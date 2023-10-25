@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34018.315
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BugFixer.Application", "BugFixer.Application", "{223A6473-F7D1-4CF0-AD67-14EE1F26FE78}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BugFixer.Data", "BugFixer.Data", "{02B8620F-7B57-439A-9BEA-D4BC7EDB7EB9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BugFixer.Domain", "BugFixer.Domain", "{8C57CB93-F0AF-4A29-9034-8B5D8B4ABEC8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BugFixer.Web", "BugFixer.Web", "{58A5336F-52FD-4E27-918A-E5F86CD8BE3E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BugFixer.IOC", "BugFixer.IOC", "{7363DC14-4BAA-422E-A6EE-48AAC24B275A}"
+EndProject
+Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A608FF11-F129-45D7-9841-AA7B6B3ECA2D}
+	EndGlobalSection
+EndGlobal
