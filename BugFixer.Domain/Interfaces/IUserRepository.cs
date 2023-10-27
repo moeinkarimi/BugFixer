@@ -24,8 +24,10 @@ namespace BugFixer.Domain.Interfaces
 
         #region Account
         Task<User> RegisterAsync(User user);
+        Task<User> LoginUserAsync(string email, string password);
         Task<bool> IsUserNameExistAsync(string userName);
         Task<bool> IsEmailExistAsync(string email);
+        Task<User> GetUserByActiveCodeAsync(string activeCode);
 
         #endregion
     }

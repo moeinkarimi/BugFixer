@@ -1,4 +1,5 @@
-﻿using BugFixer.Application.Services.Interfaces;
+﻿using BugFixer.Application.Convertors;
+using BugFixer.Application.Services.Interfaces;
 using BugFixer.Application.ViewModels.Account;
 using BugFixer.Application.ViewModels.User;
 using BugFixer.Domain.Interfaces;
@@ -30,7 +31,7 @@ namespace BugFixer.Application.Services.Implementations
                 Email = vM.Email,
                 ActiveCode = NameGenerator.GenerateUniqCode(),
                 Password = hashedPassword,
-                Avatar = "Default.jpg",
+                Avatar = "Default.png",
                 CreateDate = DateTime.Now,
                 Mobile = vM.Mobile == null ? null : vM.Mobile,
             };
@@ -44,6 +45,32 @@ namespace BugFixer.Application.Services.Implementations
             };
         }
 
+        public async Task<UserVM> LoginUserServiceAsync(LoginVM login)
+        {
+            var email = FixedText.FixEmail(login.Email);
+            var password = PasswordHelper.EncodePasswordMd5(login.Password);
+
+            var user = await _userRepository.LoginUserAsync(email, password);
+
+            if (user != null)
+            {
+                return new UserVM
+                {
+                    Id = user.Id,
+                    EmailConfirm = user.EmailConfirm,
+                    Email = user.Email,
+                    Avatar = user.Avatar,
+                    Role = user.Role,
+                    UserName = user.UserName,
+                };
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+
         public async Task<bool> IsEmailExistServiceAsync(string email)
         {
             return await _userRepository.IsEmailExistAsync(email);
@@ -52,6 +79,23 @@ namespace BugFixer.Application.Services.Implementations
         public async Task<bool> IsUserNameExistServiceAsync(string userName)
         {
             return await _userRepository.IsUserNameExistAsync(userName);
+        }
+
+        public async Task<UserVM> ActiveAccountServiceAsync(string activeCode)
+        {
+            var user = await _userRepository.GetUserByActiveCodeAsync(activeCode);
+            if(user == null || user.EmailConfirm)
+            {
+                return null;
+            }
+
+            user.EmailConfirm = true;
+            user.ActiveCode = NameGenerator.GenerateUniqCode();
+
+            await _userRepository.SaveChangeAsync();
+            return new UserVM {
+                UserName= user.UserName,
+            };
         }
     }
 }

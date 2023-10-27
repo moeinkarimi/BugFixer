@@ -22,4 +22,8 @@
     <ProjectReference Include="..\BugFixer.IOC\BugFixer.IOC.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\UsersAvatar\" />
+  </ItemGroup>
+
 </Project>

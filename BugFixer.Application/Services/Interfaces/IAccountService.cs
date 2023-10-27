@@ -12,8 +12,10 @@ namespace BugFixer.Application.Services.Interfaces
     {
 
         Task<UserVM> RegisterServiceAsync(RegisterVM vM);
+        Task<UserVM> LoginUserServiceAsync(LoginVM login);
         Task<bool> IsUserNameExistServiceAsync(string userName);
         Task<bool> IsEmailExistServiceAsync(string email);
+        Task<UserVM> ActiveAccountServiceAsync(string activeCode);
 
     }
 }
