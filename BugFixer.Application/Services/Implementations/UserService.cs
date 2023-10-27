@@ -2,6 +2,8 @@
 using BugFixer.Application.ViewModels.User;
 using BugFixer.Domain.Interfaces;
 using BugFixer.Domain.Models.User;
+using EShop.Application.Generator;
+using EShop.Application.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -89,5 +91,10 @@ namespace BugFixer.Application.Services.Implementations
             await _userRepository.SaveChangeAsync();
 
         }
+
+
+
+
+        
     }
 }

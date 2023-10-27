@@ -4,12 +4,13 @@
     <title> باگ فیکسر </title>
     <partial name="_MetaTags" />
     <partial name="_Styles" />
-    <script src="js/modernizr.js"></script>
 </head>
 <body>
+    <script src="js/modernizr.js"></script>
 
     <!-- lanfing page -->
-    <partial name="_LandingSection" />
+
+    @await RenderSectionAsync("Landing",false)
     <!-- /lanfing page -->
     <!-- menu -->
     <partial name="_TopMenu" />

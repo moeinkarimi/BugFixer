@@ -18,5 +18,15 @@ namespace BugFixer.Domain.Interfaces
         void Delete(User user);
 
         #endregion
+
+
+
+
+        #region Account
+        Task<User> RegisterAsync(User user);
+        Task<bool> IsUserNameExistAsync(string userName);
+        Task<bool> IsEmailExistAsync(string email);
+
+        #endregion
     }
 }

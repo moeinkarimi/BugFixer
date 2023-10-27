@@ -18,5 +18,10 @@ namespace BugFixer.Application.Services.Interfaces
         Task DeleteServiceAsync(int userId);
 
         #endregion
+
+
+
+
+     
     }
 }

@@ -947,6 +947,10 @@ footer .bottom-footer .socials-layer a:hover{
 }
 
 
+.error{
+    padding:6px !important;
+}
+
 @media screen and (max-width : 1199px){
     .questions-list article .detail .tags-layer,
     .questions-list article .detail .left-side{

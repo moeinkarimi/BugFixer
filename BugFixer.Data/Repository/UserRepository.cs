@@ -46,5 +46,26 @@ namespace BugFixer.Data.Repository
             _ctx.Update(user);
         }
         #endregion
+
+
+
+
+        #region Account
+        public async Task<User> RegisterAsync(User user)
+        {
+            await _ctx.AddAsync(user);
+            return user;
+        }
+
+        public Task<bool> IsUserNameExistAsync(string userName)
+        {
+            return _ctx.Users.AnyAsync(u => u.UserName == userName);
+        }
+
+        public Task<bool> IsEmailExistAsync(string email)
+        {
+            return _ctx.Users.AnyAsync(u => u.Email == email);
+        }
+        #endregion
     }
 }

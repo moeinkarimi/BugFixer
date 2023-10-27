@@ -6,25 +6,25 @@ namespace BugFixer.Domain.Models.User
     public class User : BaseEntity
     {
         [Required]
-        [MaxLength(20)]
+        [MaxLength(200)]
         public string UserName { get; set; }
         [Required]
-        [MaxLength(20)]
+        [MaxLength(200)]
         public string Email { get; set; }
         [Required]
-        [MaxLength(20)]
-        public string Mobile { get; set; }
+        [MaxLength(200)]
+        public string? Mobile { get; set; }
         [Required]
-        [MaxLength(20)]
+        [MaxLength(60)]
         public string Password { get; set; }
 
         [Display(Name = "آواتار")]
         [Required]
-        [MaxLength(50)]
+        [MaxLength(500)]
         public string? Avatar { get; set; }
         [Display(Name = "کدفعالسازی")]
         [Required]
-        [MaxLength(50)]
+        [MaxLength(100)]
         public string? ActiveCode { get; set; }
         public bool EmailConfirm { get; set; }
 
