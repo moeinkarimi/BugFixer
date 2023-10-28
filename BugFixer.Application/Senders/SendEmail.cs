@@ -13,7 +13,7 @@ namespace EShop.Application.Senders
         {
             MailMessage mail = new MailMessage();
             SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com", 587);
-            mail.From = new MailAddress("hajizadesaeed.78@gmail.com", "یکتاکالا");
+            mail.From = new MailAddress("hajizadesaeed.78@gmail.com", "BugFixer");
             mail.To.Add(to);
             mail.Subject = subject;
             mail.Body = body;

@@ -29,6 +29,8 @@ namespace BugFixer.Domain.Interfaces
         Task<bool> IsUserNameExistAsync(string userName);
         Task<bool> IsEmailExistAsync(string email);
         Task<User> GetUserByActiveCodeAsync(string activeCode);
+        Task<User> GetUserByEmailAsync(string email);
+    
 
         #endregion
     }

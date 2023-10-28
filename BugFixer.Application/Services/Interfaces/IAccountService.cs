@@ -16,6 +16,8 @@ namespace BugFixer.Application.Services.Interfaces
         Task<bool> IsUserNameExistServiceAsync(string userName);
         Task<bool> IsEmailExistServiceAsync(string email);
         Task<UserVM> ActiveAccountServiceAsync(string activeCode);
+        Task<UserVM> GetUserByEmailServiceAsync(string email);
+        Task<bool> ResetPasswordServiceAsync(string activeCode, ResetPasswordVM resetPassword);
 
     }
 }

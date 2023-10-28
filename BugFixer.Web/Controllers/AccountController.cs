@@ -68,7 +68,7 @@ namespace BugFixer.Web.Controllers
         #endregion
 
         #region Login
-       
+
         [Route("login")]
         public IActionResult Login(bool IsActive = false)
         {
@@ -83,7 +83,7 @@ namespace BugFixer.Web.Controllers
         public async Task<IActionResult> Login(LoginVM login)
         {
             if (!ModelState.IsValid)
-                return View(); 
+                return View();
 
             UserVM user = await _accountService.LoginUserServiceAsync(login);
             if (user != null)
@@ -115,7 +115,8 @@ namespace BugFixer.Web.Controllers
                 }
 
             }
-            ModelState.AddModelError("Email", "کاربری با مشخصات وارد شده یافت نشد");
+            else
+                ModelState.AddModelError("Email", "کاربری با مشخصات وارد شده یافت نشد");
             return View(login);
         }
 
@@ -131,12 +132,63 @@ namespace BugFixer.Web.Controllers
         #endregion
 
         #region ActiveAccount
-        [Route("activeaccount/{id}")]
+        [Route("/activeaccount/{id}")]
         public async Task<IActionResult> ActiveAccount(string id)
         {
             UserVM user = await _accountService.ActiveAccountServiceAsync(id);
+            TempData["emailConfirm"] = true;
+            return RedirectToAction("login");
+        }
+        #endregion
 
-            return RedirectToAction("login", user.EmailConfirm);
+        #region ForgotPassword
+
+        #region ForGotPassword
+        [Route("/forgotpassword")]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost("/forgotpassword")]
+        [ValidateAntiForgeryToken]
+
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordVM forgotPassword)
+        {
+            if (!ModelState.IsValid) { return View(forgotPassword); };
+
+            UserVM user = await _accountService.GetUserByEmailServiceAsync(forgotPassword.Email);
+
+            if (user != null)
+            {
+                string body = _viewRender.RenderToStringAsync("_ForgotPasswordEmail", user);
+                SendEmail.Send(user.Email, "فعالسازی", body);
+                ViewBag.IsSended = true;
+                return View();
+            }
+            ModelState.AddModelError("Email", "حساب کاربری یافت نشد");
+            return View(forgotPassword);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region ResetPassword
+        [Route("/reset-password/{activeCode}")]
+        public async Task<IActionResult> ResetPassword(string activeCode)
+        {
+            return View();
+        }
+
+        [HttpPost("/reset-password/{activeCode}")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetPassword(string activeCode, ResetPasswordVM reset)
+        {
+            if (!ModelState.IsValid) { return View(reset); };
+            var isSuccess = await _accountService.ResetPasswordServiceAsync(activeCode, reset);
+            TempData["isResetPasswordSuccess"] = isSuccess;
+            return Redirect("/login");
         }
         #endregion
 
