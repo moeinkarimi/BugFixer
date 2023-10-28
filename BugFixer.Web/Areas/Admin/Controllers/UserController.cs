@@ -30,6 +30,7 @@ namespace BugFixer.Web.Areas.Admin.Controllers
         [HttpGet("admin/create-user")]
         public IActionResult Create()
         {
+
             return View();
         }
 
@@ -44,6 +45,46 @@ namespace BugFixer.Web.Areas.Admin.Controllers
             await _userService.CreateServiceAsync(createUser);
             return RedirectToAction("Index");
         }
+
+
+        [HttpGet("admin/update-user/{id}")]
+        public async Task<IActionResult> Update(int id)
+        {
+            UpdateUserVM userInfor = await _userService.GetUserInforForUpdate(id);
+            return View(userInfor);
+        }
+
+
+        [HttpPost("admin/update-user/{id}")]
+        public async Task<IActionResult> Update(UpdateUserVM updateUserVM)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return View(updateUserVM);
+            }
+
+            await _userService.UpdateServiceAsync(updateUserVM);
+            return RedirectToAction("Index");
+        }
+
+
+        [HttpGet("admin/show-user/{id}")]
+        public async Task<IActionResult> Show(int id)
+        {
+            UserVM userInfor = await _userService.GetServiceAsync(id);
+            return View(userInfor);
+        }
+
+
+        [HttpGet("admin/delete-user/{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _userService.DeleteServiceAsync(id);
+            return Json(new { status = "success" });
+        }
+
+
 
     }
 }

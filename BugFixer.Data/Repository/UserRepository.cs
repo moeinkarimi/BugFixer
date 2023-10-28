@@ -2,7 +2,6 @@
 using BugFixer.Domain.Interfaces;
 using BugFixer.Domain.Models.User;
 using Microsoft.EntityFrameworkCore;
-
 namespace BugFixer.Data.Repository
 {
     public class UserRepository : IUserRepository

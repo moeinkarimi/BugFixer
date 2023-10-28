@@ -1,0 +1,101 @@
+﻿@model BugFixer.Application.ViewModels.User.UserVM
+
+@{
+    ViewData["Title"] = "نمایش کاربر";
+}
+
+
+<section class="content-header">
+    <h1>
+        عنوان صفحه
+        <small>توضیحات</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> خانه</a></li>
+        <li class="active">صفحه</li>
+        <li class="active">کاربر</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+
+        <div class="col-md-8">
+            <!-- Widget: user widget style 1 -->
+            <div class="box box-widget widget-user-2">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="widget-user-header bg-yellow">
+                    <div class="widget-user-image">
+                        <img class="img-circle" src="/images/UsersAvatar/@Model.Avatar" alt="User Avatar">
+                    </div>
+                    <!-- /.widget-user-image -->
+                    <h3 class="widget-user-username">@Model.UserName</h3>
+                    <h5 class="widget-user-desc">
+                        @if (Model.EmailConfirm == true)
+                        {
+                            <span class="label label-success">فعال</span>
+                        }else{
+                            <span class="label label-danger">غیر فعال</span>
+
+                        }
+                    </h5>
+                </div>
+                <div class="box-footer no-padding">
+                    <ul class="nav nav-stacked">
+                        <li><a> نام کاربری <span class="pull-left">@Model.UserName</span></a></li>
+
+                        <li><a>ایمیل <span class="pull-left">@Model.Email</span></a></li>
+                        <li><a href="#">موبایل <span class="pull-left">@Model.Mobile</span></a></li>
+                
+                    </ul>
+
+                  
+                </div>
+
+          
+            </div>
+                <a href="/admin/user-list" class="btn btn-primary">بازگشت</a>
+            <button  class="btn btn-danger" onclick="DeleteUser('@Model.UserName','@Model.Id')">حذف</button>
+            <!-- /.widget-user -->
+        </div>
+
+    </div>
+
+</section>
+
+@section FooterRefrences{
+    <script>
+
+        function DeleteUser(userName, id) {
+
+            Swal.fire({
+                title: `آیا از حذف ${userName}  مطمئن هستید؟`,
+
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: "حذف",
+                cancelButtonText: "خیر"
+
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "GET",
+                        url: `/admin/delete-user/${id}`,
+                        success: function (response) {
+                            if (response.status == "success") {
+                                window.location.replace("https://localhost:44384/admin/user-list");
+                            }
+                        },
+
+                    });
+                }
+            })
+        }
+    </script>
+}
+
+
+
+

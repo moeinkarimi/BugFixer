@@ -77,7 +77,7 @@
                                                 نام کاربری
 
                                             </th>
-                                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="سیستم عامل: activate to sort column ascending" style="width: 320.888px;">
+                                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="سیستم عامل: activate to sort column ascending" style="width: 91.2375px;">
                                                 وضعیت
 
                                             </th>
@@ -86,7 +86,7 @@
                                                 تاریخ ایجاد
 
                                             </th>
-                                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="ورژن: activate to sort column ascending" style="width: 91.2375px;">
+                                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="ورژن: activate to sort column ascending" style="width: 320.888px;">
                                                 عملیات
                                             </th>
                                         </tr>
@@ -99,34 +99,33 @@
                                                 <td>@Model.Entities[i].UserName</td>
                                                 @if (Model.Entities[i].EmailConfirm)
                                                 {
-                                                    <td class="text-success">فعال</td>
+                                                    <td>
+                                                        <span class="label label-success">فعال </span>
+                                                    </td>
                                                 }
                                                 else
                                                 {
-                                                    <td class="text-danger">غیر فعال</td>
+                                                    <td> 
+                                                        <span class="label label-danger">غیر فعال </span>
+                                                    </td>
                                                 }
                                                 <td>@Model.Entities[i].CreateDate.ToShamsi()</td>
-                                                <td>
-                                                    <button class="btn btn-primary btn-sm">
+                                                <td class="">
+                                                            <a href="/admin/show-user/@Model.Entities[i].Id" class="btn btn-warning btn-xs ">
+                                                        نمایش
+                                                    </a>
+                                                        <a href="/admin/update-user/@Model.Entities[i].Id" class="btn  btn-primary btn-xs">
                                                         ویرایش
-                                                    </button>
+                                                    </a>
+
                                                 </td>
                                             </tr>
                                         }
                                     </tbody>
-
                                 </table>
                             </div>
                         </div>
-
-
-                        
-
-
                         <partial name="_SitePaging" model="@Model.GetCurrentPaging()" />
-
-
-
                     </div>
                 </div>
                 <!-- /.box-body -->
