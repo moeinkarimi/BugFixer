@@ -1,7 +1,34 @@
+using BugFixer.Data.Context;
+using BugFixer.IOC;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+#region Authentication
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+}).AddCookie(options =>
+{
+    options.LoginPath = "/Login";
+    options.LogoutPath = "/Logout";
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(43200);
+});
+#endregion
+
+builder.Services.AddDbContext<BugFixerDBContext>(options =>
+     options.UseSqlServer(builder.Configuration.GetConnectionString("BugFixerConnection"))
+    );
+
+#region Injections
+DependencyContainer.UserServices(builder.Services);
+#endregion
 
 var app = builder.Build();
 

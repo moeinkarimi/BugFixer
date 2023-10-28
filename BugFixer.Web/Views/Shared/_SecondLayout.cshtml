@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html class="no-js" dir="rtl" lang="fa-IR">
+<head>
+    <title> باگ فیکسر </title>
+    <partial name="_MetaTags" />
+    <partial name="_Styles" />
+</head>
+<body>
+    <script src="js/modernizr.js"></script>
+
+
+    <!-- header -->
+    <partial name="_Header" />
+    <!-- /header -->
+
+    <div class="user-page-style">
+        @RenderBody()
+    </div>
+
+
+    <partial name="_Footer" />
+    <partial name="_Scripts" />
+    @await RenderSectionAsync("Scripts", false)
+</body>
+</html>
+

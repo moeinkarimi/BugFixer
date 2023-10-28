@@ -29,6 +29,8 @@ namespace BugFixer.Application.ViewModels.User
         public string? Avatar { get; set; }
         public bool EmailConfirm { get; set; }
 
+        public string? ActiveCode { get; set; }
+
         #region Relations
         public Role? Role { get; set; }
         #endregion
