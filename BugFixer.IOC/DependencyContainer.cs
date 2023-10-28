@@ -4,11 +4,7 @@ using BugFixer.Data.Repository;
 using BugFixer.Domain.Interfaces;
 using EShop.Application.Convertors;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace BugFixer.IOC
 {

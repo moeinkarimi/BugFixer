@@ -8,7 +8,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
     <partial name="_MetaTags" />
 
-    <title>صفحه شروع | کنترل پنل</title>
+    <title>پنل مدیریت | @ViewData["Title"]</title>
     <!-- Tell the browser to be responsive to screen width -->
 
 <partial name="_StyleRefrences"/>
@@ -42,8 +42,13 @@ desired effect
         <!-- right side column. contains the logo and sidebar -->
         <partial name="_SideBar" />
 
+        <div class="content-wrapper" style="min-height: 915.875px">
 
-        @RenderBody()
+            @RenderBody()
+
+
+        </div>
+
 
         <!-- Main Footer -->
         <footer class="main-footer text-center">
