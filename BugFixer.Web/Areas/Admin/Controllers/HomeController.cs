@@ -1,12 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BugFixer.Application.Services.Interfaces;
+using BugFixer.Application.ViewModels.User;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BugFixer.Web.Areas.Admin.Controllers
 {
     public class HomeController : BaseController
     {
-        public IActionResult Index()
+        private readonly IUserService _userService;
+        public HomeController(IUserService userService)
         {
-            return View();
+            _userService = userService;
+        }
+        public async Task<IActionResult> Index()
+        {
+            IEnumerable<UserVM> userList=await _userService.GetAllServiceAsync();
+            return View(userList);
         }
     }
 }

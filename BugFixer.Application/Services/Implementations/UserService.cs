@@ -2,11 +2,6 @@
 using BugFixer.Application.ViewModels.User;
 using BugFixer.Domain.Interfaces;
 using BugFixer.Domain.Models.User;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BugFixer.Application.Services.Implementations
 {
@@ -22,7 +17,7 @@ namespace BugFixer.Application.Services.Implementations
             User newUser = new User()
             {
                 Email = createUserVM.Email,
-                EmailConfirm=true,
+                EmailConfirm = true,
                 Mobile = createUserVM.Mobile,
                 Password = createUserVM.Password,
                 UserName = createUserVM.UserName,
@@ -31,7 +26,7 @@ namespace BugFixer.Application.Services.Implementations
             await _userRepository.CreateAsync(newUser);
             await _userRepository.SaveChangeAsync();
 
-           
+
         }
 
         public async Task DeleteServiceAsync(int userId)
@@ -40,14 +35,14 @@ namespace BugFixer.Application.Services.Implementations
 
             if (getUser != null)
             {
-                 _userRepository.Delete(getUser);
+                _userRepository.Delete(getUser);
                 await _userRepository.SaveChangeAsync();
             }
         }
 
         public async Task<IEnumerable<UserVM>> GetAllServiceAsync()
         {
-            IEnumerable<User> userList=await _userRepository.GetAllAsync();
+            IEnumerable<User> userList = await _userRepository.GetAllAsync();
             return userList.Select(user => new UserVM()
             {
                 Id = user.Id,
@@ -55,7 +50,7 @@ namespace BugFixer.Application.Services.Implementations
                 Email = user.Email,
                 EmailConfirm = user.EmailConfirm,
                 Mobile = user.Mobile,
-                Avatar=user.Avatar,
+                Avatar = user.Avatar,
                 CreateDate = user.CreateDate,
             }).ToList();
         }
