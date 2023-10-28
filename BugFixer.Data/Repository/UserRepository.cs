@@ -45,6 +45,12 @@ namespace BugFixer.Data.Repository
         {
             _ctx.Update(user);
         }
+
+
+        public  IQueryable<User> UserListForFilter()
+        {
+            return  _ctx.Users.AsQueryable();
+        }
         #endregion
 
 
@@ -79,6 +85,7 @@ namespace BugFixer.Data.Repository
             var user = await _ctx.Users.FindAsync(activeCode);
             return user;
         }
+
         #endregion
     }
 }

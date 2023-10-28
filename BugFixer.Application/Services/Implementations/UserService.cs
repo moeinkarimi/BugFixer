@@ -4,6 +4,7 @@ using BugFixer.Domain.Interfaces;
 using BugFixer.Domain.Models.User;
 using EShop.Application.Generator;
 using EShop.Application.Security;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,9 @@ namespace BugFixer.Application.Services.Implementations
                 Mobile = createUserVM.Mobile,
                 Password = createUserVM.Password,
                 UserName = createUserVM.UserName,
+                ActiveCode = NameGenerator.GenerateUniqCode(),
+                Avatar="Default.jpg"
+            
             };
 
             await _userRepository.CreateAsync(newUser);
@@ -45,6 +49,20 @@ namespace BugFixer.Application.Services.Implementations
                 _userRepository.Delete(getUser);
                 await _userRepository.SaveChangeAsync();
             }
+        }
+
+        public async Task<FilterUsersViewModel> FilterUser(FilterUsersViewModel filter)
+        {
+            IQueryable<User> query = _userRepository.UserListForFilter();
+
+            if (!string.IsNullOrEmpty(filter.UserName))
+            {
+                query = query.Where(u => EF.Functions.Like(u.UserName, $"%{filter.UserName.Trim().ToLower()}%"));
+            }
+
+            await filter.Paging(query);
+
+            return filter;
         }
 
         public async Task<IEnumerable<UserVM>> GetAllServiceAsync()

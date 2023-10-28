@@ -16,6 +16,7 @@ namespace BugFixer.Domain.Interfaces
         Task CreateAsync(User user);
         void Update(User user);
         void Delete(User user);
+        IQueryable<User> UserListForFilter();
 
         #endregion
 

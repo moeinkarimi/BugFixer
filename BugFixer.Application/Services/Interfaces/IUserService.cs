@@ -20,8 +20,11 @@ namespace BugFixer.Application.Services.Interfaces
         #endregion
 
 
+        Task<FilterUsersViewModel> FilterUser(FilterUsersViewModel filter);
 
 
-     
+
+
+
     }
 }
