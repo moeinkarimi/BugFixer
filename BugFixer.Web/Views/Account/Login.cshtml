@@ -4,6 +4,8 @@
 @{
     ViewData["Title"] = " ورورد";
     Layout = "_SecondLayout";
+    bool emailConfirm = TempData["emailConfirm"] as bool? ?? false;
+    bool isResetPasswordSuccess = TempData["isResetPasswordSuccess"] as bool? ?? false;
 }
 
 <div class="breadcumb-layer">
@@ -41,7 +43,17 @@
             </div>
 
             <div class="col-md-5 col-sm-12 col-xs-12 pull-right">
-
+                @{
+                    if (emailConfirm == true)
+                    {
+                        <div id="confirmAlert" class="alert alert-success text-success">حساب کاربری با موفقیت فعال شد.</div>
+                    }
+                    if (isResetPasswordSuccess == true)
+                    {
+                        <div id="confirmAlert" class="alert alert-success text-success">رمز عبور شما با موفقیت تغییر یافت.</div>
+                    }
+                   
+                }
                 <form asp-controller="Account" asp-action="Login" method="Post" class="shadow-style">
 
                     <div class="inner">
@@ -68,7 +80,7 @@
                         <div asp-validation-summary="All" class="text-danger"></div>
 
                         <div class="link">
-                            <a href=""> رمز عبور خود را فراموش کرده ام !</a>
+                            <a href="/forgotPassword"> رمز عبور خود را فراموش کرده ام !</a>
                         </div>
 
                         <button> ورود به حساب کاربری </button>
@@ -83,6 +95,11 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        setTimeout(function () {
+            $('#confirmAlert').remove();
+        }, 3000);
+    </script>
 }
 
 

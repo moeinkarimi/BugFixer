@@ -59,8 +59,8 @@ namespace BugFixer.Data.Repository
 
         public async Task<User> LoginUserAsync(string email, string password)
         {
-           var user = await _ctx.Users
-                        .FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
+            var user = await _ctx.Users
+                         .FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
             return user;
         }
 
@@ -76,9 +76,19 @@ namespace BugFixer.Data.Repository
 
         public async Task<User> GetUserByActiveCodeAsync(string activeCode)
         {
-            var user = await _ctx.Users.FindAsync(activeCode);
+            var user = await _ctx.Users
+                .FirstOrDefaultAsync(u => u.ActiveCode == activeCode);
             return user;
         }
+
+        public async Task<User> GetUserByEmailAsync(string email)
+        {
+            var user = await _ctx.Users
+                .FirstOrDefaultAsync(u => u.Email == email);
+            return user;
+        }
+
+      
         #endregion
     }
 }

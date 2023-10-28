@@ -95,7 +95,27 @@ namespace BugFixer.Application.Services.Implementations
             await _userRepository.SaveChangeAsync();
             return new UserVM {
                 UserName= user.UserName,
+                EmailConfirm= user.EmailConfirm,
             };
+        }
+
+        public async Task<UserVM> GetUserByEmailServiceAsync(string email)
+        {
+            var user = await _userRepository.GetUserByEmailAsync(FixedText.FixEmail(email));
+            return new UserVM { 
+                Email = user.Email,
+                ActiveCode = user.ActiveCode
+            };
+        }
+
+        public async Task<bool> ResetPasswordServiceAsync(string activeCode, ResetPasswordVM resetPassword)
+        {
+            var user = await _userRepository.GetUserByActiveCodeAsync(activeCode);
+            if (user == null || user.EmailConfirm == false)
+                return false;
+            user.Password = PasswordHelper.EncodePasswordMd5(resetPassword.Password);
+            await _userRepository.SaveChangeAsync();
+            return true;
         }
     }
 }
