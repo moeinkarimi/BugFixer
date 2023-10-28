@@ -11,6 +11,7 @@ namespace BugFixer.Web.Areas.Admin.Controllers
         {
             _userService = userService;
         }
+        [HttpGet("admin/user-list")]
         public async Task<IActionResult> Index()
         {
             IEnumerable<UserVM> userList = await _userService.GetAllServiceAsync();
