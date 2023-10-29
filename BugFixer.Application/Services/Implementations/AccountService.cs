@@ -102,10 +102,15 @@ namespace BugFixer.Application.Services.Implementations
         public async Task<UserVM> GetUserByEmailServiceAsync(string email)
         {
             var user = await _userRepository.GetUserByEmailAsync(FixedText.FixEmail(email));
-            return new UserVM { 
-                Email = user.Email,
-                ActiveCode = user.ActiveCode
-            };
+            if(user != null)
+            {
+                return new UserVM
+                {
+                    Email = user.Email,
+                    ActiveCode = user.ActiveCode
+                };
+            }
+            return null;
         }
 
         public async Task<bool> ResetPasswordServiceAsync(string activeCode, ResetPasswordVM resetPassword)

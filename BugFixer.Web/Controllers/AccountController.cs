@@ -157,7 +157,7 @@ namespace BugFixer.Web.Controllers
         {
             if (!ModelState.IsValid) { return View(forgotPassword); };
 
-            UserVM user = await _accountService.GetUserByEmailServiceAsync(forgotPassword.Email);
+            var user = await _accountService.GetUserByEmailServiceAsync(forgotPassword.Email);
 
             if (user != null)
             {

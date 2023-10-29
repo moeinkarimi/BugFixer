@@ -23,6 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\UserPanel\Controllers\" />
+    <Folder Include="Areas\UserPanel\Views\" />
     <Folder Include="wwwroot\images\UsersAvatar\" />
   </ItemGroup>
 
