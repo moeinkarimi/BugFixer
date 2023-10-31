@@ -22,6 +22,53 @@ namespace BugFixer.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("BugFixer.Domain.Models.Resume.Resume", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Bio")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EducationalDocuments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Favourites")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ProfessionName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Skills")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("WorkExperienceYears")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Resumes");
+                });
+
             modelBuilder.Entity("BugFixer.Domain.Models.Role.Permission", b =>
                 {
                     b.Property<int>("Id")
@@ -172,6 +219,17 @@ namespace BugFixer.Data.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("BugFixer.Domain.Models.Resume.Resume", b =>
+                {
+                    b.HasOne("BugFixer.Domain.Models.User.User", "User")
+                        .WithOne("Resume")
+                        .HasForeignKey("BugFixer.Domain.Models.Resume.Resume", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("BugFixer.Domain.Models.Role.RolePermission", b =>
                 {
                     b.HasOne("BugFixer.Domain.Models.Role.Permission", "Permission")
@@ -208,6 +266,12 @@ namespace BugFixer.Data.Migrations
                     b.Navigation("RolePermissions");
 
                     b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("BugFixer.Domain.Models.User.User", b =>
+                {
+                    b.Navigation("Resume")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

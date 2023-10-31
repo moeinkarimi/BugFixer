@@ -1,4 +1,5 @@
-﻿using BugFixer.Domain.Models.Role;
+﻿using BugFixer.Domain.Models.Resume;
+using BugFixer.Domain.Models.Role;
 using BugFixer.Domain.Models.User;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,6 +19,8 @@ namespace BugFixer.Data.Context
         public DbSet<RolePermission> RolePermissions { get; set; }
 
         #endregion
+
+        public DbSet<Resume> Resumes { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

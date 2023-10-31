@@ -31,8 +31,10 @@ namespace BugFixer.Domain.Models.User
         public string? AboutMe { get; set; }
         public bool EmailConfirm { get; set; }
 
+
         #region Relations
         public Role.Role? Role { get; set; }
+        public Resume.Resume Resume { get; set; }
         #endregion
 
     }

@@ -14,5 +14,7 @@ namespace BugFixer.Domain.Models.Base
         public DateTime CreateDate { get; set; }= DateTime.Now;
         public bool IsDelete { get; set; }
 
+
+
     }
 }
