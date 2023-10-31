@@ -1,0 +1,68 @@
+﻿@using BugFixer.Application.ViewModels.Account;
+@model EditProfileVM
+<div class="account-content-layer layer-style">
+    <h3> ویرایش حساب کاربری  </h3>
+    @{
+        if (ViewBag.isSuccess == true)
+        {
+            <div id="confirmAlert" class="alert alert-success text-success">اطلاعات حساب با موفقیت تغییر یافت.</div>
+        }
+    }
+    <div class="inner">
+        <form asp-action="Edit" asp-controller="Home" asp-area="UserPanel" class="form-layer-style">
+            <div class="row">
+
+                <div class="col-md-6 col-sm-12 col-xs-12">
+                    <!-- input -->
+                    <div class="input-layer">
+                        <label><i class="icon-user-shape"></i>  نام  </label>
+                        <input type="text" asp-for="FirstName">
+                        <span asp-validation-for="FirstName"> </span>
+                    </div>
+                    <!--/ input -->
+                </div>   <div class="col-md-6 col-sm-12 col-xs-12">
+                    <!-- input -->
+                    <div class="input-layer">
+                        <label><i class="icon-user-shape"></i>   نام خانوادگی  </label>
+                        <input type="text" asp-for="LastName">
+                        <span asp-validation-for="LastName"> </span>
+                    </div>
+                    <!--/ input -->
+                </div>
+                <div class="col-md-6 col-sm-12 col-xs-12">
+                    <!-- input -->
+                    <div class="input-layer">
+                        <label><i class="icon-smartphone"></i>  شماره موبایل </label>
+                        <input type="text" asp-for="Mobile">
+                        <span asp-validation-for="Mobile"> </span>
+                    </div>
+                    <!-- /input -->
+                </div>           
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <!-- textarea -->
+                    <div class="textarea-layer">
+                        <label><i class="icon-document"></i>  توضیحات </label>
+                        <textarea asp-for="AboutMe"> </textarea>
+                        <span asp-validation-for="AboutMe">  </span>
+                    </div>
+                    <!-- /textarea -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-sm-3 col-xs-12 pull-left">
+                    <button class="submit-button green"> <span>ویرایش اطلاعات</span> </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        setTimeout(function () {
+            $('#confirmAlert').remove();
+        }, 3000);
+    </script>
+}

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using BugFixer.Application.Extensions;
 
 namespace BugFixer.Web.Controllers
 {
@@ -95,6 +96,7 @@ namespace BugFixer.Web.Controllers
                         new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
                         new Claim(ClaimTypes.Name,user.UserName),
                         new Claim("UserAvatar",user.Avatar),
+                        new Claim("UserJoinDate", user.CreateDate.ToShamsi()),
                     };
                     var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                     var principal = new ClaimsPrincipal(identity);

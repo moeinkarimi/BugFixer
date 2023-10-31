@@ -62,6 +62,7 @@ namespace BugFixer.Application.Services.Implementations
                     Avatar = user.Avatar,
                     Role = user.Role,
                     UserName = user.UserName,
+                    CreateDate = user.CreateDate,
                 };
             }
             else
@@ -84,7 +85,7 @@ namespace BugFixer.Application.Services.Implementations
         public async Task<UserVM> ActiveAccountServiceAsync(string activeCode)
         {
             var user = await _userRepository.GetUserByActiveCodeAsync(activeCode);
-            if(user == null || user.EmailConfirm)
+            if (user == null || user.EmailConfirm)
             {
                 return null;
             }
@@ -93,16 +94,17 @@ namespace BugFixer.Application.Services.Implementations
             user.ActiveCode = NameGenerator.GenerateUniqCode();
 
             await _userRepository.SaveChangeAsync();
-            return new UserVM {
-                UserName= user.UserName,
-                EmailConfirm= user.EmailConfirm,
+            return new UserVM
+            {
+                UserName = user.UserName,
+                EmailConfirm = user.EmailConfirm,
             };
         }
 
         public async Task<UserVM> GetUserByEmailServiceAsync(string email)
         {
             var user = await _userRepository.GetUserByEmailAsync(FixedText.FixEmail(email));
-            if(user != null)
+            if (user != null)
             {
                 return new UserVM
                 {
@@ -121,6 +123,29 @@ namespace BugFixer.Application.Services.Implementations
             user.Password = PasswordHelper.EncodePasswordMd5(resetPassword.Password);
             await _userRepository.SaveChangeAsync();
             return true;
+        }
+
+        public async Task<EditProfileVM> GetUserForEditByIdServiceAsync(int id)
+        {
+            var user = await _userRepository.GetUserForEditByIdAsync(id);
+            return new EditProfileVM
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Mobile = user.Mobile,
+                AboutMe = user.AboutMe,
+            };
+        }
+
+        public async Task EditProfileByIdServiceAsync(int id, EditProfileVM edit)
+        {
+            var user = await _userRepository.GetUserForEditByIdAsync(id);
+            user.FirstName = edit.FirstName;
+            user.LastName = edit.LastName;
+            user.Mobile = edit.Mobile;
+            user.AboutMe = edit.AboutMe;
+
+            await _userRepository.SaveChangeAsync();
         }
     }
 }

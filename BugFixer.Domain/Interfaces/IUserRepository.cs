@@ -29,7 +29,7 @@ namespace BugFixer.Domain.Interfaces
         Task<bool> IsEmailExistAsync(string email);
         Task<User> GetUserByActiveCodeAsync(string activeCode);
         Task<User> GetUserByEmailAsync(string email);
-    
+        Task<User> GetUserForEditByIdAsync(int id);
 
         #endregion
     }

@@ -88,7 +88,11 @@ namespace BugFixer.Data.Repository
             return user;
         }
 
-      
+      public async Task<User> GetUserForEditByIdAsync(int id)
+        {
+            var user = await _ctx.Users.FindAsync(id);
+            return user;
+        }
         #endregion
     }
 }
