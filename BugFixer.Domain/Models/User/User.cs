@@ -5,6 +5,8 @@ namespace BugFixer.Domain.Models.User
 {
     public class User : BaseEntity
     {
+        public  string? FirstName{ get; set; }
+        public  string? LastName{ get; set; }
         [Required]
         [MaxLength(200)]
         public string UserName { get; set; }
@@ -26,6 +28,7 @@ namespace BugFixer.Domain.Models.User
         [Required]
         [MaxLength(100)]
         public string? ActiveCode { get; set; }
+        public string? AboutMe { get; set; }
         public bool EmailConfirm { get; set; }
 
         #region Relations
