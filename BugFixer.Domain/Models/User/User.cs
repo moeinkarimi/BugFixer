@@ -5,8 +5,6 @@ namespace BugFixer.Domain.Models.User
 {
     public class User : BaseEntity
     {
-        public string? FirstName{ get; set; }
-        public string? LastName{ get; set; }
         [Required]
         [MaxLength(200)]
         public string UserName { get; set; }
