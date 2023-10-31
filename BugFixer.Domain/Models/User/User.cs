@@ -15,7 +15,7 @@ namespace BugFixer.Domain.Models.User
         public string Email { get; set; }
         [Required]
         [MaxLength(200)]
-        public string? Mobile { get; set; }
+        public string Mobile { get; set; }
         [Required]
         [MaxLength(60)]
         public string Password { get; set; }

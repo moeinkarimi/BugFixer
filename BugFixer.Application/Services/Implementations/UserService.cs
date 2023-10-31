@@ -3,12 +3,7 @@ using BugFixer.Application.ViewModels.User;
 using BugFixer.Domain.Interfaces;
 using BugFixer.Domain.Models.User;
 using EShop.Application.Generator;
-using EShop.Application.Security;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace BugFixer.Application.Services.Implementations
 {
@@ -28,6 +23,9 @@ namespace BugFixer.Application.Services.Implementations
                 Mobile = createUserVM.Mobile,
                 Password = createUserVM.Password,
                 UserName = createUserVM.UserName,
+                ActiveCode = NameGenerator.GenerateUniqCode(),
+                Avatar = "Default.png"
+
             };
 
             await _userRepository.CreateAsync(newUser);
@@ -45,6 +43,20 @@ namespace BugFixer.Application.Services.Implementations
                 _userRepository.Delete(getUser);
                 await _userRepository.SaveChangeAsync();
             }
+        }
+
+        public async Task<FilterUsersViewModel> FilterUser(FilterUsersViewModel filter)
+        {
+            IQueryable<User> query = _userRepository.UserListForFilter();
+
+            if (!string.IsNullOrEmpty(filter.UserName))
+            {
+                query = query.Where(u => EF.Functions.Like(u.UserName, $"%{filter.UserName.Trim().ToLower()}%"));
+            }
+
+            await filter.Paging(query);
+
+            return filter;
         }
 
         public async Task<IEnumerable<UserVM>> GetAllServiceAsync()
@@ -79,6 +91,20 @@ namespace BugFixer.Application.Services.Implementations
 
         }
 
+        public async Task<UpdateUserVM> GetUserInforForUpdate(int userId)
+        {
+            User getUser = await _userRepository.GetAsync(userId);
+
+            return new UpdateUserVM()
+            {
+                Id = getUser.Id,
+                UserName = getUser.UserName,
+                Email = getUser.Email,
+                Mobile = getUser.Mobile,
+                Password = getUser.Password,
+            };
+        }
+
         public async Task UpdateServiceAsync(UpdateUserVM updateUserVM)
         {
             User getUser = await _userRepository.GetAsync(updateUserVM.Id);
@@ -86,6 +112,7 @@ namespace BugFixer.Application.Services.Implementations
             getUser.UserName = updateUserVM.UserName;
             getUser.Email = updateUserVM.Email;
             getUser.Mobile = updateUserVM.Mobile;
+            getUser.Password=updateUserVM.Password;
 
             _userRepository.Update(getUser);
             await _userRepository.SaveChangeAsync();
@@ -95,6 +122,6 @@ namespace BugFixer.Application.Services.Implementations
 
 
 
-        
+
     }
 }

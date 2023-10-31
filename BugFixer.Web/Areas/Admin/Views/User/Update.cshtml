@@ -1,0 +1,81 @@
+﻿@model BugFixer.Application.ViewModels.User.UpdateUserVM;
+@{
+    ViewData["Title"] = "بروزرسانی کاربر";
+}
+
+<section class="content-header">
+    <h1>
+        عنوان صفحه
+        <small>توضیحات</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> خانه</a></li>
+        <li class="active">صفحه</li>
+        <li class="active">بروزرسانی کاربر</li>
+    </ol>
+</section>
+
+
+
+<section class="content">
+    <div class="row">
+
+        <div class="col-md-8">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">مثال ساده</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <form role="form" asp-area="Admin" asp-controller="User" asp-action="Update" method="post">
+                    <input type="hidden" asp-for="Id" />
+                    <div class="box-body">
+
+                        <div class="input-group">
+                            <span class="input-group-addon">#</span>
+                            <input type="text" asp-for="UserName" class="form-control" placeholder="نام کاربری">
+                        </div>
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                        <br />
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                            <input type="email" asp-for="Email" class="form-control" placeholder="ایمیل">
+                        </div>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+
+                        <br />
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                            <input type="text" asp-for="Mobile" class="form-control" placeholder="موبایل">
+                        </div>
+                        <span asp-validation-for="Mobile" class="text-danger"></span>
+
+                        <br />
+
+                        <div class="input-group">
+                            <span class="input-group-addon">*</span>
+                            <input type="text" asp-for="Password" class="form-control" placeholder="رمز عبور">
+                        </div>
+                        <span asp-validation-for="Password" class="text-danger"></span>
+
+
+
+                    </div>
+                    <!-- /.box-body -->
+
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary">بروزرسانی اطلاعات</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.box -->
+
+
+
+        </div>
+
+    </div>
+
+</section>
+

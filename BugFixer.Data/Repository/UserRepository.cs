@@ -2,7 +2,6 @@
 using BugFixer.Domain.Interfaces;
 using BugFixer.Domain.Models.User;
 using Microsoft.EntityFrameworkCore;
-
 namespace BugFixer.Data.Repository
 {
     public class UserRepository : IUserRepository
@@ -44,6 +43,12 @@ namespace BugFixer.Data.Repository
         public void Update(User user)
         {
             _ctx.Update(user);
+        }
+
+
+        public  IQueryable<User> UserListForFilter()
+        {
+            return  _ctx.Users.AsQueryable();
         }
         #endregion
 

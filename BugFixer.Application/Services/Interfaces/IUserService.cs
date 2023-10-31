@@ -15,13 +15,18 @@ namespace BugFixer.Application.Services.Interfaces
         Task<UserVM> GetServiceAsync(int userId);
         Task CreateServiceAsync(CreateUserVM user);
         Task UpdateServiceAsync(UpdateUserVM user);
+        Task<UpdateUserVM> GetUserInforForUpdate(int userId);
         Task DeleteServiceAsync(int userId);
+
 
         #endregion
 
 
+        Task<FilterUsersViewModel> FilterUser(FilterUsersViewModel filter);
 
 
-     
+
+
+
     }
 }

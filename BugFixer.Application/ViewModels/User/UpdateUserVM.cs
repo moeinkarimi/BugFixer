@@ -15,7 +15,7 @@ namespace BugFixer.Application.ViewModels.User
         [Required(ErrorMessage = "{0}الزامی می باشد")]
         public string UserName { get; set; }
         [Display(Name = "ایمیل")]
-        [MaxLength(20, ErrorMessage = "تعداد کاراکتر های {0}بیش از {1}کاراکتر است")]
+        [MaxLength(200, ErrorMessage = "تعداد کاراکتر های {0}بیش از {1}کاراکتر است")]
         [Required(ErrorMessage = "{0}الزامی می باشد")]
         public string Email { get; set; }
         [Display(Name = "موبایل")]
