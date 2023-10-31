@@ -1,5 +1,7 @@
 ﻿using BugFixer.Application.Services.Interfaces;
 using BugFixer.Application.ViewModels.Account;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Differencing;
 using System.Security.Claims;
@@ -73,6 +75,7 @@ namespace BugFixer.Web.Areas.UserPanel.Controllers
                 ModelState.AddModelError("OldPassword", "رمز عبور وارد شدده صحیح نمی باشد.");
 
             await _accountService.ChangePasswordServiceAsync(userId, change);
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             TempData["ChangePasswordSuccess"] = true;
 
             return Redirect("/login");
