@@ -6,6 +6,7 @@
     Layout = "_SecondLayout";
     bool emailConfirm = TempData["emailConfirm"] as bool? ?? false;
     bool isResetPasswordSuccess = TempData["isResetPasswordSuccess"] as bool? ?? false;
+    bool changePasswordSuccess = TempData["ChangePasswordSuccess"] as bool? ?? false;
 }
 
 <div class="breadcumb-layer">
@@ -49,6 +50,10 @@
                         <div id="confirmAlert" class="alert alert-success text-success">حساب کاربری با موفقیت فعال شد.</div>
                     }
                     if (isResetPasswordSuccess == true)
+                    {
+                        <div id="confirmAlert" class="alert alert-success text-success">رمز عبور شما با موفقیت تغییر یافت.</div>
+                    }
+                    if (changePasswordSuccess == true)
                     {
                         <div id="confirmAlert" class="alert alert-success text-success">رمز عبور شما با موفقیت تغییر یافت.</div>
                     }

@@ -20,6 +20,7 @@ namespace BugFixer.Application.Services.Interfaces
         Task<bool> ResetPasswordServiceAsync(string activeCode, ResetPasswordVM resetPassword);
         Task<EditProfileVM> GetUserForEditByIdServiceAsync(int id);
         Task EditProfileByIdServiceAsync(int id, EditProfileVM edit);
+        Task<bool> ChangePasswordServiceAsync(int id,ChangePasswordVM changePassword);
 
     }
 }

@@ -31,6 +31,7 @@ namespace BugFixer.Domain.Interfaces
         Task<User> GetUserByActiveCodeAsync(string activeCode);
         Task<User> GetUserByEmailAsync(string email);
         Task<User> GetUserForEditByIdAsync(int id);
+        Task<User> GetUserByIdAsync(int id);
 
         #endregion
     }

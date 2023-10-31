@@ -147,5 +147,19 @@ namespace BugFixer.Application.Services.Implementations
 
             await _userRepository.SaveChangeAsync();
         }
+
+        public async Task<bool> ChangePasswordServiceAsync(int id, ChangePasswordVM changePassword)
+        {
+            var user = await _userRepository.GetUserByIdAsync(id);
+            var hashedOldPass = PasswordHelper.EncodePasswordMd5(changePassword.OldPassword);
+            if (hashedOldPass != user.Password)
+            {
+                return false;
+            }
+            var hashedNewPassword = PasswordHelper.EncodePasswordMd5(changePassword.NewPassword);
+            user.Password = hashedNewPassword;
+            await _userRepository.SaveChangeAsync();
+            return true;
+        }
     }
 }
