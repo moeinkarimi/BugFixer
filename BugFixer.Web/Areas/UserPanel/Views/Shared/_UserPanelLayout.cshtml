@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html class="no-js" dir="rtl" lang="fa-IR">
+<head>
+  <partial name="_MetaTags" / />
+  <partial name="_Styles" />
+    <title> باگ فیکسر </title>
+
+   
+    <script src="/js/jquery.min.js"></script>
+</head>
+<body>
+    <script src="/js/modernizr.js"></script>
+
+  <partial name="_Header"/>
+
+    <div class="user-page-style">
+
+        <partial name="_BreadCrumb"/>
+
+        <div class="account-layer">
+            <div class="container">
+                <!-- right side -->
+                <div class="right-side">
+                    <!-- avatar -->
+                    <partial name="_QuickAccess" />
+                    <!-- /avatar -->
+                    <!-- side bar -->
+                    <partial name="_AccessMenu" / />
+                    <!-- /side bar -->
+                    <!-- side bar -->
+                    <partial name="_CompleteAccount" />
+                    <!-- /side bar -->
+                </div>
+                <!-- /right side -->
+                <!-- left side -->
+                <div class="left-side">
+
+                    <!-- account heading -->
+                    <partial name="_AccountHeading" />
+                    <!-- /account heading -->
+                  @RenderBody()
+
+                </div>
+                <!-- /left side -->
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+    </div>
+
+ <partial name="_Footer"/>
+
+   <partial name="_Scripts"/>
+    @RenderSection("Scripts", false)
+</body>
+</html>
