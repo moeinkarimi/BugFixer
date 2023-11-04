@@ -28,6 +28,7 @@ builder.Services.AddDbContext<BugFixerDBContext>(options =>
 
 #region Injections
 DependencyContainer.UserServices(builder.Services);
+DependencyContainer.RoleServices(builder.Services);
 #endregion
 
 var app = builder.Build();

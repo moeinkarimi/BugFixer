@@ -1,14 +1,8 @@
-﻿using BugFixer.Domain.Models.Role;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace BugFixer.Application.ViewModels.User
 {
-    public class UserVM: BaseVM.BaseVM
+    public class UserVM : BaseVM.BaseVM
     {
         [Required]
         [MaxLength(20)]
@@ -32,7 +26,7 @@ namespace BugFixer.Application.ViewModels.User
         public string? ActiveCode { get; set; }
 
         #region Relations
-        public Role? Role { get; set; }
+        public Domain.Models.Role.Role? Role { get; set; }
         #endregion
     }
 }
