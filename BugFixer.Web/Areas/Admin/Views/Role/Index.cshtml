@@ -64,22 +64,14 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-md-5">
-                                        <div id="example1_filter" class="dataTables_filter">
-                                            <label for="search_input_2">
-                                                جستجو نام نقش:
-                                            </label>
-                                            <input type="search" asp-for="Name" class="form-control input-sm" placeholder="" aria-controls="example1" id="search_input_2">
-
-                                        </div>
-                                    </div>
+                
                                 </div>
 
                             </form>
                         </div>
 
                         <div>
-                            <a href="/admin/create-user" class="btn bg-navy margin"> افزودن <i class="fa fa-plus-square-o"></i></a>
+                            <a href="/admin/role-add" class="btn bg-navy margin"> افزودن <i class="fa fa-plus-square-o"></i></a>
                         </div>
 
                         <div class="row">
@@ -94,10 +86,7 @@
                                                 عنوان
 
                                             </th>
-                                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="سیستم عامل: activate to sort column ascending" style="width: 91.2375px;">
-                                                نام
-
-                                            </th>
+                                  
                                             <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="ورژن: activate to sort column ascending" style="width: 91.2375px;">
 
                                                 تاریخ ایجاد
@@ -114,14 +103,14 @@
                                             <tr role="row" class=@((i%2==0)?"even":"odd")>
                                                 <td class="sorting_1">@(i + 1)</td>
                                                 <td>@Model.Entities[i].Title</td>
-                                                <td>@Model.Entities[i].Name</td>
+                               
 
                                                 <td>@Model.Entities[i].CreateDate.ToShamsi()</td>
                                                 <td class="">
-                                                    <a href="/admin/show-user/@Model.Entities[i].Id" class="btn btn-warning btn-xs ">
+                                                    <a href="/admin/role-show/@Model.Entities[i].Id" class="btn btn-warning btn-xs ">
                                                         نمایش
                                                     </a>
-                                                    <a href="/admin/update-user/@Model.Entities[i].Id" class="btn  btn-primary btn-xs">
+                                                    <a href="/admin/role-update/@Model.Entities[i].Id" class="btn  btn-primary btn-xs">
                                                         ویرایش
                                                     </a>
 

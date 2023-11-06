@@ -7,8 +7,6 @@ namespace BugFixer.Application.ViewModels.Role
         [Display(Name = "عنوان نقش")]
         [MaxLength(20, ErrorMessage = "تعداد کاراکتر های {0}بیش از {1}کاراکتر است")]
         public string? Title { get; set; }
-        [Display(Name = "نام نقش")]
-        [MaxLength(20, ErrorMessage = "تعداد کاراکتر های {0}بیش از {1}کاراکتر است")]
-        public string? Name { get; set; }
+
     }
 }

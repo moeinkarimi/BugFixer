@@ -14,7 +14,8 @@ namespace BugFixer.Application.Services.Interfaces
         Task<RoleVM> GetServiceAsync(int id);
         Task AddServiceAsync(CreateRoleVM role);
         Task UpdateService(UpdateRoleVM role);
-        void DeleteService(int id);
+        Task<UpdateRoleVM> GetRoleInforForUpdate(int id);
+        Task DeleteService(int id);
         Task<FilterRoleVM> FilterRole(FilterRoleVM filterRole);
     }
 }

@@ -22,7 +22,6 @@ namespace BugFixer.Application.Services.Implementations
             Role newRole = new Role()
             {
                 Title = role.Title,
-                Name = role.Name,
 
             };
 
@@ -30,12 +29,12 @@ namespace BugFixer.Application.Services.Implementations
             await _roleRepository.SaveChangeAsync();
         }
 
-        public async void DeleteService(int id)
+        public async Task DeleteService(int id)
         {
             Role role = await _roleRepository.GetAsync(id);
 
             _roleRepository.Delete(role);
-            _roleRepository.SaveChangeAsync();
+           await _roleRepository.SaveChangeAsync();
         }
 
         public async Task<FilterRoleVM> FilterRole(FilterRoleVM filterRole)
@@ -46,10 +45,7 @@ namespace BugFixer.Application.Services.Implementations
             {
                 query = query.Where(u => EF.Functions.Like(u.Title, $"%{filterRole.Title.Trim().ToLower()}%"));
             }
-            if (!string.IsNullOrEmpty(filterRole.Name))
-            {
-                query = query.Where(u => EF.Functions.Like(u.Name, $"%{filterRole.Name.Trim().ToLower()}%"));
-            }
+     
 
             await filterRole.Paging(query);
 
@@ -62,10 +58,21 @@ namespace BugFixer.Application.Services.Implementations
             return roleList.Select(r => new RoleVM()
             {
                 Title = r.Title,
-                Name = r.Name,
                 CreateDate = r.CreateDate,
                 Id = r.Id,
             }).ToList();
+        }
+
+        public async Task<UpdateRoleVM> GetRoleInforForUpdate(int id)
+        {
+            Role role = await _roleRepository.GetAsync(id);
+
+            return new UpdateRoleVM()
+            {
+                Title = role.Title,
+              
+                Id = role.Id,
+            };
         }
 
         public async Task<RoleVM> GetServiceAsync(int id)
@@ -75,7 +82,6 @@ namespace BugFixer.Application.Services.Implementations
             return new RoleVM()
             {
                 Title = role.Title,
-                Name = role.Name,
                 CreateDate = role.CreateDate,
                 Id = role.Id,
             };
@@ -87,7 +93,6 @@ namespace BugFixer.Application.Services.Implementations
             Role getRole = await _roleRepository.GetAsync(role.Id);
 
             getRole.Title = role.Title;
-            getRole.Name = role.Name;
 
             _roleRepository.Update(getRole);
             await _roleRepository.SaveChangeAsync();
