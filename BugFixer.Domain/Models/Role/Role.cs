@@ -11,11 +11,6 @@ namespace BugFixer.Domain.Models.Role
         [MaxLength(200)]
 
         public string Title { get; set; }
-        [Display(Name = "نام نقش")]
-        [Required]
-        [MaxLength()]
-
-        public string Name { get; set; }
 
 
 

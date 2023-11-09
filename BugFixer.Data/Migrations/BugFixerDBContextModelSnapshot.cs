@@ -111,10 +111,15 @@ namespace BugFixer.Data.Migrations
                     b.Property<bool>("IsDelete")
                         .HasColumnType("bit");
 
+                    b.Property<string>("PermissionName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
 
@@ -134,10 +139,6 @@ namespace BugFixer.Data.Migrations
 
                     b.Property<bool>("IsDelete")
                         .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -163,9 +164,6 @@ namespace BugFixer.Data.Migrations
                     b.Property<bool>("IsDelete")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("PermissionId")
-                        .HasColumnType("int");
-
                     b.Property<int>("PersmissionId")
                         .HasColumnType("int");
 
@@ -174,7 +172,7 @@ namespace BugFixer.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PermissionId");
+                    b.HasIndex("PersmissionId");
 
                     b.HasIndex("RoleId");
 
@@ -273,7 +271,9 @@ namespace BugFixer.Data.Migrations
                 {
                     b.HasOne("BugFixer.Domain.Models.Role.Permission", "Permission")
                         .WithMany("RolePermissions")
-                        .HasForeignKey("PermissionId");
+                        .HasForeignKey("PersmissionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("BugFixer.Domain.Models.Role.Role", "Role")
                         .WithMany("RolePermissions")

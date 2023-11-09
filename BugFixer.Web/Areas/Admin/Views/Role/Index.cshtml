@@ -1,0 +1,135 @@
+﻿@model BugFixer.Application.ViewModels.Role.FilterRoleVM;
+@using BugFixer.Application.Extensions;
+
+@{
+    ViewData["Title"] = "نمایش لیست نقش ها";
+}
+
+@section FooterRefrences{
+    <script src="/Admin/dist/js/custom.js"></script>
+}
+
+<section class="content-header">
+    <h1>
+        عنوان صفحه
+        <small>توضیحات</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> خانه</a></li>
+        <li class="active">صفحه</li>
+        <li class="active">لیست کاربران</li>
+    </ol>
+</section>
+
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">لیست کاربران</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="dataTables_length" id="example1_length">
+                                    <label>
+                                        تعداد نمایش
+                                        <select name="example1_length" aria-controls="example1" class="form-control input-sm">
+                                            <option value="10">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                    </label>
+                                </div>
+                            </div>
+                            <form asp-area="Admin" asp-controller="Role" asp-action="FilterRolesAjax" id="filter-search" class="d-flex" data-ajax="true" data-method="get" data-ajax-complete="complete" data-ajax-begin="open_waiting()" data-ajax-success="close_waiting()" data-ajax-mode="replace" data-ajax-update="#FilterRoles">
+                                <input type="hidden" asp-for="Page" />
+                                <div class="d-flex">
+
+                                    <div class="col-md-5">
+
+                                        <div id="example1_filter" class="dataTables_filter">
+
+                                            <label for="#search_input_1">
+                                                جستجو عنوان نقش
+                                            </label>
+                                            <div class="d-flex">
+                                                <button type="submit" class="btn btn-primary btn-sm">اعمال</button>
+                                                <input type="search" asp-for="Title" class="form-control input-sm" placeholder="" aria-controls="example1" id="search_input_1">
+                                            </div>
+
+                                        </div>
+                                    </div>
+                
+                                </div>
+
+                            </form>
+                        </div>
+
+                        <div>
+                            <a href="/admin/role-add" class="btn bg-navy margin"> افزودن <i class="fa fa-plus-square-o"></i></a>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="موتور رندر: activate to sort column descending" style="width: 178.238px;">
+                                                ردیف
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="مرورگر: activate to sort column ascending" style="width: 334.075px;">
+                                                عنوان
+
+                                            </th>
+                                  
+                                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="ورژن: activate to sort column ascending" style="width: 91.2375px;">
+
+                                                تاریخ ایجاد
+
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="ورژن: activate to sort column ascending" style="width: 320.888px;">
+                                                عملیات
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for (int i = 0; i < Model.Entities.Count(); i++)
+                                        {
+                                            <tr role="row" class=@((i%2==0)?"even":"odd")>
+                                                <td class="sorting_1">@(i + 1)</td>
+                                                <td>@Model.Entities[i].Title</td>
+                               
+
+                                                <td>@Model.Entities[i].CreateDate.ToShamsi()</td>
+                                                <td class="">
+                                                    <a href="/admin/role-show/@Model.Entities[i].Id" class="btn btn-warning btn-xs ">
+                                                        نمایش
+                                                    </a>
+                                                    <a href="/admin/role-update/@Model.Entities[i].Id" class="btn  btn-primary btn-xs">
+                                                        ویرایش
+                                                    </a>
+
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <partial name="_SitePaging" model="@Model.GetCurrentPaging()" />
+                    </div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+

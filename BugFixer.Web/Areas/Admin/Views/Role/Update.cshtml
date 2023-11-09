@@ -1,0 +1,87 @@
+﻿@model BugFixer.Application.ViewModels.Role.UpdateRoleVM
+@using BugFixer.Application.ViewModels.RolePermission
+@{
+
+    ViewData["Title"] = "بروزرسانی نقش";
+    List<RolePermissionVM> rolePermissions = ViewBag.RolePermissions as List<RolePermissionVM>;
+    List<PermissionsVM> permissionList = ViewBag.PermissionList as List<PermissionsVM>;
+
+}
+
+<section class="content-header">
+    <h1>
+        عنوان صفحه
+        <small>توضیحات</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> خانه</a></li>
+        <li class="active">صفحه</li>
+        <li class="active">بروزرسانی اطلاعات نقش</li>
+    </ol>
+</section>
+
+
+
+<section class="content">
+    <div class="row">
+        <form role="form" asp-area="Admin" asp-controller="Role" asp-action="Update" method="post">
+            <div class="col-md-8">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">مثال ساده</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+
+                    <input type="hidden" asp-for="Id" />
+                    <div class="box-body">
+
+                        <div class="input-group">
+                            <span class="input-group-addon">#</span>
+                            <input type="text" asp-for="Title" class="form-control" placeholder="عنوان نقش">
+                        </div>
+                        <span asp-validation-for="Title" class="text-danger"></span>
+
+
+
+
+                    </div>
+                    <!-- /.box-body -->
+
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary">بروزرسانی </button>
+                    </div>
+                </div>
+                <!-- /.box -->
+
+
+
+            </div>
+
+            <div class="col-md-4">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"> دسترسی نقش</h3>
+
+                        <ul class="list-unstyled mt-4">
+                            @foreach (var item in permissionList)
+                            {
+                                <li>
+                                    <input type="checkbox" name="permissions" @((rolePermissions.Any(rp => rp.PersmissionId == item.Id) ? "checked":"")) value="@item.Id" /><span>@item.Title</span>
+                                </li>
+                            }
+                        </ul>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </form>
+
+
+    </div>
+
+</section>
+

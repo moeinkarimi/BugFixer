@@ -28,7 +28,7 @@ namespace BugFixer.Application.ViewModels.User
         public string? ActiveCode { get; set; }
 
         #region Relations
-        public Role? Role { get; set; }
+        public Domain.Models.Role.Role? Role { get; set; }
         #endregion
     }
 }

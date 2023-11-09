@@ -12,9 +12,10 @@ namespace BugFixer.Domain.Models.Role
     {
         [Display(Name = "عنوان دسترسی")]
         [Required]
-        [MaxLength(50)]
+        [MaxLength(200)]
         public string Title { get; set; }
-
+        [MaxLength(200)]
+        public string PermissionName { get; set; }
 
         #region Relations
         public List<RolePermission>? RolePermissions { get; set; }

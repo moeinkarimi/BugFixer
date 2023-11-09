@@ -1,0 +1,74 @@
+﻿@model BugFixer.Application.ViewModels.Role.RoleVM
+@{
+    ViewData["Title"] = "نمایش نقش";
+}
+
+<section class="content-header">
+    <h1>
+        عنوان صفحه
+        <small>توضیحات</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> خانه</a></li>
+        <li class="active">صفحه</li>
+        <li class="active">نمایش اطلاعات نقش</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+
+        <div class="col-md-8">
+            <!-- Widget: user widget style 1 -->
+            <div class="box box-widget widget-user-2">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+            
+
+                <div class="box-footer no-padding">
+                    <ul class="nav nav-stacked">
+                        <li><a> عنوان نقش <span class="pull-left">@Model.Title</span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <a href="/admin/role-list" class="btn btn-primary">بازگشت</a>
+            <button class="btn btn-danger" onclick="DeleteRole('@Model.Title','@Model.Id')">حذف</button>
+            <!-- /.widget-user -->
+        </div>
+
+    </div>
+
+</section>
+
+@section FooterRefrences{
+    <script>
+
+        function DeleteRole(Title, id) {
+
+            Swal.fire({
+                title: `آیا از حذف ${Title}  مطمئن هستید؟`,
+
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: "حذف",
+                cancelButtonText: "خیر"
+
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "GET",
+                        url: `/admin/role-delete/${id}`,
+                        success: function (response) {
+                            if (response.status == "success") {
+                                window.location.replace("https://localhost:44384/admin/role-list");
+                            }
+                        },
+
+                    });
+                }
+            })
+        }
+    </script>
+}
+

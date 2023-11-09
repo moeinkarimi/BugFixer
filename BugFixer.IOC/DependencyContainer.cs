@@ -19,5 +19,13 @@ namespace BugFixer.IOC
 
             service.AddScoped<IViewRenderService, RenderViewToString>();
         }
+
+
+        public static void RoleServices(IServiceCollection service)
+        {
+            service.AddScoped<IRoleRepository, RoleRepository>();
+            service.AddScoped<IRoleService, RoleService>();
+        }
+
     }
 }
