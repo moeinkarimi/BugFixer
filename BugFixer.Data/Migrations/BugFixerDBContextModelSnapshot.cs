@@ -52,9 +52,6 @@ namespace BugFixer.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Skills")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
@@ -67,6 +64,37 @@ namespace BugFixer.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Resumes");
+                });
+
+            modelBuilder.Entity("BugFixer.Domain.Models.Resume.ResumeSkills", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ResumeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SkillPercentage")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SkillTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ResumeId");
+
+                    b.ToTable("ResumeSkills");
                 });
 
             modelBuilder.Entity("BugFixer.Domain.Models.Role.Permission", b =>
@@ -230,6 +258,17 @@ namespace BugFixer.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("BugFixer.Domain.Models.Resume.ResumeSkills", b =>
+                {
+                    b.HasOne("BugFixer.Domain.Models.Resume.Resume", "Resume")
+                        .WithMany("ResumeSkills")
+                        .HasForeignKey("ResumeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Resume");
+                });
+
             modelBuilder.Entity("BugFixer.Domain.Models.Role.RolePermission", b =>
                 {
                     b.HasOne("BugFixer.Domain.Models.Role.Permission", "Permission")
@@ -254,6 +293,11 @@ namespace BugFixer.Data.Migrations
                         .HasForeignKey("RoleId");
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("BugFixer.Domain.Models.Resume.Resume", b =>
+                {
+                    b.Navigation("ResumeSkills");
                 });
 
             modelBuilder.Entity("BugFixer.Domain.Models.Role.Permission", b =>

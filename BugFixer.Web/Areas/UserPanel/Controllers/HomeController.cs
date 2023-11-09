@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Differencing;
 using System.Security.Claims;
+using BugFixer.Domain.Models.Resume;
+using BugFixer.Application.ViewModels.Resume;
 
 namespace BugFixer.Web.Areas.UserPanel.Controllers
 {
@@ -79,6 +81,21 @@ namespace BugFixer.Web.Areas.UserPanel.Controllers
             TempData["ChangePasswordSuccess"] = true;
 
             return Redirect("/login");
+        }
+        #endregion
+
+        #region Resume
+        [Route("/user-panel/resume")]
+        public IActionResult Resume()
+        {
+            return View();
+        }
+
+        [HttpPost("/user-panel/resume")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Resume(List<string> favorites)
+        {
+            return View();
         }
         #endregion
 
