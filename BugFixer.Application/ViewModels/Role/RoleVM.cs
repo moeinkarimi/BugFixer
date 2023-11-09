@@ -1,5 +1,4 @@
-﻿using BugFixer.Domain.Models.Role;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace BugFixer.Application.ViewModels.Role
 {
@@ -15,7 +14,7 @@ namespace BugFixer.Application.ViewModels.Role
 
 
         #region Relations
-        public List<RolePermission>? RolePermissions { get; set; }
+        public List<Domain.Models.Role.RolePermission>? RolePermissions { get; set; }
         public List<Domain.Models.User.User>? Users { get; set; }
         #endregion
     }

@@ -1,6 +1,11 @@
 ﻿@model BugFixer.Application.ViewModels.Role.UpdateRoleVM
+@using BugFixer.Application.ViewModels.RolePermission
 @{
+
     ViewData["Title"] = "بروزرسانی نقش";
+    List<RolePermissionVM> rolePermissions = ViewBag.RolePermissions as List<RolePermissionVM>;
+    List<PermissionsVM> permissionList = ViewBag.PermissionList as List<PermissionsVM>;
+
 }
 
 <section class="content-header">
@@ -19,16 +24,16 @@
 
 <section class="content">
     <div class="row">
+        <form role="form" asp-area="Admin" asp-controller="Role" asp-action="Update" method="post">
+            <div class="col-md-8">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">مثال ساده</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
 
-        <div class="col-md-8">
-            <!-- general form elements -->
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">مثال ساده</h3>
-                </div>
-                <!-- /.box-header -->
-                <!-- form start -->
-                <form role="form" asp-area="Admin" asp-controller="Role" asp-action="Update" method="post">
                     <input type="hidden" asp-for="Id" />
                     <div class="box-body">
 
@@ -47,13 +52,34 @@
                     <div class="box-footer">
                         <button type="submit" class="btn btn-primary">بروزرسانی </button>
                     </div>
-                </form>
+                </div>
+                <!-- /.box -->
+
+
+
             </div>
-            <!-- /.box -->
 
+            <div class="col-md-4">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"> دسترسی نقش</h3>
 
+                        <ul class="list-unstyled mt-4">
+                            @foreach (var item in permissionList)
+                            {
+                                <li>
+                                    <input type="checkbox" name="permissions" @((rolePermissions.Any(rp => rp.PersmissionId == item.Id) ? "checked":"")) value="@item.Id" /><span>@item.Title</span>
+                                </li>
+                            }
+                        </ul>
 
-        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </form>
+
 
     </div>
 

@@ -19,5 +19,13 @@ namespace BugFixer.Domain.Interfaces
         void Delete(Role role);
 
 
+
+        #region Permissions
+        Task<IEnumerable<Permission>> PermissionListAsync();
+        Task AddRolePermissionAsync(RolePermission rolePermission);
+        Task<IEnumerable<RolePermission>> rolePermissionsAsync(int roleId);
+        void DeleteRolePermissionAsync(RolePermission rolePermission);
+        #endregion
+
     }
 }

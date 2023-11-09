@@ -15,6 +15,7 @@ namespace BugFixer.Data.Repository
         public async Task AddAsync(Role role)
         {
            await _ctx.Roles.AddAsync(role);
+         
         }
 
         public void  Delete(Role role)
@@ -37,6 +38,7 @@ namespace BugFixer.Data.Repository
             return _ctx.Roles.AsQueryable();
         }
 
+
         public async Task SaveChangeAsync()
         {
             await _ctx.SaveChangesAsync();
@@ -46,5 +48,28 @@ namespace BugFixer.Data.Repository
         {
             _ctx.Roles.Update(role);
         }
+
+
+        #region Permissions
+        public async Task<IEnumerable<Permission>> PermissionListAsync()
+        {
+            return await _ctx.Persmissions.ToListAsync();
+        }
+
+        public async Task AddRolePermissionAsync(RolePermission rolePermission)
+        {
+            await _ctx.RolePermissions.AddAsync(rolePermission);
+        }
+
+        public async Task<IEnumerable<RolePermission>> rolePermissionsAsync(int roleId)
+        {
+           return await _ctx.RolePermissions.Where(rp=> rp.RoleId == roleId).ToListAsync();
+        }
+
+        public void DeleteRolePermissionAsync(RolePermission rolePermission)
+        {
+            _ctx.RolePermissions.Remove(rolePermission);
+        }
+        #endregion
     }
 }
