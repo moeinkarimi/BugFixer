@@ -3,6 +3,7 @@ using BugFixer.Application.ViewModels.User;
 using BugFixer.Domain.Interfaces;
 using BugFixer.Domain.Models.User;
 using EShop.Application.Generator;
+using EShop.Application.Security;
 using Microsoft.EntityFrameworkCore;
 
 namespace BugFixer.Application.Services.Implementations
@@ -21,10 +22,12 @@ namespace BugFixer.Application.Services.Implementations
                 Email = createUserVM.Email,
                 EmailConfirm = true,
                 Mobile = createUserVM.Mobile,
-                Password = createUserVM.Password,
+                Password = PasswordHelper.EncodePasswordMd5(createUserVM.Password),
                 UserName = createUserVM.UserName,
                 ActiveCode = NameGenerator.GenerateUniqCode(),
-                Avatar = "Default.png"
+                Avatar = "Default.png",
+                RoleId = createUserVM.RoleId,
+                
 
             };
 
@@ -102,6 +105,7 @@ namespace BugFixer.Application.Services.Implementations
                 Email = getUser.Email,
                 Mobile = getUser.Mobile,
                 Password = getUser.Password,
+                RoleId = getUser.RoleId,
             };
         }
 
@@ -113,6 +117,7 @@ namespace BugFixer.Application.Services.Implementations
             getUser.Email = updateUserVM.Email;
             getUser.Mobile = updateUserVM.Mobile;
             getUser.Password=updateUserVM.Password;
+            getUser.RoleId=updateUserVM.RoleId;
 
             _userRepository.Update(getUser);
             await _userRepository.SaveChangeAsync();
