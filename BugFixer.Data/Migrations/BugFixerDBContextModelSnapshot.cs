@@ -63,7 +63,7 @@ namespace BugFixer.Data.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Resumes");
+                    b.ToTable("Resumes", (string)null);
                 });
 
             modelBuilder.Entity("BugFixer.Domain.Models.Resume.ResumeSkills", b =>
@@ -123,7 +123,7 @@ namespace BugFixer.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Persmissions");
+                    b.ToTable("Persmissions", (string)null);
                 });
 
             modelBuilder.Entity("BugFixer.Domain.Models.Role.Role", b =>
@@ -147,7 +147,7 @@ namespace BugFixer.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
                 });
 
             modelBuilder.Entity("BugFixer.Domain.Models.Role.RolePermission", b =>
@@ -176,7 +176,7 @@ namespace BugFixer.Data.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("RolePermissions");
+                    b.ToTable("RolePermissions", (string)null);
                 });
 
             modelBuilder.Entity("BugFixer.Domain.Models.User.User", b =>
@@ -242,7 +242,7 @@ namespace BugFixer.Data.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("BugFixer.Domain.Models.Resume.Resume", b =>

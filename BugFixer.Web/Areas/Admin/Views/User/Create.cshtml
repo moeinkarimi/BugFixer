@@ -1,7 +1,9 @@
 ﻿@model BugFixer.Application.ViewModels.User.CreateUserVM
+@using BugFixer.Application.ViewModels.Role
 
 @{
     ViewData["Title"] = "افزودن کاربر جدید";
+    List<RoleVM> roleList = ViewBag.RoleList as List<RoleVM>;
 }
 
 <section class="content-header">
@@ -20,16 +22,16 @@
 
 <section class="content">
     <div class="row">
+        <form role="form" asp-area="Admin" asp-controller="User" asp-action="Create" method="post">
+            <div class="col-md-8">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">مثال ساده</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
 
-        <div class="col-md-8">
-            <!-- general form elements -->
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">مثال ساده</h3>
-                </div>
-                <!-- /.box-header -->
-                <!-- form start -->
-                <form role="form" asp-area="Admin" asp-controller="User" asp-action="Create" method="post">
                     <div class="box-body">
 
                         <div class="input-group">
@@ -37,14 +39,14 @@
                             <input type="text" asp-for="UserName" class="form-control" placeholder="نام کاربری">
                         </div>
                         <span asp-validation-for="UserName" class="text-danger"></span>
-                        <br/>
+                        <br />
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
                             <input type="email" asp-for="Email" class="form-control" placeholder="ایمیل">
                         </div>
                         <span asp-validation-for="Email" class="text-danger"></span>
 
-                        <br/>
+                        <br />
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-phone"></i></span>
                             <input type="text" asp-for="Mobile" class="form-control" placeholder="موبایل">
@@ -59,21 +61,47 @@
                         </div>
                         <span asp-validation-for="Password" class="text-danger"></span>
 
-                  
-                
+
+
                     </div>
                     <!-- /.box-body -->
 
                     <div class="box-footer">
                         <button type="submit" class="btn btn-primary">ثبت اطلاعات</button>
                     </div>
-                </form>
+
+                </div>
+                <!-- /.box -->
+
+
+
             </div>
-            <!-- /.box -->
+
+            <div class="col-md-4">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"> دسترسی نقش</h3>
+
+                        <ul class="list-unstyled mt-4">
+                            @if (roleList != null)
+                            {
+                                @foreach (var item in roleList)
+                                {
+                                    <li>
+                                        <input type="radio" name="selectedRole" value="@item.Id" /><span>@item.Title</span>
+                                    </li>
+                                }
+                            }
+                        </ul>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </form>
 
 
-
-        </div>
 
     </div>
 

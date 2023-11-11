@@ -26,6 +26,7 @@ namespace BugFixer.Application.ViewModels.User
         [MaxLength(20, ErrorMessage = "تعداد کاراکتر های {0}بیش از {1}کاراکتر است")]
         [Required(ErrorMessage = "{0}الزامی می باشد")]
         public string Password { get; set; }
+        public int? RoleId { get; set; }
 
 
     }

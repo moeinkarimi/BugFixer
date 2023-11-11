@@ -1,6 +1,10 @@
 ﻿@model BugFixer.Application.ViewModels.User.UpdateUserVM;
+@using BugFixer.Application.ViewModels.Role
+
 @{
     ViewData["Title"] = "بروزرسانی کاربر";
+    List<RoleVM> roleList = ViewBag.RoleList as List<RoleVM>;
+
 }
 
 <section class="content-header">
@@ -19,7 +23,7 @@
 
 <section class="content">
     <div class="row">
-
+        <form role="form" asp-area="Admin" asp-controller="User" asp-action="Update" method="post">
         <div class="col-md-8">
             <!-- general form elements -->
             <div class="box box-primary">
@@ -28,7 +32,7 @@
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                <form role="form" asp-area="Admin" asp-controller="User" asp-action="Update" method="post">
+
                     <input type="hidden" asp-for="Id" />
                     <div class="box-body">
 
@@ -67,13 +71,39 @@
                     <div class="box-footer">
                         <button type="submit" class="btn btn-primary">بروزرسانی اطلاعات</button>
                     </div>
-                </form>
+           
             </div>
             <!-- /.box -->
 
 
 
         </div>
+
+            <div class="col-md-4">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"> دسترسی نقش</h3>
+
+                        <ul class="list-unstyled mt-4">
+                            @if (roleList != null)
+                            {
+                                @foreach (var item in roleList)
+                                {
+                                    <li>
+                                        <input type="radio" name="selectedRole" @((item.Id == Model.RoleId)?"checked":"")  value="@item.Id" /><span>@item.Title</span>
+                                    </li>
+                                }
+                            }
+                        </ul>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </form>
+
+
 
     </div>
 

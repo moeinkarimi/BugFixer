@@ -1,4 +1,5 @@
 ﻿using BugFixer.Application.Services.Interfaces;
+using BugFixer.Application.ViewModels.Role;
 using BugFixer.Application.ViewModels.User;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,13 +8,14 @@ namespace BugFixer.Web.Areas.Admin.Controllers
     public class UserController : BaseController
     {
         private readonly IUserService _userService;
+        private readonly IRoleService _roleService;
  
         private readonly FilterUsersViewModel filterUsers;
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IRoleService roleService)
         {
             _userService = userService;
             filterUsers = new FilterUsersViewModel();
-           
+            _roleService = roleService;
         }
         [HttpGet("admin/user-list")]
         public async Task<IActionResult> Index()
@@ -28,20 +30,21 @@ namespace BugFixer.Web.Areas.Admin.Controllers
         }
 
         [HttpGet("admin/create-user")]
-        public IActionResult Create()
+        public  async Task<IActionResult> Create()
         {
-
+            IEnumerable<RoleVM> roleList =await _roleService.GetAllServiceAsync();
+            ViewBag.RoleList = roleList;
             return View();
         }
 
         [HttpPost("admin/create-user")]
-        public async Task<IActionResult> Create(CreateUserVM createUser)
+        public async Task<IActionResult> Create(CreateUserVM createUser,int selectedRole)
         {
             if (!ModelState.IsValid)
             {
                 return View(createUser);
             }
-
+            createUser.RoleId= selectedRole;
             await _userService.CreateServiceAsync(createUser);
             return RedirectToAction("Index");
         }
@@ -50,20 +53,22 @@ namespace BugFixer.Web.Areas.Admin.Controllers
         [HttpGet("admin/update-user/{id}")]
         public async Task<IActionResult> Update(int id)
         {
+            IEnumerable<RoleVM> roleList = await _roleService.GetAllServiceAsync();
+            ViewBag.RoleList = roleList;
             UpdateUserVM userInfor = await _userService.GetUserInforForUpdate(id);
             return View(userInfor);
         }
 
 
         [HttpPost("admin/update-user/{id}")]
-        public async Task<IActionResult> Update(UpdateUserVM updateUserVM)
+        public async Task<IActionResult> Update(UpdateUserVM updateUserVM, int selectedRole)
         {
 
             if (!ModelState.IsValid)
             {
                 return View(updateUserVM);
             }
-
+            updateUserVM.RoleId= selectedRole;
             await _userService.UpdateServiceAsync(updateUserVM);
             return RedirectToAction("Index");
         }

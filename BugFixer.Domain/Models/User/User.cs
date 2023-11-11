@@ -30,6 +30,7 @@ namespace BugFixer.Domain.Models.User
         public string? ActiveCode { get; set; }
         public string? AboutMe { get; set; }
         public bool EmailConfirm { get; set; }
+        public int? RoleId { get; set; }
 
 
         #region Relations
