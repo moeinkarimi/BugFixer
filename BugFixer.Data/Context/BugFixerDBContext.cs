@@ -18,6 +18,7 @@ namespace BugFixer.Data.Context
         public DbSet<Role> Roles { get; set; }
         public DbSet<Permission> Persmissions { get; set; }
         public DbSet<RolePermission> RolePermissions { get; set; }
+        public DbSet<Follower> Followers { get; set; }
 
         #endregion
 
@@ -33,7 +34,21 @@ namespace BugFixer.Data.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+        base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Answer>()
+                .HasOne(a => a.User)
+                .WithMany()
+                .HasForeignKey(a => a.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<TrueAnswer>()
+            .HasOne(ta => ta.Question)
+            .WithMany()
+            .HasForeignKey(ta => ta.QuestionId)
+            .OnDelete(DeleteBehavior.NoAction);
+
         }
     }
 }
+
+

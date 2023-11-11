@@ -22,6 +22,133 @@ namespace BugFixer.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("BugFixer.Domain.Models.Questions.Answer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestionId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Answers");
+                });
+
+            modelBuilder.Entity("BugFixer.Domain.Models.Questions.Question", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Visit")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Questions");
+                });
+
+            modelBuilder.Entity("BugFixer.Domain.Models.Questions.QuestionTag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Tag")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestionId");
+
+                    b.ToTable("QuestionTags");
+                });
+
+            modelBuilder.Entity("BugFixer.Domain.Models.Questions.TrueAnswer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AnswerId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnswerId");
+
+                    b.HasIndex("QuestionId");
+
+                    b.ToTable("TrueAnswers");
+                });
+
             modelBuilder.Entity("BugFixer.Domain.Models.Resume.Resume", b =>
                 {
                     b.Property<int>("Id")
@@ -63,7 +190,7 @@ namespace BugFixer.Data.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Resumes", (string)null);
+                    b.ToTable("Resumes");
                 });
 
             modelBuilder.Entity("BugFixer.Domain.Models.Resume.ResumeSkills", b =>
@@ -123,7 +250,7 @@ namespace BugFixer.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Persmissions", (string)null);
+                    b.ToTable("Persmissions");
                 });
 
             modelBuilder.Entity("BugFixer.Domain.Models.Role.Role", b =>
@@ -147,7 +274,7 @@ namespace BugFixer.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles", (string)null);
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("BugFixer.Domain.Models.Role.RolePermission", b =>
@@ -176,7 +303,34 @@ namespace BugFixer.Data.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("RolePermissions", (string)null);
+                    b.ToTable("RolePermissions");
+                });
+
+            modelBuilder.Entity("BugFixer.Domain.Models.User.Follower", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("FollowedUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FollowingUserId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FollowingUserId");
+
+                    b.ToTable("Follower");
                 });
 
             modelBuilder.Entity("BugFixer.Domain.Models.User.User", b =>
@@ -242,7 +396,67 @@ namespace BugFixer.Data.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("BugFixer.Domain.Models.Questions.Answer", b =>
+                {
+                    b.HasOne("BugFixer.Domain.Models.Questions.Question", "Question")
+                        .WithMany("Answers")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BugFixer.Domain.Models.User.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Question");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("BugFixer.Domain.Models.Questions.Question", b =>
+                {
+                    b.HasOne("BugFixer.Domain.Models.User.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("BugFixer.Domain.Models.Questions.QuestionTag", b =>
+                {
+                    b.HasOne("BugFixer.Domain.Models.Questions.Question", "Question")
+                        .WithMany("QuestionTags")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Question");
+                });
+
+            modelBuilder.Entity("BugFixer.Domain.Models.Questions.TrueAnswer", b =>
+                {
+                    b.HasOne("BugFixer.Domain.Models.Questions.Answer", "Answer")
+                        .WithMany()
+                        .HasForeignKey("AnswerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BugFixer.Domain.Models.Questions.Question", "Question")
+                        .WithMany()
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Answer");
+
+                    b.Navigation("Question");
                 });
 
             modelBuilder.Entity("BugFixer.Domain.Models.Resume.Resume", b =>
@@ -286,6 +500,17 @@ namespace BugFixer.Data.Migrations
                     b.Navigation("Role");
                 });
 
+            modelBuilder.Entity("BugFixer.Domain.Models.User.Follower", b =>
+                {
+                    b.HasOne("BugFixer.Domain.Models.User.User", "Users")
+                        .WithMany("FollowersOrFollowings")
+                        .HasForeignKey("FollowingUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Users");
+                });
+
             modelBuilder.Entity("BugFixer.Domain.Models.User.User", b =>
                 {
                     b.HasOne("BugFixer.Domain.Models.Role.Role", "Role")
@@ -293,6 +518,13 @@ namespace BugFixer.Data.Migrations
                         .HasForeignKey("RoleId");
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("BugFixer.Domain.Models.Questions.Question", b =>
+                {
+                    b.Navigation("Answers");
+
+                    b.Navigation("QuestionTags");
                 });
 
             modelBuilder.Entity("BugFixer.Domain.Models.Resume.Resume", b =>
@@ -314,8 +546,9 @@ namespace BugFixer.Data.Migrations
 
             modelBuilder.Entity("BugFixer.Domain.Models.User.User", b =>
                 {
-                    b.Navigation("Resume")
-                        .IsRequired();
+                    b.Navigation("FollowersOrFollowings");
+
+                    b.Navigation("Resume");
                 });
 #pragma warning restore 612, 618
         }

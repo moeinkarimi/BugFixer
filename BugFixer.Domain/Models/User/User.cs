@@ -35,7 +35,9 @@ namespace BugFixer.Domain.Models.User
 
         #region Relations
         public Role.Role? Role { get; set; }
-        public Resume.Resume Resume { get; set; }
+        public Resume.Resume? Resume { get; set; }
+        public List<Follower>? FollowersOrFollowings { get; set; }
+       
         #endregion
 
     }
