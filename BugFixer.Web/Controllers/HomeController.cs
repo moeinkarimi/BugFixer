@@ -1,4 +1,5 @@
-﻿using BugFixer.Web.Models;
+﻿using BugFixer.Application.Services.Interfaces;
+using BugFixer.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -7,10 +8,12 @@ namespace BugFixer.Web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IQuestionService _questionService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger,IQuestionService questionService)
         {
             _logger = logger;
+            _questionService = questionService;
         }
 
         public IActionResult Index()
