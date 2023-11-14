@@ -9,10 +9,14 @@ namespace BugFixer.Domain.Interfaces
 {
     public interface IQuestionRepository
     {
-        Task<IEnumerable<Question>> GetQuestions();
-        Task<Question> GetQuestion(int id);
-        Task CreateQuestion(Question quesion);
-        Task CreateAnswer(Answer answer);
+        Task SavechangeAsync();
+
+
+        Task<IEnumerable<Question>> GetQuestionsAsync();
+        Task<Question> GetQuestionAsync(int id);
+        Task CreateQuestionAsync(Question quesion);
+        Task CreateAnswerAsync(Answer answer);
+        Task CreateQuestionTagAsync(QuestionTag questionTag);
 
 
     }

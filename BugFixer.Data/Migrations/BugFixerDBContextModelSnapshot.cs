@@ -330,7 +330,7 @@ namespace BugFixer.Data.Migrations
 
                     b.HasIndex("FollowingUserId");
 
-                    b.ToTable("Follower");
+                    b.ToTable("Followers");
                 });
 
             modelBuilder.Entity("BugFixer.Domain.Models.User.User", b =>
