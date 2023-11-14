@@ -29,7 +29,11 @@ namespace BugFixer.Data.Context
         public DbSet<TrueAnswer> TrueAnswers { get; set; }
         #endregion
 
+        #region ResumeSkills
         public DbSet<Resume> Resumes { get; set; }
+        public DbSet<ResumeSkills> ResumeSkills { get; set; }
+
+        #endregion
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

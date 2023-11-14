@@ -45,5 +45,20 @@ namespace BugFixer.IOC
         }
         #endregion
 
+
+
+        #region Resume Sevices
+
+        public static void ResumeServices(IServiceCollection service)
+        {
+            service.AddScoped<IResumeRepository, ResumeRepository>();
+            service.AddScoped<IResumeService, ResumeService>();
+
+            service.AddScoped<IResumeSkillsRepository, ResumeSkillsRepository>();
+            
+        }
+
+        #endregion
+
     }
 }

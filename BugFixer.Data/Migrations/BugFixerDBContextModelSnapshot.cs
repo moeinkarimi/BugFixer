@@ -182,8 +182,8 @@ namespace BugFixer.Data.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("WorkExperienceYears")
-                        .HasColumnType("int");
+                    b.Property<string>("WorkExperienceYears")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -330,7 +330,7 @@ namespace BugFixer.Data.Migrations
 
                     b.HasIndex("FollowingUserId");
 
-                    b.ToTable("Follower");
+                    b.ToTable("Followers");
                 });
 
             modelBuilder.Entity("BugFixer.Domain.Models.User.User", b =>
