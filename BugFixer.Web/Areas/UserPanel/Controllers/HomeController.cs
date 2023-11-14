@@ -7,6 +7,7 @@ using Microsoft.CodeAnalysis.Differencing;
 using System.Security.Claims;
 using BugFixer.Domain.Models.Resume;
 using BugFixer.Application.ViewModels.Resume;
+using Newtonsoft.Json;
 
 namespace BugFixer.Web.Areas.UserPanel.Controllers
 {
@@ -14,13 +15,15 @@ namespace BugFixer.Web.Areas.UserPanel.Controllers
     {
         #region Fields
         private readonly IAccountService _accountService;
+        private readonly IResumeService _resumeService;
         #endregion
 
 
         #region Constructor
-        public HomeController(IAccountService accountService)
+        public HomeController(IAccountService accountService, IResumeService resumeService)
         {
             _accountService = accountService;
+            _resumeService = resumeService; 
         }
         #endregion
 
@@ -85,16 +88,33 @@ namespace BugFixer.Web.Areas.UserPanel.Controllers
         #endregion
 
         #region Resume
-        [Route("/user-panel/resume")]
+        [HttpGet("/user-panel/resume")]
         public IActionResult Resume()
         {
             return View();
         }
 
         [HttpPost("/user-panel/resume")]
-        [ValidateAntiForgeryToken]
-        public IActionResult Resume(List<string> favorites)
+        public async Task<IActionResult> Resume(string resumeWorkExperience, string resumebio,string resumeProfessionName, string resumeSkills, string resumeEducations, string resumeFavourites)
         {
+            int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var resumeSkillsDs = JsonConvert.DeserializeObject<List<ResumeSkillsVM>>(resumeSkills);
+            var resumeEducationsDs = JsonConvert.DeserializeObject<string>(resumeEducations);
+            var resumeFavouritesDs = JsonConvert.DeserializeObject<string>(resumeFavourites);
+            var resumebioDs = JsonConvert.DeserializeObject<string>(resumebio);
+            var resumeWorkExperienceDs = JsonConvert.DeserializeObject<string>(resumeWorkExperience);
+            var resumeProfessionNameDs = JsonConvert.DeserializeObject<string>(resumeProfessionName);
+
+            var model = new CreateResumeVM{
+                ProfessionName=resumeProfessionNameDs,
+                WorkExperienceYears=resumeWorkExperienceDs,
+                Bio=resumebioDs,
+                ResumeSkills= resumeSkillsDs,
+                EducationalDocuments=resumeEducationsDs,
+                Favourites=resumeFavouritesDs,
+                UserId=userId
+            };
+            await _resumeService.CreateResumeServiceAsync(model);
             return View();
         }
         #endregion

@@ -16,7 +16,7 @@ namespace BugFixer.Application.ViewModels.Resume
         [Display(Name = "نام کاربری")]
         [Required(ErrorMessage = "وارد کردن {0} الزامی میباشد")]
         [StringLength(100, ErrorMessage = "{0} نمی تواند بیشتر از 100 حرف باشد.")]
-        public int? WorkExperienceYears { get; set; }
+        public string? WorkExperienceYears { get; set; }
         [Display(Name = "نام کاربری")]
     
         [StringLength(100, ErrorMessage = "{0} نمی تواند بیشتر از 100 حرف باشد.")]
@@ -27,5 +27,6 @@ namespace BugFixer.Application.ViewModels.Resume
         public string? Bio { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public int UserId { get; set; }
+        public List<ResumeSkillsVM> ResumeSkills { get; set; }
     }
 }

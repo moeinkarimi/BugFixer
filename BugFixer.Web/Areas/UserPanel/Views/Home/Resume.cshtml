@@ -1,7 +1,9 @@
-﻿<div class="account-content-layer layer-style">
+﻿@model BugFixer.Application.ViewModels.Resume.CreateResumeVM
+
+<div class="account-content-layer layer-style">
     <h3> مدیریت رزومه  </h3>
     <div class="inner">
-        <form asp-area="UserPanel" asp-controller="Home" asp-action="Resume" method="post" class="form-layer-style">
+        <form id="resumeForm" class="form-layer-style">
 
             <div class="row">
 
@@ -9,7 +11,7 @@
                     <!-- History -->
                     <div class="input-layer">
                         <label><i class="icon-user-6"></i> نام حرفه ی شما </label>
-                        <input type="text" name="" value="">
+                        <input type="text" id="professionName">
                         <div class="msg-layer"> مثال : گرافیست وب </div>
                     </div>
                     <!-- /History -->
@@ -20,7 +22,7 @@
                     <!-- duration History -->
                     <div class="input-layer">
                         <label><i class="icon-user-6"></i> میزان سابقه ی حرفه ای </label>
-                        <input type="text" name="" value="">
+                        <input type="text" id="workExperience">
                         <div class="msg-layer"> مثال : 2 سال سابقه ی حرفه ای</div>
                     </div>
                     <!-- / duration History -->
@@ -48,8 +50,6 @@
                                                         <li> <input type="checkbox" id="category-5" value="Laravel"><label for="category-5"> Laravel </label> </li>
                                                         <li> <input type="checkbox" id="category-6" value="CodeIgniter"><label for="category-6"> CodeIgniter </label> </li>
                                                         <li> <input type="checkbox" id="category-7" value="Angular"><label for="category-7"> Angular </label> </li>
-                                                        <li> <input type="checkbox" id="category-8" value="PHP"> <label for="category-8"> PHP </label></li>
-                                                        <li> <input type="checkbox" id="category-9" value="ASP.Net"><label for="category-9"> ASP.Net </label> </li>
                                                     </ul>
                                                     <!-- /child -->
                                                 </li>
@@ -62,9 +62,6 @@
                                                         <li> <input type="checkbox" id="category-14" value="react Native"><label for="category-14"> react Native </label> </li>
                                                         <li> <input type="checkbox" id="category-15" value="Xamarin"><label for="category-15"> Xamarin </label> </li>
                                                         <li> <input type="checkbox" id="category-16" value="Angular"><label for="category-16"> Angular </label> </li>
-                                                        <li> <input type="checkbox" id="category-17" value="react Native"><label for="category-17"> react Native </label> </li>
-                                                        <li> <input type="checkbox" id="category-18" value="Xamarin"><label for="category-18"> Xamarin </label> </li>
-                                                        <li> <input type="checkbox" id="category-19" value="Angular"><label for="category-19"> Angular </label> </li>
                                                     </ul>
                                                     <!-- /child -->
                                                 </li>
@@ -87,39 +84,15 @@
                                                 </li>
                                                 <!-- /parent -->
                                                 <!-- parent -->
-                                                <li class="">
-                                                    <a href="javascript:void(0)"> مهندسی نرم افزار <span><i class="icon-minus"></i></span> </a>
-                                                    <!-- child -->
-                                                    <ul style="display: block;">
-                                                        <li> <input type="checkbox" id="category-28" value="طراحی قالب وب سایت"><label for="category-28"> طراحی قالب وب سایت</label> </li>
-                                                        <li> <input type="checkbox" id="category-29" value="طراحی ست اداری"><label for="category-29"> طراحی ست اداری </label> </li>
-                                                        <li> <input type="checkbox" id="category-30" value="طراحی کارت ویزیت"><label for="category-30">طراحی کارت ویزیت </label> </li>
-                                                        <li> <input type="checkbox" id="category-31" value="طراحی آرم و لوگو"><label for="category-31"> طراحی آرم و لوگو </label> </li>
-                                                        <li> <input type="checkbox" id="category-32" value="طراحی کاراکتر و انیمیشن"><label for="category-32"> طراحی کاراکتر و انیمیشن </label> </li>
-                                                        <li> <input type="checkbox" id="category-33" value="طراحی جلد کتاب"><label for="category-33"> طراحی جلد کتاب </label> </li>
-                                                        <li> <input type="checkbox" id="category-34" value="طراحی پوستر"><label for="category-34"> طراحی پوستر </label> </li>
-                                                        <li> <input type="checkbox" id="category-35" value="طراحی بروشور"><label for="category-35"> طراحی بروشور </label> </li>
-                                                    </ul>
-                                                    <!-- /child -->
-                                                </li>
                                                 <!-- /parent -->
                                                 <!-- parent -->
-                                                <li class="">
-                                                    <a href="javascript:void(0)"> برنامه نویسی ویندوز <span><i class="icon-minus"></i></span> </a>
-                                                    <!-- child -->
-                                                    <ul style="display: block;">
-                                                        <li> <input type="checkbox" id="category-36" value="طراحی قالب وب سایت"><label for="category-36"> طراحی قالب وب سایت</label> </li>
-                                                        <li> <input type="checkbox" id="category-37" value="طراحی ست اداری"><label for="category-37"> طراحی ست اداری </label> </li>
-                                                        <li> <input type="checkbox" id="category-38" value="طراحی کارت ویزیت"><label for="category-38">طراحی کارت ویزیت </label> </li>
-                                                        <li> <input type="checkbox" id="category-39" value="طراحی آرم و لوگو"><label for="category-39"> طراحی آرم و لوگو </label> </li>
-                                                    </ul>
-                                                    <!-- /child -->
-                                                </li>
                                                 <!-- /parent -->
                                             </ul>
                                         </div>
                                     </div>
-                                </div><div class="slimScrollBar" style="background: rgb(0, 0, 0); width: 3px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; left: 4px; height: 84.3097px;"></div><div class="slimScrollRail" style="width: 3px; height: 100%; position: absolute; top: 0px; border-radius: 7px; background: rgb(0, 0, 0); opacity: 0; z-index: 90; left: 4px; display: none;"></div>
+                                </div>
+                                <div class="slimScrollBar" style="background: rgb(0, 0, 0); width: 3px; position: absolute; top: 41px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; left: 4px; height: 156.816px;"></div>
+                                <div class="slimScrollRail" style="width: 3px; height: 100%; position: absolute; top: 0px; border-radius: 7px; background: rgb(0, 0, 0); opacity: 0; z-index: 90; left: 4px; display: none;"></div>
                             </div>
                         </div>
                         <!-- تمامی مهارت ها بصورت چک باکس با آرایه ی  skills[] ایجاد میشه که میتونید  value هاش و استفاده کنید یا ذخیره کنید  -->
@@ -172,7 +145,7 @@
                     <div class="educational-documents-layer">
                         <div class="input-layer">
                             <label><i class="icon-document"></i> مدارک آموزشی من </label>
-                            <input type="text" name="" value="" class="educational-item">
+                            <input type="text" class="educational-item">
                             <div class="msg-layer"> هر مدرک را وارد نمونده و سپس دکمه  Enter را فشار دهید</div>
                             <!-- تمامی مدارک بصورت چک باکس با آرایه ی  educational[] ایجاد میشه که میتونید  value هاش و استفاده کنید یا ذخیره کنید  -->
                             <div class="educational-result"></div>
@@ -199,14 +172,14 @@
                     <!-- description -->
                     <div class="textarea-layer">
                         <label><i class="icon-document"></i>  بیوگرافی کوتاه (500 کاراکتر) </label>
-                        <textarea id="description-field" maxlength="500"> </textarea>
+                        <textarea id="description-field" maxlength="500" asp-for="Bio"> </textarea>
                         <div id="charNum" class="msg-layer red"> تعداد کاراکترهای مجاز 500</div>
                     </div>
                     <!-- /description -->
                 </div>
 
                 <div class="col-md-3 col-sm-3 col-xs-12 pull-left">
-                    <button type="button" class="submit-button green"> ثبت رزومه </button>
+                    <button type="button" onclick="handleClick(event)" class="submit-button green"> ثبت رزومه </button>
                 </div>
 
             </div>
@@ -216,52 +189,92 @@
 </div>
 
 
-@*
+
 @section Scripts {
     <script>
-     
 
 
-        //var selectedSkills = [];
 
-        //$('#skillsBtn').click(function () {
+        var selectedSkills = [];
 
-        //    // Retrieve the selected skill title and percentage from the popup
-        //    var skillTitle = $('.skills-popup .title').text().trim();
-        //    var skillPercentage = $('.skills-popup input[name="skill-percent"]:checked').val();
+        $('#skillsBtn').click(function () {
 
-        //    // Create an object with skill data
-        //    var skill = {
-        //        SkillTitle: skillTitle,
-        //        SkillPercentage: parseInt(skillPercentage)
-        //    };
+            // Retrieve the selected skill title and percentage from the popup
+            var skillTitle = $('.skills-popup .title').text().trim();
+            var skillPercentage = $('.skills-popup input[name="skill-percent"]:checked').val();
 
-        //    // Push the skill object to the array or process it as needed
-        //    selectedSkills.push(skill);
-        //    console.log(selectedSkills)
+            // Create an object with skill data
+            var skill = {
+                SkillTitle: skillTitle,
+                SkillPercentage: parseInt(skillPercentage)
+            };
 
-        //    // Hide the popup or perform any other actions
-        //    $('.skills-popup').hide();
-        //});
+            // Push the skill object to the array or process it as needed
+            selectedSkills.push(skill);
+            console.log(selectedSkills)
+
+            // Hide the popup or perform any other actions
+            $('.skills-popup').hide();
+        });
 
 
-        //$('#resumeForm').submit(function (event) {
-        //    event.preventDefault();
-        //    var jsonData = JSON.stringify({"selecetedSkills": selectedSkills})
-        //    $.ajax({
-        //        url: '/User-Panel/Resume',
-        //        type: 'POST',
-        //        contentType: 'application/json',
-        //        data: jsonData,
-        //        success: function (result) {
-        //            // Handle the response from the controller
-        //            console.log(result);
-        //        },
-        //        error: function (xhr) {
-        //            // Handle any errors
-        //            console.log(xhr);
-        //        }
-        //    });
-        //})
+
+
+
+        function handleClick(event) {
+
+            event.preventDefault();
+
+            // bio
+            var bio = $('#description-field').val();
+
+            // professionName
+            var professionName = $('#professionName').val()
+
+            //workExperience
+            var workExperience = $('#workExperience').val()
+
+            // store resume favouriites
+            var FavouriteResult = [];
+
+            $('.favorites-result input[name="favorites[]"]').each(function () {
+                FavouriteResult.push($(this).val());
+            });
+
+            var FavouriteResultConcated = FavouriteResult.join('--');
+
+            // store educations
+            var educationalResult = [];
+
+            $('.educational-result input[name="educational[]"]').each(function () {
+                educationalResult.push($(this).val());
+            });
+
+            var educationalResultConcated = educationalResult.join('--');
+
+            // Serialize the list into JSON format
+            var resumeSkills = JSON.stringify(selectedSkills);
+            var resumeEducations = JSON.stringify(educationalResultConcated);
+            var resumeFavourites = JSON.stringify(FavouriteResultConcated);
+            var resumebio = JSON.stringify(bio);
+            var resumeProfessionName = JSON.stringify(professionName);
+            var resumeWorkExperience = JSON.stringify(workExperience);
+
+            $.ajax({
+                url: '/user-Panel/resume',
+                type: 'POST',
+                data: { resumeProfessionName: resumeProfessionName, resumeWorkExperience: resumeWorkExperience, resumeSkills: resumeSkills, resumeEducations: resumeEducations, resumeFavourites: resumeFavourites, resumebio: resumebio },
+                success: function (result) {
+                    // Handle the response from the controller
+                    console.log(result);
+                },
+                error: function (xhr) {
+                    // Handle any errors
+                    console.log(xhr);
+                }
+            });
+
+
+        }
     </script>
-    }*@
+    }

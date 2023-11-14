@@ -182,8 +182,8 @@ namespace BugFixer.Data.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("WorkExperienceYears")
-                        .HasColumnType("int");
+                    b.Property<string>("WorkExperienceYears")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
