@@ -38,7 +38,7 @@ namespace BugFixer.Web.Controllers
                 return View(create);
             }
             await _questionService.CreateQuestionServiceAsync(create, userId);
-            return Redirect("/Home/Index");
+            return Redirect("/");
         }
 
 

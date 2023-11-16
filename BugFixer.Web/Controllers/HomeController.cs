@@ -17,6 +17,7 @@ namespace BugFixer.Web.Controllers
             _questionService = questionService;
         }
 
+        [Route("/")]
         public async Task<IActionResult> Index()
         {
             IEnumerable<QuestionVM> questionList = await _questionService.GetQuestionsServiceAsync();

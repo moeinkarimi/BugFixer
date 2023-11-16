@@ -18,6 +18,8 @@ namespace BugFixer.Domain.Interfaces
         Task CreateAnswerAsync(Answer answer);
         Task CreateQuestionTagAsync(QuestionTag questionTag);
 
+        Task<int> GetUserQuestionsCountAsync(int userId);
+        Task<int> GetUserAnswersCountAsync(int userId);
 
     }
 }

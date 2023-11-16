@@ -97,5 +97,16 @@ namespace BugFixer.Application.Services.Implementations
                 })
             }).ToList();
         }
+
+        public async Task<QACounts> GetQACountsServiceAsync(int userId)
+        {
+            var qCounts = await _questionRepository.GetUserQuestionsCountAsync(userId);
+            var aCounts = await _questionRepository.GetUserAnswersCountAsync(userId);
+
+            return new QACounts { 
+                QuestionsCount=qCounts != null ? qCounts:0,
+                AnswersCount= aCounts != null ? aCounts : 0
+            };
+        }
     }
 }

@@ -25,7 +25,7 @@
                     <partial name="_QuickAccess" />
                     <!-- /avatar -->
                     <!-- side bar -->
-                    <partial name="_AccessMenu" / />
+                    @await Component.InvokeAsync("AccessMenuComponent")
                     <!-- /side bar -->
                     <!-- side bar -->
                     <partial name="_CompleteAccount" />

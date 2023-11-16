@@ -35,7 +35,22 @@ namespace BugFixer.Data.Repository
 
         public async Task<IEnumerable<Question>> GetQuestionsAsync()
         {
-            return await _ctx.Questions.Include(q => q.User).Include(q=> q.QuestionTags).Include(q => q.Answers).ThenInclude(a=> a.User).ToListAsync();
+            return await _ctx.Questions.Include(q => q.User).Include(q => q.QuestionTags).Include(q => q.Answers).ThenInclude(a => a.User).ToListAsync();
+        }
+
+        public async Task<int> GetUserAnswersCountAsync(int userId)
+        {
+            return _ctx.Questions
+                .Where(q => q.UserId == userId)
+                .SelectMany(q => q.Answers)
+                .Count();
+        }
+
+        public async Task<int> GetUserQuestionsCountAsync(int userId)
+        {
+            return _ctx.Questions
+                .Where(q => q.UserId == userId)
+                .Count();
         }
 
         public async Task SavechangeAsync()
