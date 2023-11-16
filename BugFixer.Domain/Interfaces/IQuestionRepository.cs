@@ -17,6 +17,13 @@ namespace BugFixer.Domain.Interfaces
         Task CreateQuestionAsync(Question quesion);
         Task CreateAnswerAsync(Answer answer);
         Task CreateQuestionTagAsync(QuestionTag questionTag);
+        void UpdateQuestion(Question question);
+
+        IQueryable<Answer> QuestionAnswersQueryable(int id);
+
+        void UpdateAnswer(Answer answer);
+        Task<Answer> GetAnswerById(int id);
+        
 
 
     }

@@ -1,16 +1,11 @@
-﻿using BugFixer.Domain.Models.Questions;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using BugFixer.Application.ViewModels.User;
+using BugFixer.Domain.Models.Questions;
+using BugFixer.Domain.Models.User;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BugFixer.Application.ViewModels.User;
 
 namespace BugFixer.Application.ViewModels.Questions
 {
-    public class QuestionVM:BaseVM.BaseVM
+    public class QuestionVM : BaseVM.BaseVM
     {
         [Display(Name = "عنوان سوال")]
         [MaxLength(400, ErrorMessage = "تعداد کاراکتر های {0}بیش از {1}کاراکتر است")]
@@ -21,9 +16,9 @@ namespace BugFixer.Application.ViewModels.Questions
 
 
         #region Relations
-        public UserVM? User { get; set; }
+        public Domain.Models.User.User? User { get; set; }
         public IEnumerable<QuestionTagVM>? QuestionTags { get; set; }
-        public IEnumerable<AnswerVM>? Answers { get; set; }
+        public IEnumerable<Answer>? Answers { get; set; }
         #endregion
     }
 }

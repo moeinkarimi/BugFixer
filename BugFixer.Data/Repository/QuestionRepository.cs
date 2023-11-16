@@ -28,19 +28,53 @@ namespace BugFixer.Data.Repository
             await _ctx.QuestionTags.AddAsync(questionTag);
         }
 
+        public async Task<Answer> GetAnswerById(int id)
+        {
+
+            return await _ctx.Answers.FirstOrDefaultAsync(a => a.Id == id);
+
+        }
+
         public async Task<Question> GetQuestionAsync(int id)
         {
-            return await _ctx.Questions.FirstOrDefaultAsync(q => q.Id == id);
+            return await _ctx.Questions.Include(q=> q.QuestionTags)
+                .Include(q=> q.Answers)
+                .Include(q=> q.User)
+                .ThenInclude(u=> u.Answers)
+                .Include(q=> q.User)
+                .ThenInclude(u=> u.Questions)
+                .FirstOrDefaultAsync(q => q.Id == id);
         }
 
         public async Task<IEnumerable<Question>> GetQuestionsAsync()
         {
-            return await _ctx.Questions.Include(q => q.User).Include(q=> q.QuestionTags).Include(q => q.Answers).ThenInclude(a=> a.User).ToListAsync();
+            return await _ctx.Questions.Include(q => q.User)
+                .Include(q=> q.QuestionTags)
+                .Include(q => q.Answers)
+                .ThenInclude(a=> a.User)
+                .ToListAsync();
+        }
+
+        public  IQueryable<Answer> QuestionAnswersQueryable(int id)
+        {
+            return _ctx.Answers.Include(a=> a.User).ThenInclude(u=> u.Answers)
+                .ThenInclude(u=> u.Question)
+                .Where(a=> a.QuestionId==id).AsQueryable();
         }
 
         public async Task SavechangeAsync()
         {
             await _ctx.SaveChangesAsync();
+        }
+
+        public void UpdateAnswer(Answer answer)
+        {
+            _ctx.Answers.Update(answer);
+        }
+
+        public void UpdateQuestion(Question question)
+        {
+            _ctx.Questions.Update(question);
         }
     }
 }

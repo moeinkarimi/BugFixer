@@ -4,6 +4,7 @@ using BugFixer.Domain.Interfaces;
 using BugFixer.Domain.Models.Questions;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,7 +19,7 @@ namespace BugFixer.Application.Services.Implementations
             _questionRepository = questionRepository;
         }
 
-        public async Task CreateAnswerServiceAsync(string answerText,int questionId,int userId)
+        public async Task CreateAnswerServiceAsync(string answerText, int questionId, int userId)
         {
             Answer answer = new Answer()
             {
@@ -31,7 +32,7 @@ namespace BugFixer.Application.Services.Implementations
             await _questionRepository.SavechangeAsync();
         }
 
-        public async Task CreateQuestionServiceAsync(CreateQuestionVM quesion,int userId)
+        public async Task CreateQuestionServiceAsync(CreateQuestionVM quesion, int userId)
         {
             Question newQuestion = new Question()
             {
@@ -52,7 +53,7 @@ namespace BugFixer.Application.Services.Implementations
                 {
                     Tag = tag,
                     QuestionId = newQuestion.Id
-                   
+
                 };
 
                 await _questionRepository.CreateQuestionTagAsync(newTag);
@@ -68,11 +69,23 @@ namespace BugFixer.Application.Services.Implementations
             return new QuestionVM()
             {
                 Id = question.Id,
-                Title =question.Title,
+                Title = question.Title,
                 Text = question.Text,
                 CreateDate = question.CreateDate,
-                Visit=question.Visit,
-         
+                Visit = question.Visit,
+
+                QuestionTags = question.QuestionTags.Select(q => new QuestionTagVM()
+                {
+                    Tag = q.Tag,
+                }).ToList(),
+
+                User=question.User,
+             
+
+
+
+
+
             };
         }
 
@@ -85,17 +98,74 @@ namespace BugFixer.Application.Services.Implementations
             {
                 Id = q.Id,
                 Title = q.Title,
-                User=new ViewModels.User.UserVM() { UserName=q.User?.UserName},
-                Answers=q.Answers.Select(a=> new AnswerVM()
+                User = q.User,
+                Answers = q.Answers,
+                QuestionTags = q.QuestionTags.Select(a => new QuestionTagVM()
                 {
-                    CreateDate=a.CreateDate,
-                    User=new ViewModels.User.UserVM() { UserName=a.User?.UserName}
-                }),
-                QuestionTags=q.QuestionTags.Select(a=>new QuestionTagVM()
-                {
-                    Tag=a.Tag,
+                    Tag = a.Tag,
                 })
             }).ToList();
+        }
+
+        public async Task<FilterQuestionAswersVM> QuestionAnswersFilter(FilterQuestionAswersVM filter, int questionId)
+        {
+            IQueryable<Answer> answers = _questionRepository.QuestionAnswersQueryable(questionId);
+
+            IQueryable<ShowQuestionAnswerVM> result = answers.Select(a => new ShowQuestionAnswerVM()
+            {
+                AnswerId=a.Id,
+                Text = a.Text,
+                CreateDate = a.CreateDate,
+                SenderName = a.User.UserName,
+                SenderAvatar = a.User.Avatar,
+                NumberOfAnswersSender = a.User.Answers.Count,
+                NumberOfQuestionSender = a.User.Questions.Count,
+                SenderId=a.UserId
+            }).AsQueryable();
+
+            switch (filter.OrderType)
+            {
+                case "new":
+                    
+                        result = result.OrderByDescending(a => a.CreateDate);
+                        break;
+                    
+                case "old":
+                    
+                        result = result.OrderBy(a => a.CreateDate);
+                        break;
+                default:
+                    
+                    break;
+                    
+                
+
+
+            }
+            await filter.Paging(result);
+            return filter;
+
+
+
+
+        }
+
+        public async Task UpdateAnswerService(UpdateAnswerVM updateAnswer)
+        {
+            Answer answer=await _questionRepository.GetAnswerById(updateAnswer.AnswerId);
+
+            answer.Text = updateAnswer.Text;
+            _questionRepository.UpdateAnswer(answer);
+            await _questionRepository.SavechangeAsync();
+        }
+
+        public async Task UpdteQuestionVisitService(int questionId)
+        {
+            Question question = await _questionRepository.GetQuestionAsync(questionId);
+
+            question.Visit += 1;
+            _questionRepository.UpdateQuestion(question);
+            await _questionRepository.SavechangeAsync();
         }
     }
 }
