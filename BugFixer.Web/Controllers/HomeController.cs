@@ -1,4 +1,5 @@
 ﻿using BugFixer.Application.Services.Interfaces;
+using BugFixer.Application.ViewModels.Questions;
 using BugFixer.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -16,9 +17,10 @@ namespace BugFixer.Web.Controllers
             _questionService = questionService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            IEnumerable<QuestionVM> questionList = await _questionService.GetQuestionsServiceAsync();
+            return View(questionList);
         }
 
         public IActionResult Privacy()

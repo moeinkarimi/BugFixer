@@ -1,4 +1,4 @@
-﻿
+﻿@model BugFixer.Application.ViewModels.Questions.CreateQuestionVM;
 @{
     ViewData["Title"] = "Submit-Question";
 }
@@ -39,33 +39,33 @@
                                 <li> جهت کسب پاسخ صریح ، متن پرسش خود را کاملا واضح ارسال نمایید. </li>
                             </ul>
 
-                            <form class="form-layer-style" asp-controller="Question" asp-action="Add" method="post">
+                            <form asp-controller="Question" asp-action="Create" class="form-layer-style" method="post">
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <div class="input-layer">
                                             <label> <i class="icon-document"></i> عنوان پرسش خود را وارد نمایید </label>
-                                            <input type="text" >
+                                            <input type="text" asp-for="Title" >
                                         </div>
-                                        <span class="text-danger"></span>
+                                        <span class="text-danger" asp-validation-for="Title"></span>
                                     </div>
                                     <div class="col-xs-12">
                                         <div class="textarea-layer">
                                             <label> <i class="icon-document"></i> متن کامل پرسش </label>
-                                            <textarea></textarea>
+                                            <textarea asp-for="Text"></textarea>
                                         </div>
-                                        <span class="text-danger"></span>
+                                        <span class="text-danger" asp-validation-for="Text"></span>
                                     </div>
 
                                     <div class="col-xs-12">
                                         <div class="input-layer">
                                             <!-- Use YourSelf autocomplete Plugin -->
                                             <label> <i class="icon-document"></i> تگ های مرتبط با پرسش شما </label>
-                                            <input type="text" name="tags" placeholder="مثال: php-js-python">
+                                            <input asp-for="Tag" placeholder="مثال: php-js-python">
                                         </div>
 
                                     </div>
                                     <div class="col-md-3 col-sm-4 col-xs-7 pull-left">
-                                        <button class="submit-button green"> <span>ثبت پرسش</span> </button>
+                                        <button type="submit" class="submit-button green"> <span>ثبت پرسش</span> </button>
                                     </div>
 
                                 </div>
