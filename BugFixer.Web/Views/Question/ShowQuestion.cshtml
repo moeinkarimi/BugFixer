@@ -1,7 +1,16 @@
-﻿@model BugFixer.Application.ViewModels.Questions.QuestionVM
+﻿@using BugFixer.Application.Extensions;
+@using BugFixer.Domain.Models.Questions;
+@using System.Security.Claims;
+@using BugFixer.Application.ViewModels.Questions
+@model BugFixer.Application.ViewModels.Questions.QuestionVM;
 @{
     ViewData["Title"] = "ShowQuestion";
+
+    FilterQuestionAswersVM filter = ViewBag.Answers as FilterQuestionAswersVM;
+
+
 }
+
 
 <div class="user-page-style">
 
@@ -28,10 +37,10 @@
                         <!-- use this button for edit Post , show only for author -->
                         <button><i class="icon-pencil-edit"></i></button>
 
-                        <h1><a href=""> نحوه پیاده سازی یک فروشگاه اینترنتی قدرتمند با لاراول </a></h1>
-                        <span><i> 22 </i> دقیقه پیش </span>
-                        <span><i> 123 </i> بازدید </span>
-                        <span><i> 5 </i> پاسخ </span>
+                        <h1><a href="">@Model.Title</a></h1>
+                        <span><i> @Model.CreateDate.ToShamsi() </i> @* دقیقه پیش  *@</span>
+                        <span><i> @Model.Visit </i> بازدید </span>
+                        <span><i> @filter.Entities.Count </i> پاسخ </span>
                         <span><i> 12K </i> رای </span>
                         <span><i> 3 </i> امتیاز </span>
 
@@ -40,26 +49,19 @@
                     <article>
                         <div class="inner">
                             <!-- Be sure to use this tag -->
-                            <header><h2> نحوه پیاده سازی یک فروشگاه اینترنتی قدرتمند با لاراول : </h2></header>
+                            <header><h2> @Model.Title : </h2></header>
                             <!-- /Be sure to use this tag -->
                             <p>
-                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد.
+                                @Model.Text
                             </p>
-                            <p>
-                                <a href=""> جهت مشاهده دموی کد من روی این لینک کلیک کنید </a>
-                                کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد.
-                                کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد.
-                            </p>
-                            <p>
-                                چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد.
-                            </p>
+
                             <div class="rating-layer">
                                 <form class="scoring-layer" action="" method="">
                                     <button class="plus"><i class="icon-caret-up"></i></button>
                                     <span> 12K </span>
                                     <button class="negative"><i class="icon-caret-down"></i></button>
                                 </form>
-                                <form  class="star-rating" method="">
+                                <form class="star-rating" method="">
 
                                     <!-- if user rate this post , use " active " class for Button and disabled this -->
                                     <!-- <button class="active"><i class="icon-star"></i></button> -->
@@ -73,10 +75,10 @@
                         <div class="detail-layer">
                             <div class="author">
                                 <a href="" class="img-layer">
-                                    <img src="images/pic/avatar.jpg">
+                                    <img src="/images/UsersAvatar/@Model.User.Avatar">
                                 </a>
-                                <h3><a href=""> میترا رحیمی </a></h3>
-                                <span><i>123</i> پرسش | <i>145</i> پاسخ</span>
+                                <h3><a href=""> @Model.User.UserName </a></h3>
+                                <span><i>@Model.User.Questions.Count</i> پرسش | <i>@Model.User.Answers.Count</i> پاسخ</span>
                             </div>
                             <a href="javascript:void(0)"> <i class="icon-back-arrow"></i> ثبت پاسخ به این پرسش </a>
                             <div class="share-layer">
@@ -101,13 +103,11 @@
                     <!-- tags -->
                     <div class="post-tags-layer">
                         <div class="tags-layer">
-                            <a href=""> Jquery </a>
-                            <a href=""> php </a>
-                            <a href=""> Javascript </a>
-                            <a href=""> woocommerce </a>
-                            <a href=""> Framework </a>
-                            <a href=""> Jquery </a>
-                            <a href=""> php </a>
+                            @foreach (var tag in Model.QuestionTags)
+                            {
+                                <a href=""> @tag.Tag </a>
+                            }
+
                         </div>
                     </div>
                     <!-- /tags -->
@@ -116,7 +116,7 @@
                 <!-- /question content -->
 
                 <div class="banner-layer">
-                    <a href=""><img src="images/banner-4.jpg"></a>
+                    <a href=""><img src="/images/banner-4.jpg"></a>
                 </div>
 
                 <!-- answer -->
@@ -126,10 +126,10 @@
                         <div class="filter-layer">
                             <form action="" method="">
                                 <div class="select-layer">
-                                    <select>
-                                        <option> جدیدترین پاسخ ها </option>
-                                        <option> قدیمی ترین پاسخ ها </option>
-                                        <option> پر رای ترین پاسخ ها </option>
+                                    <select name="orderType">
+                                        <option value="new"> جدیدترین پاسخ ها </option>
+                                        <option value="old"> قدیمی ترین پاسخ ها </option>
+
                                     </select>
                                 </div>
                                 <button><i class="icon-sort"></i></button>
@@ -137,179 +137,121 @@
                         </div>
                     </div>
 
-                    <!-- Item -->
-                    <div class="answer-item">
-                        <div class="top-detail">
-                            <span><i> 22 </i> دقیقه پیش </span>
-                            <span><i> 2 </i> پاسخ </span>
-                            <button><i class="icon-pencil-edit"></i></button>
-                        </div>
-                        <div class="inner">
-                            <p>
-                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد.
-                            </p>
-                            <p>
-                                کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد.
-                                کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد.
-                            </p>
-                            <p>
-                                چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد.
-                            </p>
-                            <div class="rating-layer">
-                                <form class="scoring-layer" action="" method="">
-                                    <button class="plus"><i class="icon-caret-up"></i></button>
-                                    <span> 12K </span>
-                                    <button class="negative"><i class="icon-caret-down"></i></button>
-                                </form>
-                                <form class="selected-answer">
-                                    <button class="selected"><i class="icon-check"></i></button>
-                                </form>
+
+
+                    @foreach (var item in filter.Entities)
+                    {
+                        <!-- Item -->
+                        <div class="answer-item">
+                            <div class="top-detail">
+                                <span>@item.CreateDate.ToShamsi() </span>
+
+                                @if (User.Identity.IsAuthenticated)
+                                {
+
+                                    if (item.SenderId == int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)))
+                                    {
+                                        <button type="button" data-toggle="modal" data-target="#exampleModal" data-whatever="@@fat"><i class="icon-pencil-edit"></i></button>
+
+                                    }
+
+
+                                }
+
+
+
                             </div>
-
-                        </div>
-
-                        <div class="detail-layer">
-                            <div class="author">
-                                <a href="" class="img-layer">
-                                    <img src="images/pic/avatar.jpg">
-                                </a>
-                                <h3><a href=""> میترا رحیمی </a></h3>
-                                <span><i>123</i> پرسش | <i>145</i> پاسخ</span>
-                            </div>
-                            <a href="javascript:void(0)"> <i class="icon-back-arrow"></i> ثبت پاسخ </a>
-                        </div>
-
-                        <!-- reply -->
-                        <!-- item -->
-                        <div class="reply-item">
                             <div class="inner">
-                                <p> به نظر من این تجزیه و تحلیل شما درست نیست ، پیشنهاد میکنم نگاهی به این لینک بندازید : <a href="">http://bugfixer.com/topic/12/A1dsf5</a> <span> 12 مرداد 1397 در 14:28 </span> </p>
-                                <button><i class="icon-pencil-edit"></i></button>
-                            </div>
-                        </div>
-                        <!-- item -->
-                        <!-- item -->
-                        <div class="reply-item">
-                            <div class="inner">
-                                <p> مرسی بابت توضیح صریحتون ، به نظر من باید از این تگ کاربردی بهتر استفاده بشه <span> 12 مرداد 1397 در 14:28 </span> </p>
-                                <button><i class="icon-pencil-edit"></i></button>
-                            </div>
-                        </div>
-                        <!-- item -->
-                        <!-- item -->
-                        <div class="reply-item">
-                            <div class="inner">
-                                <p> مرسی بابت توضیح صریحتون ، به نظر من باید از این تگ کاربردی بهتر استفاده بشه مرسی بابت توضیح صریحتون ، به نظر من باید از این تگ کاربردی بهتر استفاده بشه مرسی بابت توضیح صریحتون ، به نظر من باید از این تگ کاربردی بهتر استفاده بشه <span> 12 مرداد 1397 در 14:28 </span> </p>
-                                <button><i class="icon-pencil-edit"></i></button>
-                            </div>
-                        </div>
-                        <!-- item -->
-                        <!-- /reply -->
+                                @item.Text
+                                <div class="rating-layer">
+                                    <form class="scoring-layer" action="" method="">
+                                        <button class="plus"><i class="icon-caret-up"></i></button>
+                                        <span> 12K </span>
+                                        <button class="negative"><i class="icon-caret-down"></i></button>
+                                    </form>
+                                    <form class="selected-answer">
+                                        @* <button class="@((Model.TrueAnswer?.AnswerId==item.AnswerId)?"selected":"")" onclick="trueAnswer(@item.QuestionId,@item.AnswerId)"><i class="icon-check"></i></button> *@
+                                    </form>
+                                </div>
 
-                    </div>
-                    <!-- /Item -->
-                    <!-- Item -->
-                    <div class="answer-item">
-                        <div class="top-detail">
-                            <span><i> 22 </i> دقیقه پیش </span>
-                            <span><i> 2 </i> پاسخ </span>
-                            <button><i class="icon-pencil-edit"></i></button>
-                        </div>
-                        <div class="inner">
-                            <p>
-                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد.
-                            </p>
-                            <p>
-                                کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد.
-                                کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد.
-                            </p>
-                            <p>
-                                چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد.
-                            </p>
-                            <div class="rating-layer">
-                                <form class="scoring-layer" action="" method="">
-                                    <button class="plus"><i class="icon-caret-up"></i></button>
-                                    <span> 12K </span>
-                                    <button class="negative"><i class="icon-caret-down"></i></button>
-                                </form>
-                                <form class="selected-answer">
-                                    <button><i class="icon-check"></i></button>
-                                </form>
+                            </div>
+
+                            <div class="detail-layer">
+                                <div class="author">
+                                    <a href="" class="img-layer">
+                                        <img src="/images/UsersAvatar/@item.SenderAvatar">
+                                    </a>
+                                    <h3><a href=""> @item.SenderName </a></h3>
+                                    <span><i>@item.NumberOfQuestionSender</i> پرسش | <i>@item.NumberOfAnswersSender</i> پاسخ</span>
+                                </div>
+
                             </div>
 
                         </div>
+                        <!-- /Item -->
+                    }
 
-                        <div class="detail-layer">
-                            <div class="author">
-                                <a href="" class="img-layer">
-                                    <img src="images/pic/avatar.jpg">
-                                </a>
-                                <h3><a href=""> میترا رحیمی </a></h3>
-                                <span><i>123</i> پرسش | <i>145</i> پاسخ</span>
-                            </div>
-                            <a href="javascript:void(0)"> <i class="icon-back-arrow"></i> ثبت پاسخ </a>
-                        </div>
-
-                    </div>
-                    <!-- /Item -->
-                    <!-- Item -->
-                    <div class="answer-item">
-                        <div class="top-detail">
-                            <span><i> 22 </i> دقیقه پیش </span>
-                            <span><i> 2 </i> پاسخ </span>
-                            <button><i class="icon-pencil-edit"></i></button>
-                        </div>
-                        <div class="inner">
-                            <p>
-                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد.
-                            </p>
-                            <p>
-                                کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد.
-                                کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد.
-                            </p>
-                            <p>
-                                چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد.
-                            </p>
-                            <div class="rating-layer">
-                                <form class="scoring-layer" action="" method="">
-                                    <button class="plus"><i class="icon-caret-up"></i></button>
-                                    <span> 12K </span>
-                                    <button class="negative"><i class="icon-caret-down"></i></button>
-                                </form>
-                                <form class="selected-answer">
-                                    <button><i class="icon-check"></i></button>
-                                </form>
-                            </div>
-
-                        </div>
-
-                        <div class="detail-layer">
-                            <div class="author">
-                                <a href="" class="img-layer">
-                                    <img src="images/pic/avatar.jpg">
-                                </a>
-                                <h3><a href=""> میترا رحیمی </a></h3>
-                                <span><i>123</i> پرسش | <i>145</i> پاسخ</span>
-                            </div>
-                            <a href="javascript:void(0)"> <i class="icon-back-arrow"></i> ثبت پاسخ </a>
-                        </div>
-
-                    </div>
-                    <!-- /Item -->
                     <!-- pagination -->
-                    <div class="pagination-items">
-                        <div class="inner">
-                            <div class="pages">
-                                <a href="" class="page">1</a>
-                                <a href="" class="page">2</a>
-                                <a href="" class="page current">3</a>
-                                <a href="" class="page">4</a>
-                                <a href="" class="page">5</a>
-                                <a href="" class="page">...</a>
-                                <a href="" class="page last">12564</a>
+
+
+
+
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">Showing 1 to 10 of 57 entries</div>
+                        </div>
+
+                        <div class="col-sm-7">
+                            <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+                                <ul class="pagination">
+
+
+
+
+
+
+                                    @for (int i = @filter.GetCurrentPaging().StartPage; i <= @filter.GetCurrentPaging().EndPage; i++)
+                                    {
+                                        if (@filter.GetCurrentPaging().Page == i)
+                                        {
+                                            <li class="paginate_button active">
+                                                <a class="page-link cursor-pointer" data-page="0" href="/show-question/@Model.Id?pageid=@i">@i</a>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li class="paginate_button ">
+                                                <a class="page-link cursor-pointer" data-page="0" href="/show-question/@Model.Id?pageid=@i">@i</a>
+                                            </li>
+                                        }
+
+                                    }
+
+
+
+
+
+
+
+
+                                </ul>
                             </div>
                         </div>
                     </div>
+
+                    @*     @if (ViewBag.PageCount > 1)
+                    {
+                    <div class="pagination-items">
+                    <div class="inner">
+                    <div class="pages">
+                    @for (int i = 1; i <= ViewBag.PageCount; i++)
+                    {
+                    <a href="/show-question/@Model.Id?pageid=@i" class="page current">@i</a>
+                    }
+                    </div>
+                    </div>
+                    </div>
+                    } *@
                     <!-- /pagination -->
                     <!-- submit comment -->
                     <div class="submit-comment" id="submit-comment">
@@ -334,3 +276,51 @@
 
 </div>
 
+
+
+@* modal *@
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Recipient:</label>
+                        <input type="text" class="form-control" id="recipient-name">
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">Message:</label>
+                        <textarea class="form-control" id="message-text"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Send message</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* end modal *@
+
+@section Landing{
+    <script>
+        $('#exampleModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var recipient = button.data('whatever') // Extract info from data-* attributes
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            var modal = $(this)
+            modal.find('.modal-title').text('New message to ' + recipient)
+            modal.find('.modal-body input').val(recipient)
+        })
+    </script>
+                        }

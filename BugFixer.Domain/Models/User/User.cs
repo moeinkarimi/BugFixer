@@ -1,4 +1,5 @@
 ﻿using BugFixer.Domain.Models.Base;
+using BugFixer.Domain.Models.Questions;
 using System.ComponentModel.DataAnnotations;
 
 namespace BugFixer.Domain.Models.User
@@ -37,7 +38,9 @@ namespace BugFixer.Domain.Models.User
         public Role.Role? Role { get; set; }
         public Resume.Resume? Resume { get; set; }
         public List<Follower>? FollowersOrFollowings { get; set; }
-       
+        public List<Question>? Questions { get; set; }
+        public List<Answer>? Answers { get; set; }
+
         #endregion
 
     }

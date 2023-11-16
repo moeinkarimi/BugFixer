@@ -47,9 +47,21 @@ namespace BugFixer.Web.Controllers
 
 
         [HttpGet("show-question/{id}")]
-        public async Task<IActionResult> ShowQuestion(int id)
+        public async Task<IActionResult> ShowQuestion(int id, int pageId = 1,string orderType="")
         {
             QuestionVM question = await _questionService.GetQuestionServiceAsync(id);
+            await _questionService.UpdteQuestionVisitService(id);
+
+            FilterQuestionAswersVM filter=new FilterQuestionAswersVM()
+            {
+                Page=pageId,
+                OrderType= orderType,
+                
+            };
+
+
+            ViewBag.Answers = await _questionService.QuestionAnswersFilter(filter, id);
+          
             return View(question);
         }
 
@@ -62,8 +74,15 @@ namespace BugFixer.Web.Controllers
 
 
             await _questionService.CreateAnswerServiceAsync(AnswerText, QuestionId, userId);
-            return Redirect("/Home/Index");
+            return Redirect($"/show-question/{id}");
         }
+
+
+
+
+        #region Edit Answer
+        
+        #endregion
 
 
         #endregion

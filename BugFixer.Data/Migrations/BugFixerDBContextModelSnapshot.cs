@@ -46,11 +46,16 @@ namespace BugFixer.Data.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("UserId1")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("QuestionId");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Answers");
                 });
@@ -413,6 +418,10 @@ namespace BugFixer.Data.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("BugFixer.Domain.Models.User.User", null)
+                        .WithMany("Answers")
+                        .HasForeignKey("UserId1");
+
                     b.Navigation("Question");
 
                     b.Navigation("User");
@@ -421,7 +430,7 @@ namespace BugFixer.Data.Migrations
             modelBuilder.Entity("BugFixer.Domain.Models.Questions.Question", b =>
                 {
                     b.HasOne("BugFixer.Domain.Models.User.User", "User")
-                        .WithMany()
+                        .WithMany("Questions")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -546,7 +555,11 @@ namespace BugFixer.Data.Migrations
 
             modelBuilder.Entity("BugFixer.Domain.Models.User.User", b =>
                 {
+                    b.Navigation("Answers");
+
                     b.Navigation("FollowersOrFollowings");
+
+                    b.Navigation("Questions");
 
                     b.Navigation("Resume");
                 });
