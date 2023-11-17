@@ -48,17 +48,7 @@ namespace BugFixer.Data.Repository
                 .ToListAsync();
         }
 
-        public  IQueryable<Answer> QuestionAnswersQueryable(int id)
-        {
-            return  _ctx.Answers.Include(a=> a.User).ThenInclude(u=> u.Answers)
-                .ThenInclude(u=> u.Question)
-                .Where(a=> a.QuestionId==id).AsQueryable();
-        }
-
-
-
-
-        public async Task<int> GetUserQuestionsCountAsync(int userId)
+   public async Task<int> GetUserQuestionsCountAsync(int userId)
         {
             return _ctx.Questions
                 .Where(q => q.UserId == userId)

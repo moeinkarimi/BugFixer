@@ -39,8 +39,8 @@ namespace BugFixer.Domain.Models.User
         #region Relations
         [ForeignKey("RoleId")]
         public Role.Role? Role { get; set; }
-        [ForeignKey("ResumeId")]
 
+        [ForeignKey("ResumeId")]
         public Resume.Resume? Resume { get; set; }
         public List<Follower>? FollowersOrFollowings { get; set; }
         public List<Question>? Questions { get; set; }
