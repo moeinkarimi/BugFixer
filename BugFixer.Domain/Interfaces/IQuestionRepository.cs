@@ -12,21 +12,27 @@ namespace BugFixer.Domain.Interfaces
         Task SavechangeAsync();
 
 
+        #region Question Methods
         Task<IEnumerable<Question>> GetQuestionsAsync();
         Task<Question> GetQuestionAsync(int id);
         Task CreateQuestionAsync(Question quesion);
-        Task CreateAnswerAsync(Answer answer);
+
         Task CreateQuestionTagAsync(QuestionTag questionTag);
         void UpdateQuestion(Question question);
+        Task<int> GetUserQuestionsCountAsync(int userId);
+        #endregion
 
+
+
+        #region Answer Methods
+        Task CreateAnswerAsync(Answer answer);
         IQueryable<Answer> QuestionAnswersQueryable(int id);
-
         void UpdateAnswer(Answer answer);
         Task<Answer> GetAnswerById(int id);
-        
-
-        Task<int> GetUserQuestionsCountAsync(int userId);
         Task<int> GetUserAnswersCountAsync(int userId);
+
+        #endregion
+
 
     }
 }

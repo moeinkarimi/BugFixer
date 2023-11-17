@@ -47,21 +47,21 @@ namespace BugFixer.Web.Controllers
 
 
         [HttpGet("show-question/{id}")]
-        public async Task<IActionResult> ShowQuestion(int id, int pageId = 1,string orderType="")
+        public async Task<IActionResult> ShowQuestion(int id, int pageId = 1, string orderType = "")
         {
             QuestionVM question = await _questionService.GetQuestionServiceAsync(id);
             await _questionService.UpdteQuestionVisitService(id);
 
-            FilterQuestionAswersVM filter=new FilterQuestionAswersVM()
+            FilterQuestionAswersVM filter = new FilterQuestionAswersVM()
             {
-                Page=pageId,
-                OrderType= orderType,
-                
+                Page = pageId,
+                OrderType = orderType,
+
             };
 
 
             ViewBag.Answers = await _questionService.QuestionAnswersFilter(filter, id);
-          
+
             return View(question);
         }
 
@@ -81,10 +81,14 @@ namespace BugFixer.Web.Controllers
 
 
         #region Edit Answer
-        
+
         #endregion
 
 
-        #endregion
+        [HttpGet("edit-question/{id}")]
+        public async Task<IActionResult> EditAnswer(int id, int pageId = 1, string orderType = "")
+        {
+            return View();
+        }
     }
 }
