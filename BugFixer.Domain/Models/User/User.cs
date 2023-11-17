@@ -1,6 +1,7 @@
 ﻿using BugFixer.Domain.Models.Base;
 using BugFixer.Domain.Models.Questions;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BugFixer.Domain.Models.User
 {
@@ -32,10 +33,14 @@ namespace BugFixer.Domain.Models.User
         public string? AboutMe { get; set; }
         public bool EmailConfirm { get; set; }
         public int? RoleId { get; set; }
+        public int? ResumeId { get; set; }
 
 
         #region Relations
+        [ForeignKey("RoleId")]
         public Role.Role? Role { get; set; }
+        [ForeignKey("ResumeId")]
+
         public Resume.Resume? Resume { get; set; }
         public List<Follower>? FollowersOrFollowings { get; set; }
         public List<Question>? Questions { get; set; }

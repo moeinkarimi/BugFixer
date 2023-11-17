@@ -38,18 +38,12 @@ namespace BugFixer.Data.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-        base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Answer>()
-                .HasOne(a => a.User)
-                .WithMany()
-                .HasForeignKey(a => a.UserId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<TrueAnswer>()
-            .HasOne(ta => ta.Question)
-            .WithMany()
-            .HasForeignKey(ta => ta.QuestionId)
-            .OnDelete(DeleteBehavior.NoAction);
+            //Avoiding loops in database table relationships
+            foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            }
+            //End Avoiding loops in database table relationships
 
         }
     }

@@ -46,16 +46,11 @@ namespace BugFixer.Data.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId1")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("QuestionId");
 
                     b.HasIndex("UserId");
-
-                    b.HasIndex("UserId1");
 
                     b.ToTable("Answers");
                 });
@@ -192,8 +187,7 @@ namespace BugFixer.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
                     b.ToTable("Resumes");
                 });
@@ -389,6 +383,9 @@ namespace BugFixer.Data.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
+                    b.Property<int?>("ResumeId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("RoleId")
                         .HasColumnType("int");
 
@@ -398,6 +395,8 @@ namespace BugFixer.Data.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ResumeId");
 
                     b.HasIndex("RoleId");
 
@@ -409,18 +408,14 @@ namespace BugFixer.Data.Migrations
                     b.HasOne("BugFixer.Domain.Models.Questions.Question", "Question")
                         .WithMany("Answers")
                         .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("BugFixer.Domain.Models.User.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("BugFixer.Domain.Models.User.User", null)
                         .WithMany("Answers")
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Question");
 
@@ -432,7 +427,7 @@ namespace BugFixer.Data.Migrations
                     b.HasOne("BugFixer.Domain.Models.User.User", "User")
                         .WithMany("Questions")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -443,7 +438,7 @@ namespace BugFixer.Data.Migrations
                     b.HasOne("BugFixer.Domain.Models.Questions.Question", "Question")
                         .WithMany("QuestionTags")
                         .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Question");
@@ -454,13 +449,13 @@ namespace BugFixer.Data.Migrations
                     b.HasOne("BugFixer.Domain.Models.Questions.Answer", "Answer")
                         .WithMany()
                         .HasForeignKey("AnswerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("BugFixer.Domain.Models.Questions.Question", "Question")
                         .WithMany()
                         .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Answer");
@@ -471,9 +466,9 @@ namespace BugFixer.Data.Migrations
             modelBuilder.Entity("BugFixer.Domain.Models.Resume.Resume", b =>
                 {
                     b.HasOne("BugFixer.Domain.Models.User.User", "User")
-                        .WithOne("Resume")
-                        .HasForeignKey("BugFixer.Domain.Models.Resume.Resume", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -484,7 +479,7 @@ namespace BugFixer.Data.Migrations
                     b.HasOne("BugFixer.Domain.Models.Resume.Resume", "Resume")
                         .WithMany("ResumeSkills")
                         .HasForeignKey("ResumeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Resume");
@@ -495,13 +490,13 @@ namespace BugFixer.Data.Migrations
                     b.HasOne("BugFixer.Domain.Models.Role.Permission", "Permission")
                         .WithMany("RolePermissions")
                         .HasForeignKey("PersmissionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("BugFixer.Domain.Models.Role.Role", "Role")
                         .WithMany("RolePermissions")
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Permission");
@@ -514,7 +509,7 @@ namespace BugFixer.Data.Migrations
                     b.HasOne("BugFixer.Domain.Models.User.User", "Users")
                         .WithMany("FollowersOrFollowings")
                         .HasForeignKey("FollowingUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Users");
@@ -522,9 +517,17 @@ namespace BugFixer.Data.Migrations
 
             modelBuilder.Entity("BugFixer.Domain.Models.User.User", b =>
                 {
+                    b.HasOne("BugFixer.Domain.Models.Resume.Resume", "Resume")
+                        .WithMany()
+                        .HasForeignKey("ResumeId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("BugFixer.Domain.Models.Role.Role", "Role")
                         .WithMany("Users")
-                        .HasForeignKey("RoleId");
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Resume");
 
                     b.Navigation("Role");
                 });
@@ -560,8 +563,6 @@ namespace BugFixer.Data.Migrations
                     b.Navigation("FollowersOrFollowings");
 
                     b.Navigation("Questions");
-
-                    b.Navigation("Resume");
                 });
 #pragma warning restore 612, 618
         }

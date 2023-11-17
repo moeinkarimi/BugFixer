@@ -19,7 +19,7 @@
             <ul itemtype="http://schema.org/BreadcrumbList" class="breadcrumb">
                 <li itemtype="http://schema.org/ListItem" itemscope="" itemprop="itemListElement"><a href="" itemprop="item"><span itemprop="name"> باگ فیکسر </span></a></li>
                 <li itemtype="http://schema.org/ListItem" itemscope="" itemprop="itemListElement"><a href="" itemprop="item"><span itemprop="name"> پرسش ها </span></a></li>
-                <li itemtype="http://schema.org/ListItem" itemscope="" itemprop="itemListElement"><a href="" itemprop="item"><span itemprop="name"> نحوه پیاده سازی یک فروشگاه اینترنتی قدرتمند با لاراول </span></a></li>
+                <li itemtype="http://schema.org/ListItem" itemscope="" itemprop="itemListElement"><a href="" itemprop="item"><span itemprop="name"> @Model.Title </span></a></li>
             </ul>
         </div>
     </div>
@@ -122,17 +122,17 @@
                 <!-- answer -->
                 <div class="answers-layer">
                     <div class="top-layer">
-                        <h4><span> 23 </span> پاسخ به این پرسش </h4>
+                        <h4><span> @Model.Answers.Count() </span> پاسخ به این پرسش </h4>
                         <div class="filter-layer">
-                            <form action="" method="">
-                                <div class="select-layer">
-                                    <select name="orderType">
+                            <form onsubmit="handleOrderTypeFilter()">
+                                <div class="select-layer" >
+                                    <select name="orderType" id="OrderTypeSelected">
                                         <option value="new"> جدیدترین پاسخ ها </option>
                                         <option value="old"> قدیمی ترین پاسخ ها </option>
 
                                     </select>
                                 </div>
-                                <button><i class="icon-sort"></i></button>
+                                <button type="submit"><i class="icon-sort"></i></button>
                             </form>
                         </div>
                     </div>
@@ -151,7 +151,7 @@
 
                                     if (item.SenderId == int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)))
                                     {
-                                        <button type="button" data-toggle="modal" data-target="#exampleModal" data-whatever="@@fat"><i class="icon-pencil-edit"></i></button>
+                                        <a href="/edit-answer/@item.AnswerId/@Model.Id"><i class="icon-pencil-edit"></i></a>
 
                                     }
 
@@ -198,7 +198,7 @@
 
                     <div class="row">
                         <div class="col-sm-5">
-                            <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">Showing 1 to 10 of 57 entries</div>
+                            <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">Showing 1 to @filter.TakeEntity of @filter.Entities.Count entries</div>
                         </div>
 
                         <div class="col-sm-7">
@@ -312,15 +312,12 @@
 @* end modal *@
 
 @section Landing{
+
     <script>
-        $('#exampleModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget) // Button that triggered the modal
-            var recipient = button.data('whatever') // Extract info from data-* attributes
-            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-            var modal = $(this)
-            modal.find('.modal-title').text('New message to ' + recipient)
-            modal.find('.modal-body input').val(recipient)
-        })
+        const handleOrderTypeFilter = () => {
+            const selectedVal = $("#OrderTypeSelected").val();
+            console.log(selectedVal);
+        }
     </script>
+
                         }
