@@ -27,6 +27,7 @@ namespace BugFixer.Data.Context
         public DbSet<QuestionTag> QuestionTags { get; set; }
         public DbSet<Answer> Answers { get; set; }
         public DbSet<TrueAnswer> TrueAnswers { get; set; }
+        public DbSet<QuestionRate>? QuestionRates { get; set; }
         #endregion
 
         #region ResumeSkills

@@ -8,6 +8,16 @@
 
     FilterQuestionAswersVM filter = ViewBag.Answers as FilterQuestionAswersVM;
 
+    int userId;
+    if (User.Identity.IsAuthenticated)
+    {
+        userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+    }
+    else
+    {
+        userId = 0;
+    }
+
 
 }
 
@@ -65,8 +75,8 @@
 
                                     <!-- if user rate this post , use " active " class for Button and disabled this -->
                                     <!-- <button class="active"><i class="icon-star"></i></button> -->
-                                    <button><i class="icon-star"></i></button>
-                                    <span> 3 </span>
+                                    <button class="@((Model.QuestionRates.Any(qr => qr.UserId == userId) ? "active" : " "))"   id="icon-star"  onclick="RateHandler(event, '@Model.Id')"><i class="icon-star"></i></button>
+                                    <span id="ratesCount"> @Model.QuestionRates?.Count() </span>
                                 </form>
                             </div>
 
@@ -125,7 +135,7 @@
                         <h4><span> @Model.Answers.Count() </span> پاسخ به این پرسش </h4>
                         <div class="filter-layer">
                             <form onsubmit="handleOrderTypeFilter()">
-                                <div class="select-layer" >
+                                <div class="select-layer">
                                     <select name="orderType" id="OrderTypeSelected">
                                         <option value="new"> جدیدترین پاسخ ها </option>
                                         <option value="old"> قدیمی ترین پاسخ ها </option>
@@ -318,6 +328,26 @@
             const selectedVal = $("#OrderTypeSelected").val();
             console.log(selectedVal);
         }
+
+
+        function RateHandler(e, qID) {
+            e.preventDefault()
+            $.ajax({
+                url: `/add-rate/${qID}`,
+                type: "POST",
+                success: function (response) {
+                    var currentCount = parseInt($("#ratesCount").text());
+                    if (response.rateStatus) {
+                        $("#icon-star").addClass("active")
+                        $("#ratesCount").text(currentCount + 1);
+                    }
+                    else{
+                        $("#icon-star").removeClass("active")
+                        $("#ratesCount").text(currentCount - 1);
+                    }
+                }
+            })
+        }
     </script>
 
-                        }
+}

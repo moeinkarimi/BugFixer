@@ -26,6 +26,7 @@ namespace BugFixer.Domain.Models.Questions
         public User.User? User { get; set; }
         public IEnumerable<QuestionTag>? QuestionTags { get; set; }
         public IEnumerable<Answer>? Answers { get; set; }
-        #endregion
-    }
+        public IEnumerable<QuestionRate>? QuestionRates { get; set; }
+    #endregion
+}
 }

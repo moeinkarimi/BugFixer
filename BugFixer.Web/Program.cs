@@ -32,6 +32,7 @@ DependencyContainer.RoleServices(builder.Services);
 DependencyContainer.QuestionServices(builder.Services);
 DependencyContainer.AnswerServices(builder.Services);
 DependencyContainer.ResumeServices(builder.Services);
+DependencyContainer.QuestionRateServices(builder.Services);
 #endregion
 
 var app = builder.Build();

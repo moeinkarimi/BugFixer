@@ -13,12 +13,11 @@ namespace BugFixer.Application.ViewModels.Questions
         [Display(Name = "متن سوال")]
         public string? Text { get; set; }
         public int? Visit { get; set; } = 0;
-
-
         #region Relations
         public Domain.Models.User.User? User { get; set; }
         public IEnumerable<QuestionTagVM>? QuestionTags { get; set; }
         public IEnumerable<Answer>? Answers { get; set; }
+        public IEnumerable<QuestionRateVM>? QuestionRates  { get; set; }
         #endregion
     }
 }
