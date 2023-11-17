@@ -1,5 +1,6 @@
 ﻿using BugFixer.Application.Services.Interfaces;
 using BugFixer.Application.ViewModels.Questions;
+using BugFixer.Domain.Models.Questions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -81,14 +82,31 @@ namespace BugFixer.Web.Controllers
 
 
         #region Edit Answer
+        [HttpGet("edit-answer/{id}/{questionId}")]
+        public async Task<IActionResult> EditAnswer(int id,int questionId)
+        {
+            UpdateAnswerVM answer = await _questionService.GetAnswerForUpdateServiceAsync(id);
+            return View(answer);
+        }
+
+        [HttpPost("edit-answer/{id}/{questionId}")]
+        public async Task<IActionResult> EditAnswer(int id, UpdateAnswerVM updateAnswer,int questionId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(updateAnswer);
+            }
+
+            await _questionService.UpdateAnswerService(updateAnswer);
+            return Redirect($"/show-question/{questionId}");
+
+        }
+        #endregion
+
 
         #endregion
 
 
-        [HttpGet("edit-question/{id}")]
-        public async Task<IActionResult> EditAnswer(int id, int pageId = 1, string orderType = "")
-        {
-            return View();
-        }
+
     }
 }

@@ -64,6 +64,7 @@ namespace BugFixer.Application.Services.Implementations
                 }).ToList(),
 
                 User = question.User,
+                Answers = question.Answers,
 
 
 
@@ -180,6 +181,17 @@ namespace BugFixer.Application.Services.Implementations
             answer.Text = updateAnswer.Text;
             _questionRepository.UpdateAnswer(answer);
             await _questionRepository.SavechangeAsync();
+        }
+
+        public async Task<UpdateAnswerVM> GetAnswerForUpdateServiceAsync(int answerId)
+        {
+            Answer getAnswer=await _questionRepository.GetAnswerById(answerId);
+
+            return new UpdateAnswerVM()
+            {
+                AnswerId=getAnswer.Id,
+                Text=getAnswer.Text,
+            };
         }
 
         #endregion
