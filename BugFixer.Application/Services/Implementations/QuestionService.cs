@@ -80,12 +80,7 @@ namespace BugFixer.Application.Services.Implementations
                 }).ToList(),
 
                 User=question.User,
-             
-
-
-
-
-
+            
             };
         }
 
