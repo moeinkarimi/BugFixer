@@ -8,9 +8,11 @@ namespace BugFixer.Application.Services.Implementations
     public class QuestionService : IQuestionService
     {
         private readonly IQuestionRepository _questionRepository;
-        public QuestionService(IQuestionRepository questionRepository)
+        private readonly IQuestionRateRepository _questionRateRepository;
+        public QuestionService(IQuestionRepository questionRepository, IQuestionRateRepository questionRateRepository)
         {
             _questionRepository = questionRepository;
+            _questionRateRepository = questionRateRepository;
         }
 
 
@@ -65,12 +67,11 @@ namespace BugFixer.Application.Services.Implementations
 
                 User = question.User,
                 Answers = question.Answers,
-
-
-
-
-
-
+                QuestionRates = question.QuestionRates.Select(r => new QuestionRateVM
+                {
+                    QuestionId = r.QuestionId,
+                    UserId=r.UserId
+                })
             };
         }
 
@@ -185,13 +186,47 @@ namespace BugFixer.Application.Services.Implementations
 
         public async Task<UpdateAnswerVM> GetAnswerForUpdateServiceAsync(int answerId)
         {
-            Answer getAnswer=await _questionRepository.GetAnswerById(answerId);
+            Answer getAnswer = await _questionRepository.GetAnswerById(answerId);
 
             return new UpdateAnswerVM()
             {
-                AnswerId=getAnswer.Id,
-                Text=getAnswer.Text,
+                AnswerId = getAnswer.Id,
+                Text = getAnswer.Text,
             };
+        }
+
+        #endregion
+
+        #region QuestionRate Methods
+
+        public async Task CreateQuestionRateServiceAsync(int qID, int userID)
+        {
+          
+        }
+
+        public async Task<bool> HandleQuestionRateServiceAsync(int qID, int userID)
+        {
+           
+            if(await _questionRateRepository.IsRateExistAsync(qID, userID))
+            {
+                var qr = await _questionRateRepository.GetQuestionRateAsync(qID, userID);
+                _questionRateRepository.DeleteQuestionRate(qr);
+                await _questionRepository.SavechangeAsync();
+                return false;
+            }
+            else
+            {
+                var qr = new QuestionRate
+                {
+                    QuestionId = qID,
+                    UserId = userID,
+                };
+                await _questionRateRepository.CreateQuestionRateAsync(qr);
+                await _questionRepository.SavechangeAsync();
+                return true;
+            }
+
+
         }
 
         #endregion

@@ -83,14 +83,14 @@ namespace BugFixer.Web.Controllers
 
         #region Edit Answer
         [HttpGet("edit-answer/{id}/{questionId}")]
-        public async Task<IActionResult> EditAnswer(int id,int questionId)
+        public async Task<IActionResult> EditAnswer(int id, int questionId)
         {
             UpdateAnswerVM answer = await _questionService.GetAnswerForUpdateServiceAsync(id);
             return View(answer);
         }
 
         [HttpPost("edit-answer/{id}/{questionId}")]
-        public async Task<IActionResult> EditAnswer(int id, UpdateAnswerVM updateAnswer,int questionId)
+        public async Task<IActionResult> EditAnswer(int id, UpdateAnswerVM updateAnswer, int questionId)
         {
             if (!ModelState.IsValid)
             {
@@ -103,6 +103,20 @@ namespace BugFixer.Web.Controllers
         }
         #endregion
 
+
+
+        #region QuestionRate
+
+        [HttpPost("/add-rate/{questionId}")]
+        [Authorize]
+        public async Task<IActionResult> AddRate(int questionId)
+        {
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var rateStatus  = await _questionService.HandleQuestionRateServiceAsync(questionId, userId);
+            return Json(new { rateStatus = rateStatus });
+        }
+
+        #endregion
 
         #endregion
 

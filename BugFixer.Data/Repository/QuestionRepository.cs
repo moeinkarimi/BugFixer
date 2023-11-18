@@ -31,6 +31,7 @@ namespace BugFixer.Data.Repository
         public async Task<Question> GetQuestionAsync(int id)
         {
             return await _ctx.Questions.Include(q => q.QuestionTags)
+                .Include(q => q.QuestionRates)
                 .Include(q => q.Answers)
                 .Include(q => q.User)
                 .ThenInclude(u => u.Answers)
@@ -48,11 +49,7 @@ namespace BugFixer.Data.Repository
                 .ToListAsync();
         }
 
-
-
-
-
-        public async Task<int> GetUserQuestionsCountAsync(int userId)
+   public async Task<int> GetUserQuestionsCountAsync(int userId)
         {
             return _ctx.Questions
                 .Where(q => q.UserId == userId)

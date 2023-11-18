@@ -43,6 +43,11 @@ namespace BugFixer.IOC
             service.AddScoped<IAnswerRepository, AnswerRepository>();
             service.AddScoped<IAnswerService, AnswerService>();
         }
+
+        public static void QuestionRateServices(IServiceCollection service)
+        {
+            service.AddScoped<IQuestionRateRepository, QuestionRateRepository>();
+        }
         #endregion
 
 
