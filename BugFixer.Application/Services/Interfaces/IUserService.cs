@@ -25,6 +25,14 @@ namespace BugFixer.Application.Services.Interfaces
         Task<FilterUsersViewModel> FilterUser(FilterUsersViewModel filter);
 
 
+        #region Profile
+        Task<ProfileVM> ProfileInfoServiceAsync(int userId);
+        Task UpdateVisitProfileServiceAsync(int userId);
+        Task FollowUserServiceAsync(int userId, int folwingId);
+        Task<IEnumerable<Following>> FollowingsServiceAsync();
+        #endregion
+
+
 
 
 

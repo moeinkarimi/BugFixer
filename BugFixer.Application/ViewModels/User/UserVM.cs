@@ -25,6 +25,8 @@ namespace BugFixer.Application.ViewModels.User
 
         public string? ActiveCode { get; set; }
 
+        public int ProfileVisit { get; set; }
+
         #region Relations
         public Domain.Models.Role.Role? Role { get; set; }
         #endregion

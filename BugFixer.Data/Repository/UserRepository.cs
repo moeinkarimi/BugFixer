@@ -103,6 +103,28 @@ namespace BugFixer.Data.Repository
         {
             return await _ctx.Users.FindAsync(id);
         }
+
+
+        #endregion
+
+
+        #region Profile
+        public async Task<User> ProfileInfoAsync(int id)
+        {
+            return await _ctx.Users.Include(u => u.Questions).Include(u => u.QuestionRates)
+                .Include(u => u.Answers).Include(u => u.Resume)
+                .FirstOrDefaultAsync(u => u.Id == id);
+        }
+
+        public async Task FollowUser(Following following)
+        {
+            await _ctx.Followings.AddAsync(following);
+        }
+
+        public async Task<IEnumerable<Following>> Followins()
+        {
+           return await _ctx.Followings.ToListAsync();
+        }
         #endregion
     }
 }

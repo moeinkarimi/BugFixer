@@ -1,0 +1,404 @@
+﻿@model BugFixer.Application.ViewModels.User.ProfileVM
+@using BugFixer.Application.Extensions;
+@using BugFixer.Domain.Models.User
+@using System.Security.Claims;
+@{
+    ViewData["Title"] = "Profile";
+    List<Following> followings = ViewBag.Followings as List<Following>;
+    int userId = 0;
+    if (User.Identity.IsAuthenticated)
+    {
+        userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+    }
+
+}
+
+<div class="user-page-style">
+
+    <div class="breadcumb-layer">
+        <div class="container">
+            <ul itemtype="http://schema.org/BreadcrumbList" class="breadcrumb">
+                <li itemtype="http://schema.org/ListItem" itemscope="" itemprop="itemListElement"><a href="" itemprop="item"><span itemprop="name"> باگ فیکسر </span></a></li>
+                <li itemtype="http://schema.org/ListItem" itemscope="" itemprop="itemListElement"><a href="" itemprop="item"><span itemprop="name"> پروفایل میترا رحیمی </span></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="profile-page page-style">
+
+        <div class="container">
+            <!-- introduction -->
+            <div class="user-introduction">
+                <div class="right-side">
+                    <a href="" class="avatar">
+                        <img src="/images/UsersAvatar/@Model.User?.Avatar">
+                    </a>
+
+                    <div class="user-info">
+                        <div class="user-name">
+                            <h1><a href=""> @Model.User?.UserName  </a> </h1>
+                            <button> دنبال کنید </button>
+                            <!-- when user follow this user , show this line  -->
+                            @if (followings != null)
+                            {
+                                @if (followings.Any(f => f.UserId == Model.User.Id && f.FollowingId == userId))
+                                {
+                                    <button class="followed"> <i class="icon-check"></i> </button>
+                                }
+                                else
+                                {
+
+                                }
+                            }
+
+
+
+
+
+                        </div>
+                       
+                       
+                        <span> @Model.Resume?.ProfessionName </span>
+                        <p>
+                            @Model.Resume?.Bio
+                        </p>
+                        
+                    </div>
+                </div>
+                <div class="left-side">
+                    <div class="inner">
+                        <ul>
+                            <li>
+                                <ul>
+                                    <li><i>@Model.Questions?.Count</i> پرسش </li>
+                                    <li><i>@Model.Answers?.Count</i> پاسخ </li>
+                                    <li><i>@Model.QuestionRateCount</i> رای </li>
+                                </ul>
+                            </li>
+                            <li><i class="icon-eye"></i><span class="view-profile"><i>@Model.User.ProfileVisit</i> بازدید از پروفایل </span></li>
+                            <li><i class="icon-clock-1"></i><span> عضویت : @Model.User.CreateDate.ToShamsi() </span></li>
+@*                             <li><i class="icon-clock-outline"></i><span class="last-seen"> آخرین فعالیت 1 ساعت پیش </span></li> *@
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /introduction -->
+            <!-- information -->
+            <div class="user-information">
+                <ul class="main-tabs">
+                    <li class="active"><a href="javascript:void(0)" class="profile-tab"> پروفایل </a></li>
+                    <!-- if user has certificate , display this tab -->
+                    <li class=""><a href="javascript:void(0)" class="certification-tab"> مدارک من </a></li>
+                </ul>
+                <div class="inner">
+
+                    <!-- tab 1 -->
+                    <div class="tab-content-layer active" id="profile-tab" style="">
+                        <div class="inner">
+                            <div class="intro">
+                                <h2>  @Model.User.UserName </h2>
+                                <p> <a href=""> ایران - </a>  <a href=""> تهران </a> </p>
+                                <p class="title"> @Model.Resume?.ProfessionName با @Model.Resume?.WorkExperienceYears سال سابقه حرفه ای </p>
+                            </div>
+
+                            <div class="row">
+                                <!-- top tags -->
+                                <div class="col-xs-12">
+                                    <section class="top-tags-layer">
+                                        <header> <h3> تگ های برجسته </h3> <span>23</span> </header>
+                                        <div class="row">
+                                            <!-- item -->
+                                            <div class="col-md-3 col-sm-4 col-xs-6 tag-col">
+                                                <article>
+                                                    <h2><a href="">javascript</a></h2>
+                                                    <span><i>25</i> پرسش و پاسخ </span>
+                                                    <span><i>1.3K</i> رای </span>
+                                                </article>
+                                            </div>
+                                            <!-- /item -->
+                                            <!-- item -->
+                                            <div class="col-md-3 col-sm-4 col-xs-6 tag-col">
+                                                <article>
+                                                    <h2><a href="">javascript</a></h2>
+                                                    <span><i>25</i> پرسش و پاسخ </span>
+                                                    <span><i>1.3K</i> رای </span>
+                                                </article>
+                                            </div>
+                                            <!-- /item -->
+                                            <!-- item -->
+                                            <div class="col-md-3 col-sm-4 col-xs-6 tag-col">
+                                                <article>
+                                                    <h2><a href="">javascript</a></h2>
+                                                    <span><i>25</i> پرسش و پاسخ </span>
+                                                    <span><i>1.3K</i> رای </span>
+                                                </article>
+                                            </div>
+                                            <!-- /item -->
+                                            <!-- item -->
+                                            <div class="col-md-3 col-sm-4 col-xs-6 tag-col">
+                                                <article>
+                                                    <h2><a href="">javascript</a></h2>
+                                                    <span><i>25</i> پرسش و پاسخ </span>
+                                                    <span><i>1.3K</i> رای </span>
+                                                </article>
+                                            </div>
+                                            <!-- /item -->
+                                            <!-- item -->
+                                            <div class="col-md-3 col-sm-4 col-xs-6 tag-col">
+                                                <article>
+                                                    <h2><a href="">javascript</a></h2>
+                                                    <span><i>25</i> پرسش و پاسخ </span>
+                                                    <span><i>1.3K</i> رای </span>
+                                                </article>
+                                            </div>
+                                            <!-- /item -->
+                                            <!-- item -->
+                                            <div class="col-md-3 col-sm-4 col-xs-6 tag-col">
+                                                <article>
+                                                    <h2><a href="">javascript</a></h2>
+                                                    <span><i>25</i> پرسش و پاسخ </span>
+                                                    <span><i>1.3K</i> رای </span>
+                                                </article>
+                                            </div>
+                                            <!-- /item -->
+                                            <!-- item -->
+                                            <div class="col-md-3 col-sm-4 col-xs-6 tag-col">
+                                                <article>
+                                                    <h2><a href="">javascript</a></h2>
+                                                    <span><i>25</i> پرسش و پاسخ </span>
+                                                    <span><i>1.3K</i> رای </span>
+                                                </article>
+                                            </div>
+                                            <!-- /item -->
+                                            <!-- item -->
+                                            <div class="col-md-3 col-sm-4 col-xs-6 tag-col">
+                                                <article>
+                                                    <h2><a href="">javascript</a></h2>
+                                                    <span><i>25</i> پرسش و پاسخ </span>
+                                                    <span><i>1.3K</i> رای </span>
+                                                </article>
+                                            </div>
+                                            <!-- /item -->
+                                            <!-- item -->
+                                            <div class="col-md-3 col-sm-4 col-xs-6 tag-col">
+                                                <article>
+                                                    <h2><a href="">javascript</a></h2>
+                                                    <span><i>25</i> پرسش و پاسخ </span>
+                                                    <span><i>1.3K</i> رای </span>
+                                                </article>
+                                            </div>
+                                            <!-- /item -->
+                                            <!-- item -->
+                                            <div class="col-md-3 col-sm-4 col-xs-6 tag-col">
+                                                <article>
+                                                    <h2><a href="">javascript</a></h2>
+                                                    <span><i>25</i> پرسش و پاسخ </span>
+                                                    <span><i>1.3K</i> رای </span>
+                                                </article>
+                                            </div>
+                                            <!-- /item -->
+                                            <!-- item -->
+                                            <div class="col-md-3 col-sm-4 col-xs-6 tag-col">
+                                                <article>
+                                                    <h2><a href="">javascript</a></h2>
+                                                    <span><i>25</i> پرسش و پاسخ </span>
+                                                    <span><i>1.3K</i> رای </span>
+                                                </article>
+                                            </div>
+                                            <!-- /item -->
+                                            <!-- item -->
+                                            <div class="col-md-3 col-sm-4 col-xs-6 tag-col">
+                                                <article>
+                                                    <h2><a href="">javascript</a></h2>
+                                                    <span><i>25</i> پرسش و پاسخ </span>
+                                                    <span><i>1.3K</i> رای </span>
+                                                </article>
+                                            </div>
+                                            <!-- /item -->
+                                        </div>
+
+                                        <a href="" class="view-all"><i class="icon-menu-1"></i> مشاهده همه تگ ها ... </a>
+                                    </section>
+                                </div>
+                                <!-- / top tags -->
+                                <!-- top answers -->
+                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                    <section class="top-post-layer">
+                                        <header> <h3> پاسخ های منتخب </h3> <span>1.4K</span> </header>
+                                        <!-- item -->
+                                        <article>
+                                            <span class="answer-count selected">0</span>
+                                            <h2><a href=""> نحوه ی اکسپورت گرفتن از دیتابیس با php </a></h2>
+                                            <span class="publish-date">12/05/1397</span>
+                                        </article>
+                                        <!-- item -->
+                                        <!-- item -->
+                                        <article>
+                                            <span class="answer-count selected">0</span>
+                                            <h2><a href=""> نحوه ی اکسپورت گرفتن از دیتابیس با php </a></h2>
+                                            <span class="publish-date">12/05/1397</span>
+                                        </article>
+                                        <!-- item -->
+                                        <!-- item -->
+                                        <article>
+                                            <span class="answer-count selected">15</span>
+                                            <h2><a href=""> نحوه ی اکسپورت گرفتن از دیتابیس با php </a></h2>
+                                            <span class="publish-date">10/05/1397</span>
+                                        </article>
+                                        <!-- item -->
+                                        <!-- item -->
+                                        <article>
+                                            <span class="answer-count selected">15</span>
+                                            <h2><a href=""> نحوه ی اکسپورت گرفتن از دیتابیس با php </a></h2>
+                                            <span class="publish-date">10/05/1397</span>
+                                        </article>
+                                        <!-- item -->
+                                        <!-- item -->
+                                        <article>
+                                            <span class="answer-count selected">15</span>
+                                            <h2><a href=""> نحوه ی اکسپورت گرفتن از دیتابیس با php </a></h2>
+                                            <span class="publish-date">10/05/1397</span>
+                                        </article>
+                                        <!-- item -->
+                                        <!-- item -->
+                                        <article>
+                                            <span class="answer-count selected">26</span>
+                                            <h2><a href=""> نحوه ی اکسپورت گرفتن از دیتابیس با php </a></h2>
+                                            <span class="publish-date">10/05/1397</span>
+                                        </article>
+                                        <!-- item -->
+                                        <!-- item -->
+                                        <article>
+                                            <span class="answer-count selected">15</span>
+                                            <h2><a href=""> نحوه ی اکسپورت گرفتن از دیتابیس با php </a></h2>
+                                            <span class="publish-date">10/05/1397</span>
+                                        </article>
+                                        <!-- item -->
+                                        <!-- item -->
+                                        <article>
+                                            <span class="answer-count selected">15</span>
+                                            <h2><a href=""> نحوه ی اکسپورت گرفتن از دیتابیس با php </a></h2>
+                                            <span class="publish-date">10/05/1397</span>
+                                        </article>
+                                        <!-- item -->
+                                        <!-- item -->
+                                        <article>
+                                            <span class="answer-count selected">15</span>
+                                            <h2><a href=""> نحوه ی اکسپورت گرفتن از دیتابیس با php </a></h2>
+                                            <span class="publish-date">10/05/1397</span>
+                                        </article>
+                                        <!-- item -->
+                                        <!-- item -->
+                                        <article>
+                                            <span class="answer-count selected">26</span>
+                                            <h2><a href=""> نحوه ی اکسپورت گرفتن از دیتابیس با php </a></h2>
+                                            <span class="publish-date">10/05/1397</span>
+                                        </article>
+                                        <!-- item -->
+                                        <a href="" class="view-all"><i class="icon-menu-1"></i> مشاهده همه پاسخ ها ... </a>
+                                    </section>
+                                </div>
+                                <!-- /top answers -->
+                                <!-- top question -->
+                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                    <section class="top-post-layer">
+                                        <header> <h3> پرسش های برجسته </h3> <span>1.4K</span> </header>
+                                        <!-- item -->
+                                        <article>
+                                            <span class="answer-count">0</span>
+                                            <h2><a href=""> نحوه ی اکسپورت گرفتن از دیتابیس با php </a></h2>
+                                            <span class="publish-date">12/05/1397</span>
+                                        </article>
+                                        <!-- item -->
+                                        <!-- item -->
+                                        <article>
+                                            <span class="answer-count">0</span>
+                                            <h2><a href=""> نحوه ی اکسپورت گرفتن از دیتابیس با php </a></h2>
+                                            <span class="publish-date">12/05/1397</span>
+                                        </article>
+                                        <!-- item -->
+                                        <!-- item -->
+                                        <article>
+                                            <span class="answer-count answered">15</span>
+                                            <h2><a href=""> نحوه ی اکسپورت گرفتن از دیتابیس با php </a></h2>
+                                            <span class="publish-date">10/05/1397</span>
+                                        </article>
+                                        <!-- item -->
+                                        <!-- item -->
+                                        <article>
+                                            <span class="answer-count answered">15</span>
+                                            <h2><a href=""> نحوه ی اکسپورت گرفتن از دیتابیس با php </a></h2>
+                                            <span class="publish-date">10/05/1397</span>
+                                        </article>
+                                        <!-- item -->
+                                        <!-- item -->
+                                        <article>
+                                            <span class="answer-count answered">15</span>
+                                            <h2><a href=""> نحوه ی اکسپورت گرفتن از دیتابیس با php </a></h2>
+                                            <span class="publish-date">10/05/1397</span>
+                                        </article>
+                                        <!-- item -->
+                                        <!-- item -->
+                                        <article>
+                                            <span class="answer-count selected">26</span>
+                                            <h2><a href=""> نحوه ی اکسپورت گرفتن از دیتابیس با php </a></h2>
+                                            <span class="publish-date">10/05/1397</span>
+                                        </article>
+                                        <!-- item -->
+                                        <!-- item -->
+                                        <article>
+                                            <span class="answer-count answered">15</span>
+                                            <h2><a href=""> نحوه ی اکسپورت گرفتن از دیتابیس با php </a></h2>
+                                            <span class="publish-date">10/05/1397</span>
+                                        </article>
+                                        <!-- item -->
+                                        <!-- item -->
+                                        <article>
+                                            <span class="answer-count answered">15</span>
+                                            <h2><a href=""> نحوه ی اکسپورت گرفتن از دیتابیس با php </a></h2>
+                                            <span class="publish-date">10/05/1397</span>
+                                        </article>
+                                        <!-- item -->
+                                        <!-- item -->
+                                        <article>
+                                            <span class="answer-count answered">15</span>
+                                            <h2><a href=""> نحوه ی اکسپورت گرفتن از دیتابیس با php </a></h2>
+                                            <span class="publish-date">10/05/1397</span>
+                                        </article>
+                                        <!-- item -->
+                                        <!-- item -->
+                                        <article>
+                                            <span class="answer-count selected">26</span>
+                                            <h2><a href=""> نحوه ی اکسپورت گرفتن از دیتابیس با php </a></h2>
+                                            <span class="publish-date">10/05/1397</span>
+                                        </article>
+                                        <!-- item -->
+                                        <a href="" class="view-all"><i class="icon-menu-1"></i> مشاهده همه پرسش ها ... </a>
+                                    </section>
+                                </div>
+                                <!-- /top question -->
+                            </div>
+                        </div>
+                    </div>
+                    <!--/ tab 1 -->
+                    <!-- tab 2 -->
+                    <!-- if user has certificate , display this tab -->
+                    <div class="tab-content-layer" id="certification-tab" style="display: none;">
+                        <div class="inner">
+                            <ul>
+                                <li>  @Model.Resume?.EducationalDocuments </li>
+                      
+                            </ul>
+                        </div>
+                    </div>
+                    <!--/ tab 2 -->
+
+                </div>
+            </div>
+            <!-- /information -->
+        </div>
+
+    </div>
+
+</div>
+

@@ -335,7 +335,7 @@ namespace BugFixer.Data.Migrations
                     b.ToTable("RolePermissions");
                 });
 
-            modelBuilder.Entity("BugFixer.Domain.Models.User.Follower", b =>
+            modelBuilder.Entity("BugFixer.Domain.Models.User.Following", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -346,20 +346,20 @@ namespace BugFixer.Data.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("FollowedUserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FollowingUserId")
+                    b.Property<int>("FollowingId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsDelete")
                         .HasColumnType("bit");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("FollowingUserId");
+                    b.HasIndex("UserId");
 
-                    b.ToTable("Followers");
+                    b.ToTable("Followings");
                 });
 
             modelBuilder.Entity("BugFixer.Domain.Models.User.User", b =>
@@ -412,6 +412,9 @@ namespace BugFixer.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
+
+                    b.Property<int>("ProfileVisit")
+                        .HasColumnType("int");
 
                     b.Property<int?>("RoleId")
                         .HasColumnType("int");
@@ -548,15 +551,13 @@ namespace BugFixer.Data.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("BugFixer.Domain.Models.User.Follower", b =>
+            modelBuilder.Entity("BugFixer.Domain.Models.User.Following", b =>
                 {
-                    b.HasOne("BugFixer.Domain.Models.User.User", "Users")
+                    b.HasOne("BugFixer.Domain.Models.User.User", null)
                         .WithMany("FollowersOrFollowings")
-                        .HasForeignKey("FollowingUserId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("BugFixer.Domain.Models.User.User", b =>

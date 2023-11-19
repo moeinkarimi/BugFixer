@@ -18,7 +18,7 @@ namespace BugFixer.Data.Context
         public DbSet<Role> Roles { get; set; }
         public DbSet<Permission> Persmissions { get; set; }
         public DbSet<RolePermission> RolePermissions { get; set; }
-        public DbSet<Follower> Followers { get; set; }
+        public DbSet<Following> Followings { get; set; }
 
         #endregion
 
@@ -27,7 +27,7 @@ namespace BugFixer.Data.Context
         public DbSet<QuestionTag> QuestionTags { get; set; }
         public DbSet<Answer> Answers { get; set; }
         public DbSet<TrueAnswer> TrueAnswers { get; set; }
-        public DbSet<QuestionRate>? QuestionRates { get; set; }
+        public DbSet<QuestionRate> QuestionRates { get; set; }
         #endregion
 
         #region ResumeSkills

@@ -34,5 +34,9 @@ namespace BugFixer.Domain.Interfaces
         Task<User> GetUserByIdAsync(int id);
 
         #endregion
+
+        Task<User> ProfileInfoAsync(int id);
+        Task FollowUser(Following following);
+        Task<IEnumerable<Following>> Followins();
     }
 }

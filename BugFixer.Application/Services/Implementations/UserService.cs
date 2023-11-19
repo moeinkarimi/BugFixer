@@ -109,6 +109,8 @@ namespace BugFixer.Application.Services.Implementations
             };
         }
 
+
+
         public async Task UpdateServiceAsync(UpdateUserVM updateUserVM)
         {
             User getUser = await _userRepository.GetAsync(updateUserVM.Id);
@@ -125,8 +127,71 @@ namespace BugFixer.Application.Services.Implementations
         }
 
 
+        #region Profile
+        public async Task UpdateVisitProfileServiceAsync(int userId)
+        {
+            User user = await _userRepository.GetAsync(userId);
+
+            user.ProfileVisit += 1;
+            _userRepository.Update(user);
+            await _userRepository.SaveChangeAsync();
+        }
+
+        public async Task<ProfileVM> ProfileInfoServiceAsync(int userId)
+        {
+            User user = await _userRepository.ProfileInfoAsync(userId);
+
+            return new ProfileVM()
+            {
+                User = new UserVM()
+                {
+                    Id = user.Id,
+                    UserName = user.UserName,
+                    Avatar = user.Avatar,
+                    CreateDate = user.CreateDate,
+                    ProfileVisit = user.ProfileVisit,
+
+                },
+
+                Questions = user.Questions.Select(q => new ViewModels.Questions.QuestionVM()
+                {
+                    Text = q.Text,
+                    CreateDate = q.CreateDate,
+                }).ToList(),
+
+                Answers = user.Answers.Select(q => new ViewModels.Questions.AnswerVM()
+                {
+                    Text = q.Text,
+                    CreateDate = q.CreateDate,
+                }).ToList(),
+
+                Resume = user.Resume !=null ? new ViewModels.Resume.ResumeVM()
+                {
+                    Bio = user.Resume.Bio,
+                    EducationalDocuments = user.Resume.EducationalDocuments,
+                    ProfessionName = user.Resume.ProfessionName,
+                    WorkExperienceYears = user.Resume.WorkExperienceYears,
+                }:null,
+               QuestionRateCount=user.QuestionRates.Count(),
+
+                
 
 
+            };
+        }
 
+        public async Task FollowUserServiceAsync(int userId, int folwingId)
+        {
+            Following follwing = new Following() {UserId=userId,FollowingId=folwingId };
+
+            await _userRepository.FollowUser(follwing);
+            await _userRepository.SaveChangeAsync();
+        }
+
+        public async Task<IEnumerable<Following>> FollowingsServiceAsync()
+        {
+            return await _userRepository.Followins();
+        }
+        #endregion
     }
 }

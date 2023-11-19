@@ -34,11 +34,13 @@ namespace BugFixer.Domain.Models.User
         public bool EmailConfirm { get; set; }
         public int? RoleId { get; set; }
 
+        public int ProfileVisit { get; set; }
+
         #region Relations
         [ForeignKey("RoleId")]
         public Role.Role? Role { get; set; }
         public Resume.Resume? Resume { get; set; }
-        public List<Follower>? FollowersOrFollowings { get; set; }
+        public List<Following>? FollowersOrFollowings { get; set; }
         public List<Question>? Questions { get; set; }
         public List<Answer>? Answers { get; set; }
         public List<QuestionRate>? QuestionRates { get; set; }

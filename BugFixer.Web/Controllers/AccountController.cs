@@ -15,14 +15,19 @@ namespace BugFixer.Web.Controllers
     {
         #region Fields
         private readonly IAccountService _accountService;
+        private readonly IUserService _userService;
         private IViewRenderService _viewRender;
         #endregion
 
         #region Constructor
-        public AccountController(IAccountService accountService, IViewRenderService viewRender)
+        public AccountController(IAccountService accountService,
+            IViewRenderService viewRender,
+            IUserService userService
+            )
         {
             _accountService = accountService;
             _viewRender = viewRender;
+            _userService = userService;
         }
         #endregion
 
@@ -191,6 +196,17 @@ namespace BugFixer.Web.Controllers
             var isSuccess = await _accountService.ResetPasswordServiceAsync(activeCode, reset);
             TempData["isResetPasswordSuccess"] = isSuccess;
             return Redirect("/login");
+        }
+        #endregion
+
+        #region Profile
+        [HttpGet("show/profile/{id:int}/{name}")]
+        public async Task<IActionResult> Profile(int id,string name)
+        {
+            ProfileVM profileInfo=await _userService.ProfileInfoServiceAsync(id);
+            await _userService.UpdateVisitProfileServiceAsync(id);
+            ViewBag.Followins = await _userService.FollowingsServiceAsync();
+            return View(profileInfo);
         }
         #endregion
 

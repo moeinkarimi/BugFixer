@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace BugFixer.Domain.Models.User
 {
-    public class Follower: BaseEntity
+    public class Following: BaseEntity
     {
-        public int FollowedUserId { get; set; }
-        public int FollowingUserId { get; set; }
+        public int UserId { get; set; }
+        public int FollowingId { get; set; }
 
-        [ForeignKey("FollowingUserId")]
-        public virtual User Users{ get; set; }
+
+
 
     }
 }
