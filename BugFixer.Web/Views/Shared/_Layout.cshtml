@@ -21,7 +21,9 @@
        @RenderBody()
         <!-- /questions -->
         <!-- aside -->
-      <partial name="_SideBar"/>
+     
+        @await RenderSectionAsync("SideBar",false)
+
         <!-- /aside -->
         <div class="clearfix"></div>
     </div>

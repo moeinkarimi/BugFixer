@@ -41,7 +41,9 @@
                     @if (item.Answers.Any())
                     {
                         <li> آخرین پاسخ توسط <a href=""> @item.Answers.FirstOrDefault().User.UserName </a> در 1 دقیقه پسش </li>
-                    }else{
+                    }
+                    else
+                    {
                         <li>
                             بدون پاسخ
                         </li>
@@ -49,7 +51,7 @@
                 </ul>
                 <div class="detail">
                     <div class="tags-layer">
-                        @foreach(var tag in item.QuestionTags)
+                        @foreach (var tag in item.QuestionTags)
                         {
                             <a href=""> @tag.Tag </a>
                         }
@@ -91,3 +93,7 @@
     </div>
     <!-- /questions list -->
 </div>
+
+@section SideBar{
+    <partial name="_SideBar" />
+        }

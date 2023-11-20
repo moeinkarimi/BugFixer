@@ -101,6 +101,22 @@ namespace BugFixer.Data.Repository
             _ctx.Answers.Update(answer);
         }
 
+
+
+        #endregion
+
+
+        #region Profile
+        public async Task<IEnumerable<Question>> ProfileSelectedQuestionsAsync(int id)
+        {
+            return await _ctx.Questions.Where(q => q.UserId == id).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Answer>> ProfileSelectedAswersAsync(int id)
+        {
+            return await _ctx.Answers.Where(q => q.UserId == id).ToListAsync();
+
+        }
         #endregion
     }
 }

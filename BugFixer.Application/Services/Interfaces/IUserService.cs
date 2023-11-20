@@ -28,7 +28,7 @@ namespace BugFixer.Application.Services.Interfaces
         #region Profile
         Task<ProfileVM> ProfileInfoServiceAsync(int userId);
         Task UpdateVisitProfileServiceAsync(int userId);
-        Task FollowUserServiceAsync(int userId, int folwingId);
+        Task FollowUserServiceAsync(int userId, int follwingId);
         Task<IEnumerable<Following>> FollowingsServiceAsync();
         #endregion
 

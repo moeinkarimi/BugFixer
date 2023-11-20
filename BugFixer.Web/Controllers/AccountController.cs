@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using BugFixer.Application.Extensions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BugFixer.Web.Controllers
 {
@@ -16,18 +17,22 @@ namespace BugFixer.Web.Controllers
         #region Fields
         private readonly IAccountService _accountService;
         private readonly IUserService _userService;
+        private readonly IQuestionService _questionService;
         private IViewRenderService _viewRender;
+
         #endregion
 
         #region Constructor
         public AccountController(IAccountService accountService,
             IViewRenderService viewRender,
-            IUserService userService
+            IUserService userService,
+            IQuestionService questionService
             )
         {
             _accountService = accountService;
             _viewRender = viewRender;
             _userService = userService;
+            _questionService = questionService;
         }
         #endregion
 
@@ -200,14 +205,30 @@ namespace BugFixer.Web.Controllers
         #endregion
 
         #region Profile
-        [HttpGet("show/profile/{id:int}/{name}")]
+        [HttpGet("profile/{id:int}/{name}")]
         public async Task<IActionResult> Profile(int id,string name)
         {
             ProfileVM profileInfo=await _userService.ProfileInfoServiceAsync(id);
             await _userService.UpdateVisitProfileServiceAsync(id);
             ViewBag.Followins = await _userService.FollowingsServiceAsync();
+            ViewBag.ProfileSelectedAnswers = await _questionService.ProfileSelectedAswersServiceAsync(id);
+            ViewBag.ProfileSelectedQuestions = await _questionService.ProfileSelectedQuestionsServiceAsync(id);
             return View(profileInfo);
         }
+        [HttpGet("follow-user/{id}")]
+        [Authorize]
+
+        public async Task<IActionResult> Follow(int id)
+        {
+            int follwingId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            if (id == follwingId) return BadRequest();
+
+            await _userService.FollowUserServiceAsync(id, follwingId);
+            return Json(new { status = "success" });
+        }
+
+
         #endregion
 
         #endregion

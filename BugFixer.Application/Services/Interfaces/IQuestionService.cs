@@ -36,5 +36,11 @@ namespace BugFixer.Application.Services.Interfaces
 
         #endregion
 
+
+        #region Profile
+        Task<IEnumerable<QuestionVM>> ProfileSelectedQuestionsServiceAsync(int id);
+        Task<IEnumerable<AnswerVM>> ProfileSelectedAswersServiceAsync(int id);
+
+        #endregion
     }
 }

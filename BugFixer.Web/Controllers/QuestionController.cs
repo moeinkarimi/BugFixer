@@ -57,6 +57,7 @@ namespace BugFixer.Web.Controllers
             {
                 Page = pageId,
                 OrderType = orderType,
+                
 
             };
 

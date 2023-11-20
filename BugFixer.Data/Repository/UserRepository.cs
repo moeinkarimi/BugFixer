@@ -125,6 +125,16 @@ namespace BugFixer.Data.Repository
         {
            return await _ctx.Followings.ToListAsync();
         }
+
+        public async Task<Following> GetFollowingAsync(int userId, int followingId)
+        {
+            return await _ctx.Followings.FirstOrDefaultAsync(f => f.UserId == userId && f.FollowingId == followingId);
+        }
+
+        public void DeleteFollowing(Following following)
+        {
+            _ctx.Followings.Remove(following);
+        }
         #endregion
     }
 }

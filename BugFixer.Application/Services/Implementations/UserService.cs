@@ -180,11 +180,19 @@ namespace BugFixer.Application.Services.Implementations
             };
         }
 
-        public async Task FollowUserServiceAsync(int userId, int folwingId)
+        public async Task FollowUserServiceAsync(int userId, int follwingId)
         {
-            Following follwing = new Following() {UserId=userId,FollowingId=folwingId };
+            Following getFollwing = await _userRepository.GetFollowingAsync(userId, follwingId);
+            if (getFollwing == null) {
+                Following follwing = new Following() { UserId = userId, FollowingId = follwingId };
+                await _userRepository.FollowUser(follwing);
 
-            await _userRepository.FollowUser(follwing);
+            }
+            else
+            {
+                _userRepository.DeleteFollowing(getFollwing);
+            }
+
             await _userRepository.SaveChangeAsync();
         }
 

@@ -33,6 +33,12 @@ namespace BugFixer.Domain.Interfaces
 
         #endregion
 
+        #region Profile
+        Task<IEnumerable<Question>> ProfileSelectedQuestionsAsync(int id);
+
+        Task<IEnumerable<Answer>> ProfileSelectedAswersAsync(int id);
+
+        #endregion
 
     }
 }

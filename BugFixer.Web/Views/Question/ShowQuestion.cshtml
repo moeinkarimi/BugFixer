@@ -87,7 +87,8 @@
                                 <a href="" class="img-layer">
                                     <img src="/images/UsersAvatar/@Model.User.Avatar">
                                 </a>
-                                <h3><a href="/show/profile/@Model.User.Id/@Model.User.UserName"> @Model.User.UserName </a></h3>
+                                @* <h3><a href=@(Model.User.Id!=userId?$"/profile/{Model.User.Id}/${Model.User.UserName}":"#")> @Model.User.UserName </a></h3> *@
+                                <h3><a href="/profile/@Model.User.Id/@Model.User.UserName"> @Model.User.UserName </a></h3>
                                 <span><i>@Model.User.Questions.Count</i> پرسش | <i>@Model.User.Answers.Count</i> پاسخ</span>
                             </div>
                             <a href="javascript:void(0)"> <i class="icon-back-arrow"></i> ثبت پاسخ به این پرسش </a>
@@ -191,7 +192,8 @@
                                     <a href="" class="img-layer">
                                         <img src="/images/UsersAvatar/@item.SenderAvatar">
                                     </a>
-                                    <h3><a href="/show-profile/@item.SenderId/@item.SenderName"> @item.SenderName </a></h3>
+@*                                     <h3><a href=@(item.SenderId!=userId?$"/profile/{item.SenderId}/{item.SenderName}":"#")> @item.SenderName </a></h3> *@
+                                    <h3><a href="/profile/@item.SenderId/@item.SenderName"> @item.SenderName </a></h3>
                                     <span><i>@item.NumberOfQuestionSender</i> پرسش | <i>@item.NumberOfAnswersSender</i> پاسخ</span>
                                 </div>
 

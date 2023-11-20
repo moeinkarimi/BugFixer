@@ -229,6 +229,32 @@ namespace BugFixer.Application.Services.Implementations
 
         }
 
+
+
+        #endregion
+
+        #region Profile
+        public async Task<IEnumerable<QuestionVM>> ProfileSelectedQuestionsServiceAsync(int id)
+        {
+            IEnumerable<Question> questions = await _questionRepository.ProfileSelectedQuestionsAsync(id);
+ 
+            return questions.Select(q => new QuestionVM()
+            {
+                Title = q.Title,
+                CreateDate = q.CreateDate,
+            }).ToList();
+        }
+
+        public async Task<IEnumerable<AnswerVM>> ProfileSelectedAswersServiceAsync(int id)
+        {
+            IEnumerable<Answer> questions = await _questionRepository.ProfileSelectedAswersAsync(id);
+
+            return questions.Select(q => new AnswerVM()
+            {
+                Text = q.Text,
+                CreateDate = q.CreateDate,
+            }).ToList();
+        }
         #endregion
     }
 }
