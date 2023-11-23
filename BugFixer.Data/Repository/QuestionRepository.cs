@@ -30,9 +30,10 @@ namespace BugFixer.Data.Repository
 
         public async Task<Question> GetQuestionAsync(int id)
         {
-            return await _ctx.Questions.Include(q => q.QuestionTags)
+            return await _ctx.Questions.Include(q => q.QuestionTags)                
                 .Include(q => q.QuestionRates)
                 .Include(q => q.Answers)
+                .Include(q => q.TrueAnswer)
                 .Include(q => q.User)
                 .ThenInclude(u => u.Answers)
                 .Include(q => q.User)

@@ -57,7 +57,7 @@ namespace BugFixer.Web.Controllers
             {
                 Page = pageId,
                 OrderType = orderType,
-                
+
 
             };
 
@@ -113,8 +113,19 @@ namespace BugFixer.Web.Controllers
         public async Task<IActionResult> AddRate(int questionId)
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            var rateStatus  = await _questionService.HandleQuestionRateServiceAsync(questionId, userId);
+            var rateStatus = await _questionService.HandleQuestionRateServiceAsync(questionId, userId);
             return Json(new { rateStatus = rateStatus });
+        }
+
+        #endregion
+
+        #region TrueAnswer
+        [HttpPost("/true-answer/{questionID}/{answerID}")]
+        [Authorize]
+        public async Task<IActionResult> AddTrueAnswer(int questionID, int answerID)
+        {
+            await _questionService.HandleTrueAnswerServiceAsync(questionID, answerID);
+            return Json(new { taStatus = true });
         }
 
         #endregion

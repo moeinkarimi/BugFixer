@@ -34,13 +34,6 @@ namespace BugFixer.Data.Repository
                 .FirstOrDefaultAsync(qr => qr.QuestionId == qID && qr.UserId == userID);
         }
 
-        public async Task<bool> IsRateExistAsync(int qID, int userID)
-        {
-            var qr = await _ctx.QuestionRates
-                .FirstOrDefaultAsync(qr => qr.QuestionId == qID && qr.UserId == userID);
-
-            if (qr == null) return false;
-            return true;
-        }
+     
     }
 }

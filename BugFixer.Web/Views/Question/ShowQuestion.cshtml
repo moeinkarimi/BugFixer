@@ -180,8 +180,8 @@
                                         <span> 12K </span>
                                         <button class="negative"><i class="icon-caret-down"></i></button>
                                     </form>
-                                    <form class="selected-answer">
-                                        @* <button class="@((Model.TrueAnswer?.AnswerId==item.AnswerId)?"selected":"")" onclick="trueAnswer(@item.QuestionId,@item.AnswerId)"><i class="icon-check"></i></button> *@
+                                    <form id="selected-answer" class="selected-answer">
+                                        <button id="@($"trueAnswer{item.AnswerId}")" class="@((Model.TrueAnswer?.AnswerId==item.AnswerId)?"selected":"")" onclick='@(Model.User.Id == userId ? $"trueAnswer(event, {Model.Id}, {item.AnswerId})" : "")'><i class="icon-check"></i></button>
                                     </form>
                                 </div>
 
@@ -314,6 +314,21 @@
                     else{
                         $("#icon-star").removeClass("active")
                         $("#ratesCount").text(currentCount - 1);
+                    }
+                }
+            })
+        }
+
+        function trueAnswer(e, qID, aID) {
+            e.preventDefault()
+            console.log("answer", qID, aID)
+            $.ajax({
+                url: `/true-answer/${qID}/${aID}`,
+                type: "POST",
+                success: function (response) {
+                    if (response.taStatus) {
+                        $('#selected-answer button').removeClass('selected');
+                        $(`#trueAnswer${aID}`).addClass('selected')
                     }
                 }
             })

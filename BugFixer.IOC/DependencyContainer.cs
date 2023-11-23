@@ -42,6 +42,7 @@ namespace BugFixer.IOC
         {
             service.AddScoped<IAnswerRepository, AnswerRepository>();
             service.AddScoped<IAnswerService, AnswerService>();
+            service.AddScoped<ITrueAnswerRepository, TrueAnswerRepository>();
         }
 
         public static void QuestionRateServices(IServiceCollection service)

@@ -12,6 +12,6 @@ namespace BugFixer.Domain.Interfaces
         Task CreateQuestionRateAsync(QuestionRate questionRate);
         Task<QuestionRate> GetQuestionRateAsync(int qID, int userID );
         void DeleteQuestionRate(QuestionRate questionRate);
-        Task<bool> IsRateExistAsync(int qID, int userID);
+        
     }
 }

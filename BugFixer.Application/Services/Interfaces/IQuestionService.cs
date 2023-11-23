@@ -35,6 +35,14 @@ namespace BugFixer.Application.Services.Interfaces
         Task<bool> HandleQuestionRateServiceAsync(int qID, int userID);
 
         #endregion
+        #region QuestionRate Methods
+
+        //Task CreateQuestionRateServiceAsync(int qID, int userID);
+        //Task DeleteQuestionRateServiceAsync(int qID, int userID);
+
+        Task HandleTrueAnswerServiceAsync(int qID, int aID);
+
+        #endregion
 
 
         #region Profile

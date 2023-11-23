@@ -18,6 +18,7 @@ namespace BugFixer.Domain.Models.Questions
         public Question? Question { get; set; }
         [ForeignKey("UserId")]
         public User.User? User { get; set; }
+        public TrueAnswer? TrueAnswer { get; set; }
         #endregion
     }
 }

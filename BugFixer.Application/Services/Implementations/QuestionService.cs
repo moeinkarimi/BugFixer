@@ -2,6 +2,7 @@
 using BugFixer.Application.ViewModels.Questions;
 using BugFixer.Domain.Interfaces;
 using BugFixer.Domain.Models.Questions;
+using System.Security.Cryptography;
 
 namespace BugFixer.Application.Services.Implementations
 {
@@ -9,10 +10,12 @@ namespace BugFixer.Application.Services.Implementations
     {
         private readonly IQuestionRepository _questionRepository;
         private readonly IQuestionRateRepository _questionRateRepository;
-        public QuestionService(IQuestionRepository questionRepository, IQuestionRateRepository questionRateRepository)
+        private readonly ITrueAnswerRepository _trueAnswerRepository;
+        public QuestionService(IQuestionRepository questionRepository, IQuestionRateRepository questionRateRepository, ITrueAnswerRepository trueAnswerRepository)
         {
             _questionRepository = questionRepository;
             _questionRateRepository = questionRateRepository;
+            _trueAnswerRepository = trueAnswerRepository;   
         }
 
 
@@ -59,15 +62,18 @@ namespace BugFixer.Application.Services.Implementations
                 Text = question.Text,
                 CreateDate = question.CreateDate,
                 Visit = question.Visit,
-
-                QuestionTags = question.QuestionTags.Select(q => new QuestionTagVM()
+                TrueAnswer= new TrueAnswerVM { 
+                    QuestionId = question.TrueAnswer?.QuestionId != null ? question.TrueAnswer.QuestionId : 0,
+                    AnswerId = question.TrueAnswer?.AnswerId !=null? question.TrueAnswer.AnswerId:0
+                },
+                QuestionTags = question.QuestionTags?.Select(q => new QuestionTagVM()
                 {
                     Tag = q.Tag,
                 }).ToList(),
 
                 User = question.User,
                 Answers = question.Answers,
-                QuestionRates = question.QuestionRates.Select(r => new QuestionRateVM
+                QuestionRates = question.QuestionRates?.Select(r => new QuestionRateVM
                 {
                     QuestionId = r.QuestionId,
                     UserId=r.UserId
@@ -198,19 +204,13 @@ namespace BugFixer.Application.Services.Implementations
         #endregion
 
         #region QuestionRate Methods
-
-        public async Task CreateQuestionRateServiceAsync(int qID, int userID)
-        {
-          
-        }
-
+     
         public async Task<bool> HandleQuestionRateServiceAsync(int qID, int userID)
         {
-           
-            if(await _questionRateRepository.IsRateExistAsync(qID, userID))
-            {
-                var qr = await _questionRateRepository.GetQuestionRateAsync(qID, userID);
-                _questionRateRepository.DeleteQuestionRate(qr);
+            var questionRate = await _questionRateRepository.GetQuestionRateAsync(qID, userID);
+            if (questionRate != null)
+            {             
+                _questionRateRepository.DeleteQuestionRate(questionRate);
                 await _questionRepository.SavechangeAsync();
                 return false;
             }
@@ -225,12 +225,39 @@ namespace BugFixer.Application.Services.Implementations
                 await _questionRepository.SavechangeAsync();
                 return true;
             }
-
-
         }
 
+        #endregion
 
-
+        #region TrueAnswer
+        public async Task HandleTrueAnswerServiceAsync(int qID, int aID)
+        {
+            var trueAsnwer = await _trueAnswerRepository.GetTrueAnswerAsync(qID);
+            if(trueAsnwer != null)
+            {
+                if(trueAsnwer.AnswerId != aID)
+                {
+                    _trueAnswerRepository.DeleteTrueAnswerAsync(trueAsnwer);
+                    var ta = new TrueAnswer
+                    {
+                        AnswerId = aID,
+                        QuestionId = qID,
+                    };
+                    await _trueAnswerRepository.CreateTrueAnswerAsync(ta);
+                    await _questionRepository.SavechangeAsync();
+                }
+            }
+            else
+            {
+                var ta = new TrueAnswer
+                {
+                    AnswerId = aID,
+                    QuestionId = qID,
+                };
+                await _trueAnswerRepository.CreateTrueAnswerAsync(ta);
+                await _questionRepository.SavechangeAsync();
+            }
+        }
         #endregion
 
         #region Profile
