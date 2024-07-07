@@ -9,15 +9,18 @@ namespace BugFixer.Domain.Models.Questions
         [Display(Name = "متن جواب")]
         [Required(ErrorMessage = "{0}الزامی می باشد")]
         public string Text { get; set; }
+        
         public int QuestionId { get; set; }
+        
         public int UserId { get; set; }
-
 
         #region Relations
         [ForeignKey("QuestionId")]
         public Question? Question { get; set; }
+        
         [ForeignKey("UserId")]
         public User.User? User { get; set; }
+        
         public TrueAnswer? TrueAnswer { get; set; }
         #endregion
     }
